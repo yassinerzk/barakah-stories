@@ -269,13 +269,32 @@ notes use Play's codes. Malay exists twice, as `ms` and `ms-MY` — check which 
 and make the `<ms-MY>` tag in `docs/release-notes-1.0.0.txt` match it, or Play will not attach those
 notes to the Malay listing.
 
-## 10. Release track
+## 10. Countries and regions
+
+Select every country **except South Korea and Brazil**. Google's country-requirements page lists
+rules for many markets; almost all concern paid apps, in-app purchases, games, finance, or
+developers based in that country, and none of those describe this build. Two can apply because of
+what the app itself does:
+
+- **South Korea** — the location law can require apps that use location to report to the Korean
+  Communications Commission. This app uses location for prayer times.
+- **Brazil** — the Digital ECA requires apps "likely to be accessed by" adolescents to ingest age
+  range data from the store (the Age Signals API). Muslim teenagers are a core audience here.
+
+Neither is a target market — no Korean or Portuguese localisation, small Muslim populations — so
+excluding both costs little and is reversible any time. Do **not** exclude EU countries: unjustified
+geo-blocking inside the EU is itself prohibited.
+
+When the Pro in-app purchase ships, Brazil's merchant verification and Japan's Specified Commercial
+Transactions Act disclosures start to apply. Google requests those by email and Console banner.
+
+## 11. Release track
 
 Use **Internal testing** first, then promote. It goes live in minutes, you install from Play exactly
 as a user would, and promotion to production is one click. Going straight to production means any
 launch-blocking bug reaches real users and a rollback costs a fresh build plus a review cycle.
 
-## 11. Creating the release
+## 12. Creating the release
 
 | Field        | Value                                                                 |
 | ------------ | --------------------------------------------------------------------- |
@@ -327,7 +346,7 @@ markets this app targets are the ones where that matters most.
 Play's own suggestion to "upgrade to AGP 9.0" is not actionable here: Expo SDK 57 pins the Gradle
 plugin version, and moving it independently breaks prebuild.
 
-## 12. Before you hit publish
+## 13. Before you hit publish
 
 - [ ] Screenshots captured from the installed app
 - [ ] Arabic read through by a native speaker (see `docs/STORE-LISTING.md`)
