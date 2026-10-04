@@ -17,12 +17,44 @@ export interface GeoPoint {
 export type PrayerName = 'fajr' | 'sunrise' | 'dhuhr' | 'asr' | 'maghrib' | 'isha';
 
 export const PRAYER_NAMES: ReadonlyArray<{ id: PrayerName; label: Localized; isPrayer: boolean }> = [
-  { id: 'fajr', label: { en: 'Fajr', ar: 'الفجر' }, isPrayer: true },
-  { id: 'sunrise', label: { en: 'Sunrise', ar: 'الشروق' }, isPrayer: false },
-  { id: 'dhuhr', label: { en: 'Dhuhr', ar: 'الظهر' }, isPrayer: true },
-  { id: 'asr', label: { en: 'Asr', ar: 'العصر' }, isPrayer: true },
-  { id: 'maghrib', label: { en: 'Maghrib', ar: 'المغرب' }, isPrayer: true },
-  { id: 'isha', label: { en: 'Isha', ar: 'العشاء' }, isPrayer: true },
+  {
+    id: 'fajr',
+    label: { en: 'Fajr', ar: 'الفجر', fr: 'Fajr', id: 'Subuh', ms: 'Subuh', th: 'ซุบฮิ', ur: 'فجر' },
+    isPrayer: true,
+  },
+  {
+    id: 'sunrise',
+    label: {
+      en: 'Sunrise',
+      ar: 'الشروق',
+      fr: 'Lever du soleil',
+      id: 'Terbit',
+      ms: 'Syuruk',
+      th: 'ดวงอาทิตย์ขึ้น',
+      ur: 'طلوعِ آفتاب',
+    },
+    isPrayer: false,
+  },
+  {
+    id: 'dhuhr',
+    label: { en: 'Dhuhr', ar: 'الظهر', fr: 'Dhuhr', id: 'Zuhur', ms: 'Zohor', th: 'ซุฮริ', ur: 'ظہر' },
+    isPrayer: true,
+  },
+  {
+    id: 'asr',
+    label: { en: 'Asr', ar: 'العصر', fr: 'Asr', id: 'Asar', ms: 'Asar', th: 'อัศริ', ur: 'عصر' },
+    isPrayer: true,
+  },
+  {
+    id: 'maghrib',
+    label: { en: 'Maghrib', ar: 'المغرب', fr: 'Maghrib', id: 'Magrib', ms: 'Maghrib', th: 'มัฆริบ', ur: 'مغرب' },
+    isPrayer: true,
+  },
+  {
+    id: 'isha',
+    label: { en: 'Isha', ar: 'العشاء', fr: 'Isha', id: 'Isya', ms: 'Isyak', th: 'อิชาอ์', ur: 'عشاء' },
+    isPrayer: true,
+  },
 ];
 
 export type CalcMethodId =

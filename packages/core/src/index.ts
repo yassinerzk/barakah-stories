@@ -16,3 +16,5 @@ export * from './quran';
 export * from './hadith';
 export * from './monetization';
 export * from './ads';
+export * from './prayerAlerts';
+export * from './geo';

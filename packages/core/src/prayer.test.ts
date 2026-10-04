@@ -33,6 +33,12 @@ describe('prayer', () => {
     expect(qiblaBearing({ lat: -6.2088, lng: 106.8456 })).toBeCloseTo(295, 0); // Jakarta
   });
 
+  it('names every prayer in every app language, since alerts show the name', () => {
+    for (const p of PRAYER_NAMES)
+      for (const loc of ['en', 'ar', 'fr', 'id', 'ms', 'th', 'ur'] as const)
+        expect(p.label[loc], `${p.id} ${loc}`).toBeTruthy();
+  });
+
   it('splits countdowns', () => {
     expect(splitCountdown(95 * 60_000)).toEqual({ hours: 1, minutes: 35 });
     expect(splitCountdown(-5)).toEqual({ hours: 0, minutes: 0 });
