@@ -44,6 +44,8 @@ export default function HadithBookScreen() {
                 params: { book, section: String(item.id) },
               })
             }
+            accessibilityRole="button"
+            accessibilityLabel={`${toLocaleDigits(item.id, locale)}. ${item.en}${isLast ? `, ${t('lastReadLabel')}` : ''}`}
             style={{
               flexDirection: row,
               alignItems: 'center',
@@ -55,8 +57,8 @@ export default function HadithBookScreen() {
           >
             <View
               style={{
-                width: 36,
-                height: 36,
+                minWidth: 36,
+                minHeight: 36,
                 borderRadius: 10,
                 backgroundColor: isLast ? ui.accent : ui.bgElev,
                 alignItems: 'center',
@@ -65,6 +67,7 @@ export default function HadithBookScreen() {
             >
               <Text
                 style={{ color: isLast ? ui.accentInk : ui.textMuted, fontFamily: font.medium, fontSize: 12 }}
+                maxFontSizeMultiplier={1.4}
               >
                 {toLocaleDigits(item.id, locale)}
               </Text>

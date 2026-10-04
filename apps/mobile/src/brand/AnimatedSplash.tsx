@@ -1,3 +1,4 @@
+import { reducedMotionNow } from '../a11y';
 import { useEffect } from 'react';
 import { Animated, Easing, StyleSheet, useAnimatedValue, useWindowDimensions, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
@@ -71,7 +72,13 @@ export function AnimatedSplash({ onDone }: AnimatedSplashProps) {
   const endScale = MARK_END_SCALE * 1.015;
 
   useEffect(() => {
-    const run = Animated.sequence([
+    const fadeOut = Animated.timing(fade, {
+      toValue: 1,
+      duration: FADE_MS,
+      easing: Easing.in(Easing.quad),
+      useNativeDriver: true,
+    });
+    const full = Animated.sequence([
       Animated.parallel([
         Animated.timing(spin, {
           toValue: 1,
@@ -87,26 +94,32 @@ export function AnimatedSplash({ onDone }: AnimatedSplashProps) {
         }),
       ]),
       Animated.delay(HOLD_MS),
-      Animated.timing(fade, {
-        toValue: 1,
-        duration: FADE_MS,
-        easing: Easing.in(Easing.quad),
-        useNativeDriver: true,
-      }),
+      fadeOut,
     ]);
     let done = false;
+    let run: Animated.CompositeAnimation | null = null;
     const finish = () => {
       if (done) return;
       done = true;
       onDone();
     };
-    run.start(({ finished }) => {
-      if (finished) finish();
+    // Reduce motion (system or in-app): no spin, no travel — the mark settles in
+    // place and the screen simply fades to the app.
+    void reducedMotionNow().then((reduced) => {
+      if (done) return;
+      if (reduced) {
+        spin.setValue(1);
+        travel.setValue(1);
+      }
+      run = reduced ? fadeOut : full;
+      run.start(({ finished }) => {
+        if (finished) finish();
+      });
     });
     const failsafe = setTimeout(finish, FAILSAFE_MS);
     return () => {
       clearTimeout(failsafe);
-      run.stop();
+      run?.stop();
     };
   }, [spin, travel, fade, onDone]);
 

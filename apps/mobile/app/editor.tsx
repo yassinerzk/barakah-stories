@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { designToText, shouldShowWatermark } from '@barakah/core';
@@ -110,23 +110,25 @@ export default function EditorScreen() {
           }}
         >
           <View
+            accessibilityRole="tablist"
             style={{ flexDirection: row, borderBottomWidth: 1, borderBottomColor: ui.line, marginBottom: 14 }}
           >
             {(['text', 'style'] as const).map((p) => (
-              <Text
+              <Pressable
                 key={p}
                 onPress={() => setPanel(p)}
+                accessibilityRole="tab"
+                accessibilityState={{ selected: panel === p }}
                 style={{
-                  paddingVertical: 10,
+                  minHeight: 44,
+                  justifyContent: 'center',
                   paddingHorizontal: 14,
-                  color: panel === p ? ui.text : ui.textMuted,
-                  fontFamily: font.semibold,
                   borderBottomWidth: 2,
                   borderBottomColor: panel === p ? ui.accent : 'transparent',
                 }}
               >
-                {t(p)}
-              </Text>
+                <Text style={{ color: panel === p ? ui.text : ui.textMuted, fontFamily: font.semibold }}>{t(p)}</Text>
+              </Pressable>
             ))}
           </View>
           {panel === 'text' ? <TextPanel /> : <StylePanel />}

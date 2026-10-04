@@ -1,15 +1,29 @@
+import { cloneElement, isValidElement, type ReactElement } from 'react';
 import { Switch, Text, TextInput, View } from 'react-native';
 import type { TranslationKey } from '@barakah/core';
 import { useEditorStore } from '../../store';
 import { useT } from '../../i18n';
 import { ui } from '../../theme';
 
+/**
+ * A visible label above an input. The label is also handed to the input itself,
+ * so a screen reader announces "Headline, edit box" rather than just "edit box".
+ */
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   const { font, textAlign } = useT();
+  const labelled = isValidElement(children)
+    ? cloneElement(children as ReactElement<{ accessibilityLabel?: string }>, { accessibilityLabel: label })
+    : children;
   return (
     <View style={{ gap: 6 }}>
-      <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>{label}</Text>
-      {children}
+      <Text
+        style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}
+        importantForAccessibility="no"
+        accessibilityElementsHidden
+      >
+        {label}
+      </Text>
+      {labelled}
     </View>
   );
 }
@@ -17,7 +31,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 const inputStyle = {
   backgroundColor: ui.bg,
   borderWidth: 1,
-  borderColor: ui.line,
+  borderColor: ui.lineStrong,
   borderRadius: 10,
   paddingHorizontal: 12,
   paddingVertical: 10,
@@ -103,6 +117,7 @@ export function TextPanel() {
             <Switch
               value={design[field] as boolean}
               onValueChange={(v) => patch({ [field]: v })}
+              accessibilityLabel={t(key)}
               trackColor={{ true: ui.accent, false: ui.bg }}
               thumbColor={design[field] ? ui.accentInk : ui.textMuted}
             />

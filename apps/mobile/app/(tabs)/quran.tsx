@@ -70,6 +70,9 @@ export default function QuranScreen() {
         return (
           <Pressable
             onPress={() => router.push({ pathname: '/surah/[id]', params: { id: String(item.id) } })}
+            accessibilityRole="button"
+            // One clear announcement, including the finished state the checkmark shows.
+            accessibilityLabel={`${toLocaleDigits(item.id, locale)}. ${item.transliteration}, ${item.translation}, ${toLocaleDigits(item.total_verses, locale)} ${t('verses')}${done ? `, ${t('completedLabel')}` : ''}`}
             style={{
               flexDirection: row,
               alignItems: 'center',
@@ -81,8 +84,8 @@ export default function QuranScreen() {
           >
             <View
               style={{
-                width: 38,
-                height: 38,
+                minWidth: 38,
+                minHeight: 38,
                 borderRadius: 10,
                 backgroundColor: done ? ui.accent : ui.bgElev,
                 alignItems: 'center',
@@ -92,7 +95,7 @@ export default function QuranScreen() {
               {done ? (
                 <Ionicons name="checkmark" size={20} color={ui.accentInk} />
               ) : (
-                <Text style={{ color: ui.textMuted, fontFamily: font.medium, fontSize: 13 }}>
+                <Text style={{ color: ui.textMuted, fontFamily: font.medium, fontSize: 13 }} maxFontSizeMultiplier={1.4}>
                   {toLocaleDigits(item.id, locale)}
                 </Text>
               )}

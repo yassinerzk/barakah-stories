@@ -49,10 +49,11 @@ export function StylePanel() {
               key={th.id}
               accessibilityRole="button"
               accessibilityLabel={l(th.name)}
+              accessibilityState={{ selected: active }}
               onPress={() => patch({ theme: th.id })}
               style={{
-                width: 46,
-                height: 46,
+                width: 48,
+                height: 48,
                 borderRadius: 12,
                 overflow: 'hidden',
                 borderWidth: 2,
@@ -76,6 +77,9 @@ export function StylePanel() {
       >
         <Pressable
           onPress={() => patch({ background: 'none' })}
+          accessibilityRole="button"
+          accessibilityLabel={t('photoNone')}
+          accessibilityState={{ selected: design.background === 'none' }}
           style={{
             width: 64,
             height: 114,
@@ -96,6 +100,7 @@ export function StylePanel() {
             key={b.id}
             accessibilityRole="button"
             accessibilityLabel={l(b.name)}
+            accessibilityState={{ selected: design.background === b.id }}
             onPress={() => patch({ background: b.id })}
             style={{
               width: 64,
@@ -108,6 +113,7 @@ export function StylePanel() {
           >
             <Image
               source={BACKGROUND_THUMBS[b.id]}
+              accessible={false}
               style={{ width: '100%', height: '100%' }}
               contentFit="cover"
             />

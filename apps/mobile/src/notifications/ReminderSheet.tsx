@@ -42,6 +42,7 @@ export function ReminderSheet() {
     >
       <Pressable
         onPress={dismiss}
+        accessible={false}
         style={{ flex: 1, backgroundColor: 'rgba(4,10,9,0.72)', justifyContent: 'flex-end', padding: 16 }}
       >
         {/* Keyed, so each opening starts from the saved value rather than

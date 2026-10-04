@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Alert, FlatList, Pressable, Text, TextInput, View } from 'react-native';
+import { Alert, FlatList, Pressable, Switch, Text, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import type { TranslationKey } from '@barakah/core';
 import { useT } from '../../src/i18n';
 import { ui } from '../../src/theme';
 import { useEditorStore, useLibraryStore, useToastStore } from '../../src/store';
@@ -14,6 +15,43 @@ import { useAuthStore } from '../../src/auth/store';
 import { syncAll } from '../../src/auth/sync';
 import { ProPanel } from '../../src/monetization/ProPanel';
 import { ReminderRow } from '../../src/notifications/ReminderRow';
+import { useA11yStore } from '../../src/a11y';
+
+type A11yKey = 'reduceMotion' | 'largeText' | 'boldArabic' | 'haptics' | 'qiblaVoice';
+const A11Y_ROWS: ReadonlyArray<{ key: A11yKey; title: TranslationKey; desc?: TranslationKey }> = [
+  { key: 'reduceMotion', title: 'a11yReduceMotion', desc: 'a11yReduceMotionDesc' },
+  { key: 'largeText', title: 'a11yLargeText', desc: 'a11yLargeTextDesc' },
+  { key: 'boldArabic', title: 'a11yBoldArabic', desc: 'a11yBoldArabicDesc' },
+  { key: 'haptics', title: 'a11yHaptics' },
+  { key: 'qiblaVoice', title: 'a11yQiblaVoice', desc: 'a11yQiblaVoiceDesc' },
+];
+
+/** In-app accessibility choices, each adding to the phone's own settings. */
+function AccessibilityPanel() {
+  const { t, font, row, textAlign } = useT();
+  const prefs = useA11yStore();
+  return (
+    <View style={{ gap: 14 }}>
+      {A11Y_ROWS.map(({ key, title, desc }) => (
+        <View key={key} style={{ flexDirection: row, alignItems: 'center', gap: 12 }}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: ui.text, fontFamily: font.semibold, fontSize: 15, textAlign }}>{t(title)}</Text>
+            {desc && (
+              <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>{t(desc)}</Text>
+            )}
+          </View>
+          <Switch
+            value={prefs[key]}
+            onValueChange={(v) => prefs.set({ [key]: v })}
+            accessibilityLabel={t(title)}
+            trackColor={{ true: ui.accent, false: ui.bg }}
+            thumbColor={prefs[key] ? ui.accentInk : ui.textMuted}
+          />
+        </View>
+      ))}
+    </View>
+  );
+}
 
 function AccountPanel() {
   const { t, font, row, textAlign } = useT();
@@ -71,7 +109,7 @@ function AccountPanel() {
   const input = {
     backgroundColor: ui.bg,
     borderWidth: 1,
-    borderColor: ui.line,
+    borderColor: ui.lineStrong,
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -122,6 +160,7 @@ function AccountPanel() {
         value={email}
         onChangeText={setEmail}
         placeholder={t('email')}
+        accessibilityLabel={t('email')}
         placeholderTextColor={ui.textMuted}
         autoCapitalize="none"
         keyboardType="email-address"
@@ -132,6 +171,7 @@ function AccountPanel() {
         value={password}
         onChangeText={setPassword}
         placeholder={t('password')}
+        accessibilityLabel={t('password')}
         placeholderTextColor={ui.textMuted}
         secureTextEntry
         autoComplete={mode === 'signup' ? 'new-password' : 'password'}
@@ -218,6 +258,27 @@ export default function MeScreen() {
           >
             <ProPanel />
           </View>
+          <SectionTitle>{t('accessibility')}</SectionTitle>
+          <View
+            style={{
+              backgroundColor: ui.bgElev,
+              borderRadius: ui.radius,
+              borderWidth: 1,
+              borderColor: ui.line,
+              padding: 16,
+            }}
+          >
+            <AccessibilityPanel />
+          </View>
+          <SectionTitle>{t('credits')}</SectionTitle>
+          <View style={{ gap: 4 }}>
+            <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>
+              {t('geonamesCredit')}
+            </Text>
+            <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>
+              {t('adhanCredit')}
+            </Text>
+          </View>
           <SectionTitle>{t('myPosts')}</SectionTitle>
         </View>
       }
@@ -235,6 +296,8 @@ export default function MeScreen() {
               load(item.design, item.id);
               router.push('/editor');
             }}
+            accessibilityRole="button"
+            accessibilityLabel={`${t('savedStoryLabel')}: ${item.design.headline || item.design.arabic.slice(0, 40) || t('untitled')}`}
             style={{ borderRadius: 14, overflow: 'hidden' }}
           >
             <StoryCard design={item.design} width={colWidth} hijriLabel={hijriLabel} />

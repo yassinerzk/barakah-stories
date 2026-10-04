@@ -29,9 +29,13 @@
         "foregroundImage": "./assets/android-icon-foreground.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "SCHEDULE_EXACT_ALARM"
+      ],
       "predictiveBackGestureEnabled": false,
-      "versionCode": 7
+      "versionCode": 8
     },
     "web": {
       "bundler": "metro",
@@ -51,9 +55,21 @@
         "expo-notifications",
         {
           "color": "#0b2e2a",
-          "defaultChannel": "daily-reminder"
+          "defaultChannel": "daily-reminder",
+          "sounds": [
+            "./assets/sounds/adhan.wav"
+          ]
         }
-      ]
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false,
+          "enableBackgroundPlayback": false
+        }
+      ],
+      "expo-background-task"
     ],
     "experiments": {
       "typedRoutes": false

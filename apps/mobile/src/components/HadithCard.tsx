@@ -6,6 +6,7 @@ import { designFromHadith, getSection, HADITH_BOOKS, toLocaleDigits, type Hadith
 import { useEditorStore } from '../store';
 import { useT } from '../i18n';
 import { ui } from '../theme';
+import { LARGE_TEXT_SCALE, useA11yStore } from '../a11y';
 
 interface HadithCardProps {
   entry: HadithEntry;
@@ -13,8 +14,11 @@ interface HadithCardProps {
   arabicSize?: number;
 }
 
-export const HadithCard = memo(function HadithCard({ entry, showBook, arabicSize = 21 }: HadithCardProps) {
+export const HadithCard = memo(function HadithCard({ entry, showBook, arabicSize: baseSize = 21 }: HadithCardProps) {
   const { t, locale, font, row, textAlign } = useT();
+  const largeText = useA11yStore((s) => s.largeText);
+  const boldArabic = useA11yStore((s) => s.boldArabic);
+  const arabicSize = baseSize * (largeText ? LARGE_TEXT_SCALE : 1);
   const router = useRouter();
   const loadDesign = useEditorStore((s) => s.load);
   const section = getSection(entry.book, entry.section);
@@ -49,7 +53,7 @@ export const HadithCard = memo(function HadithCard({ entry, showBook, arabicSize
         <Text
           style={{
             color: ui.text,
-            fontFamily: 'Amiri_400Regular',
+            fontFamily: boldArabic ? 'Amiri_700Bold' : 'Amiri_400Regular',
             fontSize: arabicSize,
             lineHeight: arabicSize * 1.85,
             textAlign: 'right',

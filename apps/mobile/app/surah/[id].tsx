@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useT } from '../../src/i18n';
 import { ui } from '../../src/theme';
 import { useEditorStore, useQuranStore } from '../../src/store';
+import { LARGE_TEXT_SCALE, useA11yStore } from '../../src/a11y';
 import { loadChapter } from '../../src/quran/chapters';
 import { useChapterTranslation } from '../../src/quran/useChapterTranslation';
 import { Button, Chip } from '../../src/components/ui';
@@ -27,6 +28,8 @@ export default function SurahScreen() {
   const showTranslation = useQuranStore((s) => s.showTranslation);
   const setShowTranslation = useQuranStore((s) => s.setShowTranslation);
   const fontScale = useQuranStore((s) => s.fontScale);
+  const largeText = useA11yStore((s) => s.largeText);
+  const boldArabic = useA11yStore((s) => s.boldArabic);
   const setFontScale = useQuranStore((s) => s.setFontScale);
   const setLastRead = useQuranStore((s) => s.setLastRead);
   const markFinished = useQuranStore((s) => s.markFinished);
@@ -67,7 +70,7 @@ export default function SurahScreen() {
   );
 
   if (!chapter || !meta) return null;
-  const arabicSize = 26 * fontScale;
+  const arabicSize = 26 * fontScale * (largeText ? LARGE_TEXT_SCALE : 1);
   const showBismillah = surah !== 1 && surah !== 9;
 
   return (
@@ -106,10 +109,12 @@ export default function SurahScreen() {
           />
           <Chip
             label="A−"
+            accessibilityLabel={t('fontSmaller')}
             onPress={() => setFontScale(Math.max(0.7, Math.round((fontScale - 0.1) * 10) / 10))}
           />
           <Chip
             label="A+"
+            accessibilityLabel={t('fontLarger')}
             onPress={() => setFontScale(Math.min(1.8, Math.round((fontScale + 0.1) * 10) / 10))}
           />
           <Chip
@@ -152,7 +157,7 @@ export default function SurahScreen() {
             <Text
               style={{
                 color: ui.text,
-                fontFamily: 'Amiri_400Regular',
+                fontFamily: boldArabic ? 'Amiri_700Bold' : 'Amiri_400Regular',
                 fontSize: arabicSize,
                 lineHeight: arabicSize * 1.9,
                 textAlign: 'right',

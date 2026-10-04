@@ -79,6 +79,7 @@ export function WatermarkRow() {
       <Switch
         value={!(hide && entitled)}
         disabled={busy || !monetizationReady}
+        accessibilityLabel={t('appNameOnStory')}
         onValueChange={(on) => {
           if (on) patch({ hideWatermark: false });
           else if (entitled) patch({ hideWatermark: true });

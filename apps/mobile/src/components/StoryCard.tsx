@@ -1,5 +1,12 @@
 import { forwardRef, useId } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text as RNText, View, type TextProps } from 'react-native';
+
+/**
+ * The card is a fixed 1080×1920 canvas that gets exported as an image, so its
+ * text must not grow with the phone's text-size setting — that would clip it
+ * inside the canvas. People size story text with the editor's own control.
+ */
+const Text = (props: TextProps) => <RNText allowFontScaling={false} {...props} />;
 import Svg, { G, Path, Rect } from 'react-native-svg';
 import { Image } from 'expo-image';
 import {
@@ -95,6 +102,7 @@ export const StoryCard = forwardRef<View, StoryCardProps>(function StoryCard(
         <>
           <Image
             source={BACKGROUND_IMAGES[background.id]}
+            accessible={false}
             style={StyleSheet.absoluteFill}
             contentFit="cover"
             cachePolicy="memory-disk"

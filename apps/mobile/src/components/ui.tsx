@@ -11,15 +11,19 @@ interface ChipProps {
   accent?: boolean;
   style?: StyleProp<ViewStyle>;
   fontFamily?: string;
+  /** When the visible label is a symbol ("A+"), the words a screen reader should say. */
+  accessibilityLabel?: string;
 }
 
-export function Chip({ label, active, onPress, accent, style, fontFamily }: ChipProps) {
+export function Chip({ label, active, onPress, accent, style, fontFamily, accessibilityLabel }: ChipProps) {
   const { font } = useT();
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
       accessibilityState={{ selected: !!active }}
+      accessibilityLabel={accessibilityLabel}
+      hitSlop={6}
       style={({ pressed }) => [
         s.chip,
         active && s.chipActive,
@@ -59,6 +63,8 @@ export function Button({ label, onPress, variant = 'secondary', disabled, style,
       onPress={onPress}
       disabled={disabled}
       accessibilityRole="button"
+      accessibilityState={{ disabled: !!disabled }}
+      hitSlop={size === 'sm' ? 6 : 0}
       style={({ pressed }) => [
         s.btn,
         { paddingVertical: pad },
@@ -119,10 +125,10 @@ export function Toaster() {
 const s = StyleSheet.create({
   chip: {
     borderWidth: 1,
-    borderColor: ui.line,
+    borderColor: ui.lineStrong,
     backgroundColor: ui.bgElev,
     borderRadius: 999,
-    paddingVertical: 8,
+    paddingVertical: 10,
     paddingHorizontal: 14,
   },
   chipActive: { backgroundColor: ui.accent, borderColor: 'transparent' },

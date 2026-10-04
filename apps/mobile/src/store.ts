@@ -12,6 +12,8 @@ import {
   type StoryDesign,
 } from '@barakah/core';
 
+import { announce } from './a11y';
+
 const storage = () => createJSONStorage(() => AsyncStorage);
 
 const newId = (prefix: string) =>
@@ -146,6 +148,8 @@ export const useToastStore = create<ToastState>()((set, get) => ({
   show: (message, tone = 'info') => {
     const id = newId('t');
     set({ toasts: [...get().toasts, { id, message, tone }] });
+    // iOS has no live regions; this also covers Android when focus is elsewhere.
+    announce(message);
     setTimeout(() => get().dismiss(id), 3200);
   },
   dismiss: (id) => set({ toasts: get().toasts.filter((t) => t.id !== id) }),

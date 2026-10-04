@@ -33,6 +33,7 @@ export function LanguageSheet({ visible, onClose }: LanguageSheetProps) {
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <Pressable
         onPress={onClose}
+        accessible={false}
         style={{
           flex: 1,
           backgroundColor: 'rgba(4,10,9,0.72)',

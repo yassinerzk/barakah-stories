@@ -9,6 +9,8 @@ import { ui } from '../src/theme';
 import { useAuthStore } from '../src/auth/store';
 import { useReminderStore } from '../src/notifications/store';
 import { ReminderSheet } from '../src/notifications/ReminderSheet';
+import { startPrayerAlerts } from '../src/notifications/prayerAlertStore';
+import { AdhanPlayer, useAdhanFromNotifications } from '../src/notifications/AdhanPlayer';
 import { AnimatedSplash } from '../src/brand/AnimatedSplash';
 
 SplashScreen.preventAutoHideAsync().catch(() => undefined);
@@ -27,6 +29,10 @@ export default function RootLayout() {
   useEffect(() => {
     startSession();
   }, [startSession]);
+  // Tops up the prayer-alert schedule and the panel, and keeps them in step with
+  // the location, method and language for as long as the app is running.
+  useEffect(() => startPrayerAlerts(), []);
+  useAdhanFromNotifications();
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => undefined);
   }, [fontsLoaded]);
@@ -42,6 +48,7 @@ export default function RootLayout() {
         />
       </Stack>
       <ReminderSheet />
+      <AdhanPlayer />
       <Toaster />
       {/* Drawn over the app, which mounts underneath while it plays. */}
       {!splashDone && <AnimatedSplash onDone={finishSplash} />}

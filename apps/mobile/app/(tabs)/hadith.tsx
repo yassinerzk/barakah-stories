@@ -87,12 +87,13 @@ export default function HadithScreen() {
           backgroundColor: ui.bgElev,
           borderRadius: 12,
           borderWidth: 1,
-          borderColor: ui.line,
+          borderColor: ui.lineStrong,
           paddingHorizontal: 12,
         }}
       >
-        <Ionicons name="search" size={18} color={ui.textMuted} />
+        <Ionicons name="search" size={18} color={ui.textMuted} importantForAccessibility="no" accessibilityElementsHidden />
         <TextInput
+          accessibilityLabel={t('searchHadith')}
           value={query}
           onChangeText={setQuery}
           placeholder={t('searchHadith')}
@@ -109,7 +110,12 @@ export default function HadithScreen() {
           returnKeyType="search"
         />
         {query !== '' && (
-          <Pressable onPress={() => setQuery('')} hitSlop={8}>
+          <Pressable
+            onPress={() => setQuery('')}
+            accessibilityRole="button"
+            accessibilityLabel={t('clearSearch')}
+            hitSlop={14}
+          >
             <Ionicons name="close-circle" size={18} color={ui.textMuted} />
           </Pressable>
         )}
