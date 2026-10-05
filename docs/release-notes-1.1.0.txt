@@ -1,0 +1,63 @@
+<en-US>
+New in 1.1.0
+
+• Video stories: pick a moving background and a calm sound (rain, rivers, birds, mosque ambience, adhan and more), choose 10, 15 or 30 seconds, and share an MP4
+• A new editor: text, style, video and sound tools, plus a + button to start a story from scratch
+• Prayer alerts: adhan, sound, vibration or off, for each prayer
+• Choose your country and city, or use your current location
+• A next-prayer countdown in your notifications
+</en-US>
+<ar>
+الجديد في 1.1.0
+
+• قصص بالفيديو: اختر خلفية متحركة وصوتًا هادئًا (مطر، أنهار، طيور، أجواء المسجد، الأذان وغيرها)، وحدد المدة 10 أو 15 أو 30 ثانية، وشاركها بصيغة MP4
+• محرر جديد: أدوات النص والنمط والفيديو والصوت، وزر + لإنشاء قصة من البداية
+• تنبيهات الصلاة: أذان أو صوت أو اهتزاز أو إيقاف، لكل صلاة
+• اختر بلدك ومدينتك، أو استخدم موقعك الحالي
+• عدّاد للصلاة القادمة في الإشعارات
+</ar>
+<fr-FR>
+Nouveautés de la 1.1.0
+
+• Stories vidéo : un fond animé et un son apaisant (pluie, rivière, oiseaux, ambiance de mosquée, adhan…), 10, 15 ou 30 secondes, partagées en MP4
+• Un nouvel éditeur : texte, style, vidéo et son, et un bouton + pour créer une story de zéro
+• Alertes de prière : adhan, son, vibration ou rien, pour chaque prière
+• Choisissez votre pays et votre ville, ou utilisez votre position
+• Compte à rebours de la prochaine prière dans les notifications
+</fr-FR>
+<id>
+Baru di 1.1.0
+
+• Story video: pilih latar bergerak dan suara tenang (hujan, sungai, burung, suasana masjid, azan, dan lainnya), durasi 10, 15, atau 30 detik, lalu bagikan sebagai MP4
+• Editor baru: alat teks, gaya, video, dan suara, serta tombol + untuk membuat story dari awal
+• Pengingat salat: azan, suara, getar, atau mati, untuk tiap waktu salat
+• Pilih negara dan kota, atau gunakan lokasi Anda saat ini
+• Hitung mundur salat berikutnya di notifikasi
+</id>
+<ms-MY>
+Baharu dalam 1.1.0
+
+• Cerita video: pilih latar bergerak dan bunyi tenang (hujan, sungai, burung, suasana masjid, azan dan lain-lain), tempoh 10, 15 atau 30 saat, kemudian kongsi sebagai MP4
+• Penyunting baharu: alat teks, gaya, video dan bunyi, serta butang + untuk mencipta cerita dari awal
+• Peringatan solat: azan, bunyi, getaran atau tutup, untuk setiap waktu solat
+• Pilih negara dan bandar anda, atau guna lokasi semasa
+• Kiraan detik solat seterusnya dalam pemberitahuan
+</ms-MY>
+<th>
+มีอะไรใหม่ใน 1.1.0
+
+• สตอรี่วิดีโอ: เลือกพื้นหลังเคลื่อนไหวและเสียงสงบ (ฝน สายน้ำ นก บรรยากาศมัสยิด อะซาน และอื่น ๆ) ยาว 10, 15 หรือ 30 วินาที แล้วแชร์เป็น MP4
+• ตัวแก้ไขใหม่: เครื่องมือข้อความ สไตล์ วิดีโอ และเสียง พร้อมปุ่ม + เพื่อสร้างสตอรี่ใหม่
+• แจ้งเตือนละหมาด: อะซาน เสียง สั่น หรือปิด แยกตามแต่ละเวลา
+• เลือกประเทศและเมือง หรือใช้ตำแหน่งปัจจุบัน
+• นับถอยหลังละหมาดถัดไปในการแจ้งเตือน
+</th>
+<ur>
+1.1.0 میں نیا
+
+• ویڈیو اسٹوریز: متحرک پس منظر اور پرسکون آواز چنیں (بارش، دریا، پرندے، مسجد کا ماحول، اذان اور مزید)، 10، 15 یا 30 سیکنڈ، اور MP4 میں شیئر کریں
+• نیا ایڈیٹر: متن، انداز، ویڈیو اور آواز کے ٹولز، اور نئی اسٹوری بنانے کے لیے + بٹن
+• نماز کی اطلاعات: ہر نماز کے لیے اذان، آواز، وائبریشن یا بند
+• اپنا ملک اور شہر چنیں، یا موجودہ مقام استعمال کریں
+• اطلاعات میں اگلی نماز کی الٹی گنتی
+</ur>

@@ -729,3 +729,19 @@ is what lets Play accept it as the same app.
 
 The upload folder is `barakah-release-code7`, named by version code: the earlier `barakah-release-v7`
 folder holds versionCode **6** despite its name, so don't upload from that one.
+
+## 1.1.0, versionCode 13 — run 37323242609
+
+First update after launch: video stories (Media3 encoder on Android, WebCodecs page for Expo Go /
+iOS), the Instagram-style editor with the floating + button, per-prayer alerts, the country/city
+picker and the next-prayer notification panel. Release notes in seven languages:
+`docs/release-notes-1.1.0.txt` (all under Play's 500-character limit).
+
+Verified: `versionCode='13'`, `versionName='1.1.0'`, targetSdk 36, upload certificate SHA-256
+`56b26d99…9011c0` (same as every earlier upload). New permissions need no Play declaration:
+`SCHEDULE_EXACT_ALARM` is user-granted (only `USE_EXACT_ALARM` is restricted) and the
+`FOREGROUND_SERVICE` added by WorkManager declares no typed service. Upload folder:
+`Downloads/barakah-release-code13`.
+
+The adhan is still the CC0 test recording; replacing it later means bumping the `prayer_adhan_v1`
+channel id.
