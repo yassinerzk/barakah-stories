@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.annotation.OptIn
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MimeTypes
 import androidx.media3.common.audio.DefaultGainProvider
@@ -148,6 +150,10 @@ class VideoComposerModule : Module() {
     val output = File(dir, "story-${System.currentTimeMillis()}.mp4")
 
     val transformer = Transformer.Builder(context)
+      // The muxer aborts if one track goes this long without a sample. Video
+      // encoding is slow on emulators and low-end phones while the audio track
+      // finishes almost at once, so the 10 s default tripped a "Muxer error".
+      .setMaxDelayBetweenMuxerSamplesMs(C.TIME_UNSET)
       .setVideoMimeType(MimeTypes.VIDEO_H264)
       .setAudioMimeType(MimeTypes.AUDIO_AAC)
       .setEncoderFactory(
@@ -164,13 +170,20 @@ class VideoComposerModule : Module() {
         override fun onError(composition: Composition, exportResult: ExportResult, exportException: ExportException) {
           finish()
           output.delete()
-          promise.reject("ERR_COMPOSE", exportException.message ?: "Could not render the video", exportException)
+          Log.e(TAG, "Export failed (code ${exportException.errorCode})", exportException)
+          promise.reject("ERR_COMPOSE", describe(exportException), exportException)
         }
       })
       .build()
     active = transformer
     transformer.start(composition, output.absolutePath)
     pollProgress(transformer)
+  }
+
+  /** The whole cause chain, so a device-specific failure is reportable from a screenshot. */
+  private fun describe(e: Throwable): String {
+    val parts = generateSequence(e) { it.cause }.take(4).mapNotNull { it.message }.distinct().toList()
+    return parts.joinToString(" ← ").ifEmpty { "Could not render the video" }
   }
 
   private fun finish() {
@@ -201,6 +214,7 @@ class VideoComposerModule : Module() {
   }
 
   private companion object {
+    const val TAG = "VideoComposer"
     const val WIDTH = 1080
     const val HEIGHT = 1920
     const val VIDEO_BITRATE = 6_000_000
