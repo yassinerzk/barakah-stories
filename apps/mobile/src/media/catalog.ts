@@ -26,7 +26,8 @@ interface MediaState {
   local: Record<string, string>;
   /** asset file paths currently downloading. */
   downloading: Record<string, true>;
-  load: () => Promise<void>;
+  /** Fetches the catalog; `force` re-fetches even when one is loaded. */
+  load: (force?: boolean) => Promise<void>;
   /** The asset on the device, downloading it first if needed; null if that fails. */
   ensure: (asset: MediaAsset) => Promise<string | null>;
 }
@@ -47,8 +48,9 @@ export const useMediaStore = create<MediaState>()((set, get) => ({
   local: {},
   downloading: {},
 
-  load: async () => {
+  load: async (force = false) => {
     if (get().status === 'loading') return;
+    if (!force && get().status === 'ready' && get().manifest) return;
     set({ status: 'loading' });
     const cached = isNative ? new File(dir(), 'manifest.json') : null;
     // Offline first: show what we had, then refresh from the site.
@@ -61,7 +63,9 @@ export const useMediaStore = create<MediaState>()((set, get) => ({
       }
     }
     try {
-      const res = await fetch(remoteUrl('manifest.json'), { cache: 'no-store' });
+      // The query string defeats the CDN's 10-minute cache: a stale catalog would
+      // point at file names that no longer exist after the library is rebuilt.
+      const res = await fetch(`${remoteUrl('manifest.json')}?v=${Date.now()}`, { cache: 'no-store' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const text = await res.text();
       const m = parseMediaManifest(JSON.parse(text));
@@ -78,24 +82,47 @@ export const useMediaStore = create<MediaState>()((set, get) => ({
 
   ensure: async (asset) => {
     if (!isNative) return remoteUrl(asset.file);
-    const have = get().local[asset.file];
-    if (have) return have;
-    if (get().downloading[asset.file]) return null;
-    set({ downloading: { ...get().downloading, [asset.file]: true } });
-    try {
-      dir().create({ idempotent: true, intermediates: true });
-      const target = localFile(asset.file);
-      await File.downloadFileAsync(remoteUrl(asset.file), target, { idempotent: true });
-      set({ local: { ...get().local, [asset.file]: target.uri } });
-      return target.uri;
-    } catch {
-      return null;
-    } finally {
-      const { [asset.file]: _done, ...rest } = get().downloading;
-      set({ downloading: rest });
-    }
+    const first = await download(asset);
+    if (first) return first;
+    // The file may have been renamed by a library rebuild: refresh the catalog
+    // and try the same asset under its current name, once.
+    await get().load(true);
+    const m = get().manifest;
+    const current = m && [...m.videos, ...m.sounds].find((a) => a.id === asset.id && a.file !== asset.file);
+    return current ? download(current) : null;
   },
 }));
+
+/** Downloads one asset (or returns the copy on disk). Null if it fails. */
+async function download(asset: MediaAsset): Promise<string | null> {
+  const { local, downloading } = useMediaStore.getState();
+  const have = local[asset.file];
+  if (have) return have;
+  if (downloading[asset.file]) return null;
+  useMediaStore.setState({ downloading: { ...downloading, [asset.file]: true } });
+  const target = localFile(asset.file);
+  try {
+    dir().create({ idempotent: true, intermediates: true });
+    await File.downloadFileAsync(remoteUrl(asset.file), target, { idempotent: true });
+    // A missing file can come back as a small error page; never keep that.
+    if (!target.exists || (target.size ?? 0) < MIN_ASSET_BYTES) throw new Error('Incomplete download');
+    useMediaStore.setState({ local: { ...useMediaStore.getState().local, [asset.file]: target.uri } });
+    return target.uri;
+  } catch {
+    try {
+      if (target.exists) target.delete();
+    } catch {
+      // Nothing to clean up.
+    }
+    return null;
+  } finally {
+    const { [asset.file]: _done, ...rest } = useMediaStore.getState().downloading;
+    useMediaStore.setState({ downloading: rest });
+  }
+}
+
+/** Smaller than any real clip or sound: anything below is an error response. */
+const MIN_ASSET_BYTES = 10_000;
 
 export const findVideo = (m: MediaManifest | null, id: string | null) =>
   (id && m?.videos.find((v) => v.id === id)) || null;

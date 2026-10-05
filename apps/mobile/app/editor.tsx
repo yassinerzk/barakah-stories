@@ -82,7 +82,7 @@ export default function EditorScreen() {
 
   // The library is fetched once; the chosen clip and sound download in the background.
   useEffect(() => {
-    void loadMedia();
+    void loadMedia(true);
   }, [loadMedia]);
   useEffect(() => {
     if (video && !videoUri) void ensure(video);
