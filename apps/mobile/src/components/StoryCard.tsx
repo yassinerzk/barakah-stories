@@ -46,6 +46,11 @@ interface StoryCardProps {
   /** Local file of the video background, once downloaded; plays looping and muted. */
   videoUri?: string | null;
   /**
+   * Still frame of the video background: shown while the clip downloads, and
+   * used to share a video story as an image where video export is unavailable.
+   */
+  posterUri?: string | null;
+  /**
    * Video export: draw only the text, decoration and the legibility shade on a
    * transparent canvas. The encoder lays this over the moving background.
    */
@@ -77,7 +82,7 @@ function BackgroundVideo({ uri }: { uri: string }) {
  * (captured at 1080x1920) are pixel-for-pixel the same layout.
  */
 export const StoryCard = forwardRef<View, StoryCardProps>(function StoryCard(
-  { design, width, hijriLabel, showWatermark = true, videoUri = null, transparent = false },
+  { design, width, hijriLabel, showWatermark = true, videoUri = null, posterUri = null, transparent = false },
   ref,
 ) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
@@ -125,9 +130,12 @@ export const StoryCard = forwardRef<View, StoryCardProps>(function StoryCard(
       style={{ width, height, overflow: 'hidden', backgroundColor: transparent ? 'transparent' : themeBaseColor(theme) }}
     >
       {/* background */}
-      {design.video && (videoUri || transparent) ? (
+      {design.video && (videoUri || posterUri || transparent) ? (
         <>
           {!transparent && videoUri ? <BackgroundVideo uri={videoUri} /> : null}
+          {!transparent && !videoUri && posterUri ? (
+            <Image source={{ uri: posterUri }} accessible={false} style={StyleSheet.absoluteFill} contentFit="cover" cachePolicy="memory-disk" />
+          ) : null}
           {/* The same shade a photo gets, so text reads over any footage. */}
           <Svg
             key={`scrim-video-${styleKey}`}

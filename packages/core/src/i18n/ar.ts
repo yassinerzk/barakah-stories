@@ -257,4 +257,5 @@ export const ar: Record<TranslationKey, string> = {
   mediaCredit: "الفيديوهات: Pexels. الأصوات: Freesound وويكيميديا كومنز (CC0).",
   tools: "الأدوات",
   videoNeedsBuild: "تصدير الفيديو يحتاج إلى نسخة التطبيق المثبتة، وليس Expo Go.",
+  sharedAsImage: "تمت المشاركة كصورة. تصدير الفيديو يحتاج إلى التطبيق المثبت.",
 };

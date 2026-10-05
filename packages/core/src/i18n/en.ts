@@ -255,6 +255,7 @@ export const en = {
   mediaCredit: "Videos: Pexels. Sounds: Freesound and Wikimedia Commons (CC0).",
   tools: "Tools",
   videoNeedsBuild: "Video export needs the installed app build, not Expo Go.",
+  sharedAsImage: "Shared as an image. Video export needs the installed app.",
 } as const;
 
 export type TranslationKey = keyof typeof en;

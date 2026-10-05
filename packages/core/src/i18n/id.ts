@@ -259,4 +259,5 @@ export const id: Record<TranslationKey, string> = {
   mediaCredit: "Video: Pexels. Suara: Freesound dan Wikimedia Commons (CC0).",
   tools: "Alat",
   videoNeedsBuild: "Ekspor video memerlukan aplikasi yang terpasang, bukan Expo Go.",
+  sharedAsImage: "Dibagikan sebagai gambar. Ekspor video memerlukan aplikasi terpasang.",
 };

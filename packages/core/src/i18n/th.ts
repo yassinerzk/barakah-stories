@@ -257,4 +257,5 @@ export const th: Record<TranslationKey, string> = {
   mediaCredit: "วิดีโอ: Pexels เสียง: Freesound และ Wikimedia Commons (CC0)",
   tools: "เครื่องมือ",
   videoNeedsBuild: "การส่งออกวิดีโอต้องใช้แอปที่ติดตั้ง ไม่ใช่ Expo Go",
+  sharedAsImage: "แชร์เป็นภาพแล้ว การส่งออกวิดีโอต้องใช้แอปที่ติดตั้ง",
 };

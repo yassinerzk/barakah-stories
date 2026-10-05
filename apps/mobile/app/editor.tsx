@@ -25,7 +25,7 @@ import { TextPanel } from '../src/features/editor/TextPanel';
 import { StylePanel } from '../src/features/editor/StylePanel';
 import { LengthPanel, SoundPanel, VideoPanel } from '../src/features/editor/MediaPanel';
 import { copyText, shareCard, shareVideoStory } from '../src/lib/share';
-import { playLooping, safePause, findSound, findVideo, useMediaStore } from '../src/media/catalog';
+import { playLooping, safePause, findSound, findVideo, remoteUrl, useMediaStore } from '../src/media/catalog';
 import { videoExportSupported } from '../modules/video-composer';
 
 
@@ -73,6 +73,8 @@ export default function EditorScreen() {
 
   const cardRef = useRef<View>(null);
   const overlayRef = useRef<View>(null);
+  const stillRef = useRef<View>(null);
+  const posterUri = video ? remoteUrl(video.poster) : null;
   const [tool, setTool] = useState<Tool | null>(start === 'video' ? 'video' : start === 'image' ? 'style' : null);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
@@ -122,7 +124,11 @@ export default function EditorScreen() {
         return;
       }
       if (!videoExportSupported) {
-        toast(Platform.OS === 'android' ? t('videoNeedsBuild') : t('videoAndroidOnly'), 'error');
+        // No encoder here (Expo Go, or iOS until its encoder ships): share the
+        // story as an image over the video's still frame rather than failing.
+        const outcome = await shareCard(stillRef, design.headline || 'Story');
+        if (outcome === 'unavailable') toast(t('shareFailedMobile'), 'error');
+        else toast(t('sharedAsImage'));
         return;
       }
       const bg = video ? await ensure(video) : null;
@@ -162,6 +168,13 @@ export default function EditorScreen() {
             <StoryCard ref={overlayRef} design={design} width={cardW} hijriLabel={hijriLabel} showWatermark={showWatermark} transparent />
           </View>
         )}
+        {/* A still copy (poster frame, no player) for sharing as an image: a
+            playing video surface captures as black. */}
+        {isVideo && !videoExportSupported && (
+          <View pointerEvents="none" importantForAccessibility="no-hide-descendants" style={{ position: 'absolute', left: 0, top: 0 }}>
+            <StoryCard ref={stillRef} design={design} width={cardW} hijriLabel={hijriLabel} showWatermark={showWatermark} posterUri={posterUri} />
+          </View>
+        )}
         <StoryCard
           ref={cardRef}
           design={design}
@@ -169,6 +182,7 @@ export default function EditorScreen() {
           hijriLabel={hijriLabel}
           showWatermark={showWatermark}
           videoUri={videoUri}
+          posterUri={posterUri}
         />
 
         {/* top bar over the story */}
