@@ -1,6 +1,6 @@
 # Prayer alerts, location picker and accessibility: plan
 
-Status: **proposed, awaiting the decisions in section 9**. Three research reports from October 2026
+Status: **built and in device testing** (versionCode 8, commits `4681aa5`, `90d6494`, `dbe7a89`). The adhan is a CC0 test recording until the final audio is chosen (section 9). Three research reports from October 2026
 fed into it: a codebase map, a WCAG 2.2 audit and a platform-policy/licensing review. Where they
 shaped a decision, that is summarised here.
 
@@ -237,3 +237,53 @@ The native module and bundled sounds **don't run in Expo Go**. Testing moves to 
 3. **How you'll test.**
    - (a) A development build.
    - (b) CI-built APKs only.
+
+## 10. What was built, and decisions taken during the build
+
+- Audio: the owner chose to test with the CC0 Wikimedia recording "Beautiful adhan". Both files are
+  in `apps/mobile/assets/sounds/`: `adhan.wav` (28-second notification clip) and `adhan_full.mp3`
+  (tap-to-play). Replacing them is a file swap. If the clip changes, bump the Android channel id
+  `prayer_adhan_v1` → `_v2`, because a channel's sound cannot change after it is created.
+- `expo-audio` is configured with `microphonePermission: false`, `recordAudioAndroid: false` and
+  `enableBackgroundPlayback: false`. Its defaults would have added microphone recording and a
+  media-playback foreground service, both of which carry Play declarations.
+- High latitudes: above 48° the recommended night-fraction rule applies. Inside the polar circles,
+  each day uses the times of the nearest day that has a sunrise and sunset (Aqrab Yaum). Before
+  this, Isha could be an invalid date, which failed the whole schedule.
+- The ECC review pass (react, security and logic) found three real races, fixed in `dbe7a89`:
+  - overlapping re-plans
+  - the splash running after unmount
+  - the adhan starting after Stop was pressed
+
+## 11. Check at Play submission
+
+- **Exact alarms.** Confirm in Play Console whether a declaration is now requested for
+  `SCHEDULE_EXACT_ALARM`. Research found the form only for `USE_EXACT_ALARM`, but the security
+  review believed `SCHEDULE_EXACT_ALARM` also needs one. If asked: the app's core feature is
+  user-scheduled prayer-time alerts that must fire on the minute.
+- **`FOREGROUND_SERVICE` in the manifest.** It comes from WorkManager, which `expo-background-task`
+  uses. No typed foreground-service permission is declared, and the app never starts a foreground
+  service. The `location`-typed service listed in the manifest belongs to `expo-location` and was
+  already there in versionCode 7.
+- **Data safety.** Unchanged. Alerts, the panel and the city choice stay on the device.
+
+## 12. Device test checklist
+
+1. **Prayer → Change location:** pick a country, search for a city, pick it. Times and the
+   location label update.
+2. **Use my location:** grant the permission. The label shows your city.
+3. **Turn on prayer alerts:** the notification permission prompt appears, then the toast.
+4. Under **Exact timing**, tap **Allow**, grant the permission in Android settings, and come back.
+   The status now reads "on time".
+5. **Bell on a prayer:** switch between adhan, notification sound, vibrate and off. Try
+   **Play adhan**, then **Send a test alert** and wait 5 seconds.
+6. **Tap an adhan alert:** the app opens and plays the full adhan. **Stop** ends it.
+7. **Next-prayer panel:** it shows in the shade with a live countdown. Swipe it away and it comes
+   back at the next change. Turn it off with the switch.
+8. **Reboot the phone:** the alerts and the panel come back.
+9. **City in another time zone** than the phone (e.g. Jakarta from Europe): alerts fire at that
+   city's prayer times.
+10. **Accessibility:**
+    - Me → Accessibility: try each switch.
+    - With TalkBack on, the Qibla compass speaks its directions.
+    - Reduce motion skips the opening animation.
