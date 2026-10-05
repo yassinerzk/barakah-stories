@@ -2,7 +2,7 @@
   "expo": {
     "name": "Barakah Stories",
     "slug": "barakah-stories",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "scheme": "barakah",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -36,7 +36,7 @@
         "RECEIVE_BOOT_COMPLETED"
       ],
       "predictiveBackGestureEnabled": false,
-      "versionCode": 12
+      "versionCode": 13
     },
     "web": {
       "bundler": "metro",
