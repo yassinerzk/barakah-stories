@@ -1,7 +1,9 @@
 import {
   CalculationMethod,
   Coordinates,
+  HighLatitudeRule,
   Madhab,
+  PolarCircleResolution,
   PrayerTimes,
   Qibla,
   type CalculationParameters,
@@ -104,9 +106,23 @@ function paramsFor(settings: PrayerSettings): CalculationParameters {
   return p;
 }
 
-/** Prayer times for the civil day containing `date` at the given point. */
+/**
+ * Prayer times for the civil day containing `date` at the given point.
+ *
+ * Far north and south, twilight can last all night and above the polar circles
+ * the sun may not rise or set at all, so Fajr and Isha have no astronomical
+ * answer. The library then returns an invalid date. Two standard resolutions
+ * keep every time real: above 48° the night is divided (a seventh of it, the
+ * library's recommendation), and inside the polar circles the times of the
+ * nearest day that has a sunrise and sunset are used. Below 48° neither changes
+ * anything.
+ */
 export function computePrayerTimes(point: GeoPoint, date: Date, settings: PrayerSettings): PrayerTime[] {
-  const pt = new PrayerTimes(new Coordinates(point.lat, point.lng), date, paramsFor(settings));
+  const coordinates = new Coordinates(point.lat, point.lng);
+  const params = paramsFor(settings);
+  params.highLatitudeRule = HighLatitudeRule.recommended(coordinates);
+  params.polarCircleResolution = PolarCircleResolution.AqrabYaum;
+  const pt = new PrayerTimes(coordinates, date, params);
   return PRAYER_NAMES.map(({ id }) => ({ id, time: pt[id] }));
 }
 

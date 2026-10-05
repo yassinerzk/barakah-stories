@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useDeferredValue, useMemo, useState } from 'react';
 import { FlatList, Modal, Pressable, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -56,6 +56,8 @@ export function LocationSheet({ visible, onClose, onPick, onUseMyLocation, locat
   const [country, setCountry] = useState<CountryEntry | null>(null);
   const [query, setQuery] = useState('');
   const nameOf = useMemo(() => countryNamer(locale), [locale]);
+  // Typing stays responsive; filtering a large country catches up a frame later.
+  const deferredQuery = useDeferredValue(query);
 
   const cities = useMemo<GeoCity[]>(() => {
     if (!country) return [];
@@ -64,10 +66,10 @@ export function LocationSheet({ visible, onClose, onPick, onUseMyLocation, locat
   }, [country]);
 
   const countryRows = useMemo(() => {
-    const list = searchCountries(COUNTRIES, query, nameOf);
+    const list = searchCountries(COUNTRIES, deferredQuery, nameOf);
     return [...list].sort((a, b) => nameOf(a.cc).localeCompare(nameOf(b.cc), tagOf(locale)));
-  }, [query, nameOf, locale]);
-  const cityRows = useMemo(() => searchCities(cities, query), [cities, query]);
+  }, [deferredQuery, nameOf, locale]);
+  const cityRows = useMemo(() => searchCities(cities, deferredQuery), [cities, deferredQuery]);
 
   const close = () => {
     setCountry(null);

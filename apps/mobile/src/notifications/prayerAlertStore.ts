@@ -60,13 +60,25 @@ export const usePrayerAlertStore = create<PrayerAlertState>()(
   ),
 );
 
-/** Re-plans from the current state of every store. Safe to call often; the result is idempotent. */
-export async function replanNow(): Promise<number> {
-  const { location, method, madhab } = usePrayerStore.getState();
-  const locale = useSettingsStore.getState().locale;
-  const prefs = usePrayerAlertStore.getState().prefs;
-  await registerBackgroundReplan(prefs.enabled && location !== null);
-  return applyPrayerAlerts({ location, settings: { method, madhab }, prefs, locale });
+let queue: Promise<unknown> = Promise.resolve();
+
+/**
+ * Re-plans from the current state of every store. Launch, resume, settings
+ * changes and the background task can all ask at once, and each run is a
+ * cancel-then-schedule pair — two of those interleaving could wipe the other's
+ * alerts. So every run waits its turn in one queue, and reads the stores only
+ * when it starts, so the last one always reflects the latest state.
+ */
+export function replanNow(): Promise<number> {
+  const run = queue.then(async () => {
+    const { location, method, madhab } = usePrayerStore.getState();
+    const locale = useSettingsStore.getState().locale;
+    const prefs = usePrayerAlertStore.getState().prefs;
+    await registerBackgroundReplan(prefs.enabled && location !== null);
+    return applyPrayerAlerts({ location, settings: { method, madhab }, prefs, locale });
+  });
+  queue = run.catch(() => undefined);
+  return run;
 }
 
 let pending: ReturnType<typeof setTimeout> | null = null;

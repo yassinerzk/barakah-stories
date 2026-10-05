@@ -36,6 +36,10 @@ const fill = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (
 
 /** Within this many degrees counts as facing the Qibla. */
 const QIBLA_TOLERANCE = 5;
+/** Must turn this far away again before alignment can re-trigger the buzz and announcement. */
+const QIBLA_RELEASE = 9;
+/** Minimum gap between spoken directions. */
+const VOICE_GAP_MS = 2500;
 
 export default function PrayerScreen() {
   const { t, l, locale, font, row, textAlign } = useT();
@@ -316,25 +320,31 @@ function useQiblaGuidance(qibla: number | null, heading: number | null): string 
 
   let text: string | null = null;
   let aligned = false;
+  let released = true;
   if (qibla !== null && heading !== null) {
     const diff = ((qibla - heading + 540) % 360) - 180; // -180..180, positive = turn right
     aligned = Math.abs(diff) <= QIBLA_TOLERANCE;
+    released = Math.abs(diff) > QIBLA_RELEASE;
     const deg = toLocaleDigits(Math.round(Math.abs(diff) / 5) * 5, locale);
     text = aligned ? t('qiblaAligned') : fill(t(diff > 0 ? 'qiblaTurnRight' : 'qiblaTurnLeft'), { d: deg });
   }
 
   useEffect(() => {
-    if (aligned && !wasAligned.current && haptics && Platform.OS !== 'web') {
-      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+    if (aligned && !wasAligned.current) {
+      wasAligned.current = true;
+      if (haptics && Platform.OS !== 'web') {
+        void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+      }
+    } else if (released) {
+      wasAligned.current = false;
     }
-    wasAligned.current = aligned;
-  }, [aligned, haptics]);
+  }, [aligned, released, haptics]);
 
   useEffect(() => {
     if (!text || !voice || !screenReader) return;
     const now = Date.now();
     const changed = text !== lastSpoken.current.text;
-    if (changed && (now - lastSpoken.current.at > 2500 || aligned)) {
+    if (changed && now - lastSpoken.current.at > VOICE_GAP_MS) {
       lastSpoken.current = { text, at: now };
       announce(text);
     }

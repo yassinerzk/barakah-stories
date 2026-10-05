@@ -67,7 +67,9 @@ function prayerInstants(point: GeoPoint, settings: PrayerSettings, from: Date, d
     const day = new Date(from);
     day.setDate(day.getDate() + offset);
     for (const t of computePrayerTimes(point, day, settings)) {
-      if (t.id === 'sunrise') continue;
+      // Never let an unresolvable time reach the scheduler: one invalid date would
+      // fail the whole batch and leave no alerts at all.
+      if (t.id === 'sunrise' || !Number.isFinite(t.time.getTime())) continue;
       seen.set(t.time.getTime(), t);
     }
   }

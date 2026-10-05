@@ -12,7 +12,9 @@ import { ui } from '../../theme';
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   const { font, textAlign } = useT();
   const labelled = isValidElement(children)
-    ? cloneElement(children as ReactElement<{ accessibilityLabel?: string }>, { accessibilityLabel: label })
+    ? cloneElement(children as ReactElement<{ accessibilityLabel?: string }>, {
+        accessibilityLabel: (children as ReactElement<{ accessibilityLabel?: string }>).props.accessibilityLabel ?? label,
+      })
     : children;
   return (
     <View style={{ gap: 6 }}>

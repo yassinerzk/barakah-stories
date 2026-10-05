@@ -96,6 +96,7 @@ export function AnimatedSplash({ onDone }: AnimatedSplashProps) {
       Animated.delay(HOLD_MS),
       fadeOut,
     ]);
+    // Set by finishing and by unmounting: either way, nothing below may run again.
     let done = false;
     let run: Animated.CompositeAnimation | null = null;
     const finish = () => {
@@ -118,6 +119,7 @@ export function AnimatedSplash({ onDone }: AnimatedSplashProps) {
     });
     const failsafe = setTimeout(finish, FAILSAFE_MS);
     return () => {
+      done = true;
       clearTimeout(failsafe);
       run?.stop();
     };

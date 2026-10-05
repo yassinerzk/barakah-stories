@@ -14,10 +14,52 @@ interface QiblaCompassProps {
  * Compass rose that rotates with the device so the Kaaba arrow points at the
  * real Qibla; without a heading it shows the bearing relative to North.
  */
+const c = 100;
+
+/**
+ * Ticks and cardinal letters are the same on every frame. Built once at module
+ * load, so a heading update (several a second) only changes one rotation.
+ */
+const ROSE = (
+  <>
+    {Array.from({ length: 72 }, (_, i) => i * 5).map((a) => {
+      const major = a % 90 === 0;
+      const len = major ? 10 : a % 30 === 0 ? 7 : 4;
+      const r1 = 90;
+      const rad = ((a - 90) * Math.PI) / 180;
+      return (
+        <Line
+          key={a}
+          x1={c + r1 * Math.cos(rad)}
+          y1={c + r1 * Math.sin(rad)}
+          x2={c + (r1 - len) * Math.cos(rad)}
+          y2={c + (r1 - len) * Math.sin(rad)}
+          stroke={major ? ui.text : ui.textMuted}
+          strokeWidth={major ? 2 : 1}
+        />
+      );
+    })}
+    {(['N', 'E', 'S', 'W'] as const).map((label, i) => {
+      const rad = ((i * 90 - 90) * Math.PI) / 180;
+      return (
+        <SvgText
+          key={label}
+          x={c + 70 * Math.cos(rad)}
+          y={c + 70 * Math.sin(rad) + 5}
+          fill={label === 'N' ? ui.accent : ui.textMuted}
+          fontSize={14}
+          fontWeight="700"
+          textAnchor="middle"
+        >
+          {label}
+        </SvgText>
+      );
+    })}
+  </>
+);
+
 export function QiblaCompass({ qibla, heading, size = 240 }: QiblaCompassProps) {
-  const c = 100;
   const rotation = heading === null ? 0 : -heading;
-  const ticks = Array.from({ length: 72 }, (_, i) => i * 5);
   const aligned = heading !== null && Math.abs(((qibla - heading + 540) % 360) - 180) < 4;
   return (
     <View style={{ width: size, height: size, alignSelf: 'center' }}>
@@ -31,39 +73,7 @@ export function QiblaCompass({ qibla, heading, size = 240 }: QiblaCompassProps) 
           strokeWidth={aligned ? 3 : 1.5}
         />
         <G rotation={rotation} origin={`${c}, ${c}`}>
-          {ticks.map((a) => {
-            const major = a % 90 === 0;
-            const len = major ? 10 : a % 30 === 0 ? 7 : 4;
-            const r1 = 90;
-            const rad = ((a - 90) * Math.PI) / 180;
-            return (
-              <Line
-                key={a}
-                x1={c + r1 * Math.cos(rad)}
-                y1={c + r1 * Math.sin(rad)}
-                x2={c + (r1 - len) * Math.cos(rad)}
-                y2={c + (r1 - len) * Math.sin(rad)}
-                stroke={major ? ui.text : ui.textMuted}
-                strokeWidth={major ? 2 : 1}
-              />
-            );
-          })}
-          {(['N', 'E', 'S', 'W'] as const).map((label, i) => {
-            const rad = ((i * 90 - 90) * Math.PI) / 180;
-            return (
-              <SvgText
-                key={label}
-                x={c + 70 * Math.cos(rad)}
-                y={c + 70 * Math.sin(rad) + 5}
-                fill={label === 'N' ? ui.accent : ui.textMuted}
-                fontSize={14}
-                fontWeight="700"
-                textAnchor="middle"
-              >
-                {label}
-              </SvgText>
-            );
-          })}
+          {ROSE}
           {/* Kaaba arrow */}
           <G rotation={qibla} origin={`${c}, ${c}`}>
             <Path d={`M${c} ${c - 84} l10 26 -10 -8 -10 8z`} fill={ui.accent} />

@@ -57,8 +57,14 @@ function AdhanBar() {
   const status = useAudioPlayerStatus(player);
 
   useEffect(() => {
+    let cancelled = false;
     // Plays even with the ringer switch on silent: the user just asked for it.
-    void setAudioModeAsync({ playsInSilentMode: true }).finally(() => player.play());
+    void setAudioModeAsync({ playsInSilentMode: true }).finally(() => {
+      if (!cancelled) player.play();
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [player]);
 
   useEffect(() => {

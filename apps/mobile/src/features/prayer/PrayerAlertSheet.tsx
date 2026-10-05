@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Modal, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -19,8 +20,11 @@ interface Props {
 }
 
 /** One prayer's alert: adhan, the system sound, vibration only, or nothing. */
-export function PrayerAlertSheet({ prayer, onClose }: Props) {
+export function PrayerAlertSheet({ prayer: requested, onClose }: Props) {
   const { t, l, locale, font, row, textAlign } = useT();
+  // Keeps showing the last prayer while the sheet slides away after closing.
+  const [prayer, setShown] = useState<AlertPrayer | null>(requested);
+  if (requested && requested !== prayer) setShown(requested);
   const insets = useSafeAreaInsets();
   const mode = usePrayerAlertStore((s) => (prayer ? s.prefs.modes[prayer] : 'off'));
   const setMode = usePrayerAlertStore((s) => s.setMode);
@@ -31,6 +35,7 @@ export function PrayerAlertSheet({ prayer, onClose }: Props) {
   const stop = useAdhanStore((s) => s.stop);
 
   if (!prayer) return null;
+  const visible = requested !== null;
   const name = l(PRAYER_NAMES.find((p) => p.id === prayer)!.label);
 
   const test = async () => {
@@ -40,7 +45,7 @@ export function PrayerAlertSheet({ prayer, onClose }: Props) {
   };
 
   return (
-    <Modal visible transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent>
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent>
       <Pressable
         onPress={onClose}
         accessibilityElementsHidden
