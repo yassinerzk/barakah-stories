@@ -12,10 +12,10 @@
         "th": "ลานมัสยิด",
         "ur": "مسجد کا صحن"
       },
-      "file": "video/mosque-courtyard.mp4",
-      "poster": "video/mosque-courtyard.jpg",
+      "file": "video/mosque-courtyard-560966e7.mp4",
+      "poster": "video/mosque-courtyard-ee1aecc2.jpg",
       "durationMs": 8000,
-      "bytes": 4214106,
+      "bytes": 4264383,
       "source": {
         "site": "Pexels",
         "url": "https://www.pexels.com/video/35752487/",
@@ -34,8 +34,8 @@
         "th": "มัสยิดยามค่ำ",
         "ur": "رات میں مسجد"
       },
-      "file": "video/mosque-night.mp4",
-      "poster": "video/mosque-night.jpg",
+      "file": "video/mosque-night-9160b2bc.mp4",
+      "poster": "video/mosque-night-bb33537f.jpg",
       "durationMs": 8000,
       "bytes": 3469373,
       "source": {
@@ -56,8 +56,8 @@
         "th": "หออะซานและฝูงนก",
         "ur": "مینار اور پرندے"
       },
-      "file": "video/mosque-birds.mp4",
-      "poster": "video/mosque-birds.jpg",
+      "file": "video/mosque-birds-19c08b4e.mp4",
+      "poster": "video/mosque-birds-da451a24.jpg",
       "durationMs": 8000,
       "bytes": 2459596,
       "source": {
@@ -78,8 +78,8 @@
         "th": "มัสยิดยามอาทิตย์ตก",
         "ur": "غروب کے وقت مسجد"
       },
-      "file": "video/mosque-sunset.mp4",
-      "poster": "video/mosque-sunset.jpg",
+      "file": "video/mosque-sunset-c96d1a54.mp4",
+      "poster": "video/mosque-sunset-4e1a2dbb.jpg",
       "durationMs": 8000,
       "bytes": 2342431,
       "source": {
@@ -100,10 +100,10 @@
         "th": "ลำธาร",
         "ur": "دریا"
       },
-      "file": "video/river.mp4",
-      "poster": "video/river.jpg",
+      "file": "video/river-7e1eefb6.mp4",
+      "poster": "video/river-95c01b3e.jpg",
       "durationMs": 8000,
-      "bytes": 4377042,
+      "bytes": 4370772,
       "source": {
         "site": "Pexels",
         "url": "https://www.pexels.com/video/4937376/",
@@ -122,8 +122,8 @@
         "th": "ฝนที่หน้าต่าง",
         "ur": "کھڑکی پر بارش"
       },
-      "file": "video/rain-window.mp4",
-      "poster": "video/rain-window.jpg",
+      "file": "video/rain-window-fbeff8be.mp4",
+      "poster": "video/rain-window-b1795d21.jpg",
       "durationMs": 8000,
       "bytes": 1855423,
       "source": {
@@ -144,10 +144,10 @@
         "th": "ท้องฟ้าเต็มไปด้วยดาว",
         "ur": "تاروں بھرا آسمان"
       },
-      "file": "video/starry-sky.mp4",
-      "poster": "video/starry-sky.jpg",
+      "file": "video/starry-sky-b8a20de8.mp4",
+      "poster": "video/starry-sky-3f4e6479.jpg",
       "durationMs": 8000,
-      "bytes": 4230107,
+      "bytes": 4251752,
       "source": {
         "site": "Pexels",
         "url": "https://www.pexels.com/video/9245420/",
@@ -166,10 +166,10 @@
         "th": "คลื่นทะเล",
         "ur": "سمندر کی لہریں"
       },
-      "file": "video/ocean.mp4",
-      "poster": "video/ocean.jpg",
+      "file": "video/ocean-a9111b73.mp4",
+      "poster": "video/ocean-8be6c798.jpg",
       "durationMs": 8000,
-      "bytes": 4341201,
+      "bytes": 4354458,
       "source": {
         "site": "Pexels",
         "url": "https://www.pexels.com/video/35594910/",
@@ -188,10 +188,10 @@
         "th": "แสงยามเช้า",
         "ur": "صبح کی روشنی"
       },
-      "file": "video/forest-light.mp4",
-      "poster": "video/forest-light.jpg",
+      "file": "video/forest-light-4da15e5f.mp4",
+      "poster": "video/forest-light-c705aa42.jpg",
       "durationMs": 8000,
-      "bytes": 4133634,
+      "bytes": 4117980,
       "source": {
         "site": "Pexels",
         "url": "https://www.pexels.com/video/35451208/",
@@ -210,10 +210,10 @@
         "th": "เนินทราย",
         "ur": "صحرا کے ٹیلے"
       },
-      "file": "video/desert.mp4",
-      "poster": "video/desert.jpg",
+      "file": "video/desert-f8a81bdf.mp4",
+      "poster": "video/desert-3b5ea57c.jpg",
       "durationMs": 7400,
-      "bytes": 3882535,
+      "bytes": 3877112,
       "source": {
         "site": "Pexels",
         "url": "https://www.pexels.com/video/32909168/",
@@ -232,8 +232,8 @@
         "th": "เมฆ",
         "ur": "بادل"
       },
-      "file": "video/clouds.mp4",
-      "poster": "video/clouds.jpg",
+      "file": "video/clouds-dbbef4fe.mp4",
+      "poster": "video/clouds-9d76df58.jpg",
       "durationMs": 8000,
       "bytes": 2269507,
       "source": {
@@ -254,8 +254,8 @@
         "th": "แสงเทียน",
         "ur": "شمع کی روشنی"
       },
-      "file": "video/candle.mp4",
-      "poster": "video/candle.jpg",
+      "file": "video/candle-278e006f.mp4",
+      "poster": "video/candle-332ee2dc.jpg",
       "durationMs": 8000,
       "bytes": 1637206,
       "source": {
@@ -279,9 +279,9 @@
         "th": "ลำธาร",
         "ur": "ندی"
       },
-      "file": "sound/stream.m4a",
+      "file": "sound/stream-b0bce69b.m4a",
       "durationMs": 45000,
-      "bytes": 559029,
+      "bytes": 557540,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/433589/",
@@ -301,9 +301,9 @@
         "th": "ลำธารแผ่วเบา",
         "ur": "پرسکون ندی"
       },
-      "file": "sound/gentle-stream.m4a",
+      "file": "sound/gentle-stream-4d1d02b7.m4a",
       "durationMs": 45000,
-      "bytes": 562374,
+      "bytes": 552014,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/446019/",
@@ -323,9 +323,9 @@
         "th": "ฝนพรำ",
         "ur": "ہلکی بارش"
       },
-      "file": "sound/light-rain.m4a",
+      "file": "sound/light-rain-dfecba9e.m4a",
       "durationMs": 45000,
-      "bytes": 563510,
+      "bytes": 549535,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/200273/",
@@ -345,9 +345,9 @@
         "th": "ฝนที่หน้าต่าง",
         "ur": "کھڑکی پر بارش"
       },
-      "file": "sound/rain-window.m4a",
+      "file": "sound/rain-window-0bdc7631.m4a",
       "durationMs": 45000,
-      "bytes": 560938,
+      "bytes": 551930,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/235827/",
@@ -367,9 +367,9 @@
         "th": "พายุไกลๆ",
         "ur": "دور کا طوفان"
       },
-      "file": "sound/thunder-rain.m4a",
+      "file": "sound/thunder-rain-22093605.m4a",
       "durationMs": 45000,
-      "bytes": 562173,
+      "bytes": 550784,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/319568/",
@@ -389,9 +389,9 @@
         "th": "นกร้องยามรุ่ง",
         "ur": "صبح کے پرندے"
       },
-      "file": "sound/dawn-chorus.m4a",
+      "file": "sound/dawn-chorus-f2ed8489.m4a",
       "durationMs": 45000,
-      "bytes": 562164,
+      "bytes": 556314,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/573080/",
@@ -411,9 +411,9 @@
         "th": "นกไนติงเกล",
         "ur": "بلبل"
       },
-      "file": "sound/nightingale.m4a",
+      "file": "sound/nightingale-85715609.m4a",
       "durationMs": 45000,
-      "bytes": 566691,
+      "bytes": 550233,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/269570/",
@@ -433,9 +433,9 @@
         "th": "จิ้งหรีดยามค่ำ",
         "ur": "رات کے جھینگر"
       },
-      "file": "sound/night-crickets.m4a",
+      "file": "sound/night-crickets-227ec077.m4a",
       "durationMs": 45000,
-      "bytes": 563014,
+      "bytes": 552738,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/333221/",
@@ -455,9 +455,9 @@
         "th": "คลื่น",
         "ur": "لہریں"
       },
-      "file": "sound/waves.m4a",
+      "file": "sound/waves-0b9da1d8.m4a",
       "durationMs": 45000,
-      "bytes": 560968,
+      "bytes": 554022,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/339517/",
@@ -477,9 +477,9 @@
         "th": "ลมทะเลทราย",
         "ur": "صحرائی ہوا"
       },
-      "file": "sound/desert-wind.m4a",
+      "file": "sound/desert-wind-5e389eab.m4a",
       "durationMs": 45000,
-      "bytes": 562092,
+      "bytes": 549626,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/156414/",
@@ -499,9 +499,9 @@
         "th": "ป่าฤดูใบไม้ผลิ",
         "ur": "بہار کا جنگل"
       },
-      "file": "sound/forest-spring.m4a",
+      "file": "sound/forest-spring-4949e39f.m4a",
       "durationMs": 45000,
-      "bytes": 561996,
+      "bytes": 556724,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/385280/",
@@ -521,9 +521,9 @@
         "th": "เสียงไฟปะทุ",
         "ur": "آگ کی چٹخ"
       },
-      "file": "sound/fire-crackle.m4a",
+      "file": "sound/fire-crackle-727404e8.m4a",
       "durationMs": 45000,
-      "bytes": 560360,
+      "bytes": 589156,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/414767/",
@@ -543,9 +543,9 @@
         "th": "นกท่ามกลางสายฝน",
         "ur": "بارش میں پرندے"
       },
-      "file": "sound/birds-rain.m4a",
+      "file": "sound/birds-rain-3ef4e6ca.m4a",
       "durationMs": 45000,
-      "bytes": 561545,
+      "bytes": 551526,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/521360/",
@@ -565,9 +565,9 @@
         "th": "ฝูงแกะบนภูเขา",
         "ur": "پہاڑوں میں ریوڑ"
       },
-      "file": "sound/sheep-bells.m4a",
+      "file": "sound/sheep-bells-9aa0307a.m4a",
       "durationMs": 45000,
-      "bytes": 559920,
+      "bytes": 553058,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/138424/",
@@ -587,9 +587,9 @@
         "th": "ตักบีรอีด",
         "ur": "عید کی تکبیرات"
       },
-      "file": "sound/takbirat-eid.m4a",
+      "file": "sound/takbirat-eid-02dc0baf.m4a",
       "durationMs": 45000,
-      "bytes": 561938,
+      "bytes": 549483,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/811869/",
@@ -609,9 +609,9 @@
         "th": "อะซานในเมือง",
         "ur": "شہر میں اذان"
       },
-      "file": "sound/adhan-dubai.m4a",
+      "file": "sound/adhan-dubai-82aefe92.m4a",
       "durationMs": 45000,
-      "bytes": 560762,
+      "bytes": 549695,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/144431/",
@@ -631,9 +631,9 @@
         "th": "อะซาน",
         "ur": "اذان"
       },
-      "file": "sound/adhan.m4a",
+      "file": "sound/adhan-812245f3.m4a",
       "durationMs": 45000,
-      "bytes": 563038,
+      "bytes": 549414,
       "source": {
         "site": "Wikimedia Commons",
         "url": "https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg",
@@ -653,9 +653,9 @@
         "th": "ซิกร์",
         "ur": "ذکر"
       },
-      "file": "sound/dhikr-allah-hu.m4a",
+      "file": "sound/dhikr-allah-hu-053bbd64.m4a",
       "durationMs": 8900,
-      "bytes": 112139,
+      "bytes": 109416,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/788910/",
@@ -675,9 +675,9 @@
         "th": "ภายในมัสยิด",
         "ur": "مسجد کے اندر"
       },
-      "file": "sound/mosque-room.m4a",
+      "file": "sound/mosque-room-efdc151d.m4a",
       "durationMs": 45000,
-      "bytes": 561836,
+      "bytes": 549636,
       "source": {
         "site": "Freesound",
         "url": "https://freesound.org/s/451616/",
