@@ -9,6 +9,7 @@ export interface ComposeInput {
   soundUri: string | null;
   durationMs: number;
   clipDurationMs: number;
+  soundDurationMs: number;
 }
 
 interface VideoComposerNative {

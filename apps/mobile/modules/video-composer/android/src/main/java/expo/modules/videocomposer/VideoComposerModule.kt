@@ -49,6 +49,8 @@ class ComposeOptions : Record {
   @Field val durationMs: Double = 15_000.0
   /** Length of one loop of the background clip. */
   @Field val clipDurationMs: Double = 8_000.0
+  /** Length of the sound file, so it can be repeated and trimmed like the video. */
+  @Field val soundDurationMs: Double = 45_000.0
 }
 
 /**
@@ -126,10 +128,14 @@ class VideoComposerModule : Module() {
     }
     val sequences = mutableListOf(EditedMediaItemSequence.withVideoFrom(items))
 
+    // The sound is laid out the same way as the video — repeated, the last copy
+    // trimmed — so both tracks end on the same sample. A looping sequence left
+    // the export stuck at 100%, waiting for an audio end that never came.
     val soundUri = options.soundUri
-    if (!soundUri.isNullOrEmpty()) {
-      val sound = EditedMediaItem.Builder(MediaItem.fromUri(Uri.parse(soundUri))).build()
-      sequences.add(EditedMediaItemSequence.withAudioFrom(listOf(sound)).buildUpon().setIsLooping(true).build())
+    val hasSound = !soundUri.isNullOrEmpty()
+    if (hasSound) {
+      val soundUs = (options.soundDurationMs * 1000).toLong().coerceAtLeast(1_000_000L)
+      sequences.add(EditedMediaItemSequence.withAudioFrom(repeatTo(MediaItem.fromUri(Uri.parse(soundUri)), soundUs, durationUs)))
     }
 
     val fadeOutUs = min(FADE_OUT_US, durationUs / 3)
@@ -142,7 +148,7 @@ class VideoComposerModule : Module() {
     val composition = Composition.Builder(sequences)
       .setEffects(Effects(listOf(fades), emptyList()))
       // A silent story still carries an audio track: some apps refuse video without one.
-      .experimentalSetForceAudioTrack(true)
+      .experimentalSetForceAudioTrack(!hasSound)
       .build()
 
     val dir = File(context.cacheDir, "stories").apply { mkdirs() }
@@ -178,6 +184,21 @@ class VideoComposerModule : Module() {
     active = transformer
     transformer.start(composition, output.absolutePath)
     pollProgress(transformer)
+  }
+
+  /** `media` repeated to cover `totalUs` exactly, the last copy trimmed. Audio only. */
+  private fun repeatTo(media: MediaItem, eachUs: Long, totalUs: Long): List<EditedMediaItem> {
+    val items = mutableListOf<EditedMediaItem>()
+    var remaining = totalUs
+    while (remaining > 0) {
+      val take = min(remaining, eachUs)
+      val clipped = media.buildUpon()
+        .setClippingConfiguration(MediaItem.ClippingConfiguration.Builder().setEndPositionMs(take / 1000).build())
+        .build()
+      items.add(EditedMediaItem.Builder(clipped).build())
+      remaining -= take
+    }
+    return items
   }
 
   /** The whole cause chain, so a device-specific failure is reportable from a screenshot. */

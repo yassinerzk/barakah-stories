@@ -39,7 +39,14 @@ export async function copyText(text: string): Promise<boolean> {
  */
 export async function shareVideoStory(
   overlayRef: React.RefObject<unknown>,
-  input: { backgroundUri: string; soundUri: string | null; lengthSec: number; clipDurationMs: number; title: string },
+  input: {
+    backgroundUri: string;
+    soundUri: string | null;
+    soundDurationMs: number;
+    lengthSec: number;
+    clipDurationMs: number;
+    title: string;
+  },
   onProgress: (p: number) => void,
 ): Promise<ShareOutcome> {
   const { composeVideo } = await import('../../modules/video-composer');
@@ -57,6 +64,7 @@ export async function shareVideoStory(
       soundUri: input.soundUri,
       durationMs: input.lengthSec * 1000,
       clipDurationMs: input.clipDurationMs,
+      soundDurationMs: input.soundDurationMs,
     },
     onProgress,
   );

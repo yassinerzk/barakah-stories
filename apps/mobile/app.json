@@ -36,7 +36,7 @@
         "RECEIVE_BOOT_COMPLETED"
       ],
       "predictiveBackGestureEnabled": false,
-      "versionCode": 11
+      "versionCode": 12
     },
     "web": {
       "bundler": "metro",

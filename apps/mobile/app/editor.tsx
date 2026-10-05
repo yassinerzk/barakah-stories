@@ -140,7 +140,14 @@ export default function EditorScreen() {
       setProgress(0);
       const outcome = await shareVideoStory(
         overlayRef,
-        { backgroundUri: bg, soundUri: snd, lengthSec: design.lengthSec, clipDurationMs: video.durationMs, title: design.headline || 'Story' },
+        {
+          backgroundUri: bg,
+          soundUri: snd,
+          soundDurationMs: sound?.durationMs ?? 45_000,
+          lengthSec: design.lengthSec,
+          clipDurationMs: video.durationMs,
+          title: design.headline || 'Story',
+        },
         setProgress,
       );
       if (outcome === 'unavailable') toast(t('shareFailedMobile'), 'error');
@@ -231,9 +238,9 @@ export default function EditorScreen() {
         </View>
       </View>
 
-      {/* Floating share button, bottom-left like a story app's "Your story". */}
+      {/* Floating share button, bottom-right. */}
       <View style={{ height: BOTTOM_BAR }} />
-      <View style={{ position: 'absolute', left: 16, bottom: insets.bottom + 14 }}>
+      <View style={{ position: 'absolute', right: 16, bottom: insets.bottom + 14 }}>
         <Pressable
           onPress={share}
           disabled={busy}

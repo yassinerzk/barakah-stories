@@ -15,7 +15,7 @@ const CHOICES: ReadonlyArray<{ id: Choice; icon: ComponentProps<typeof Ionicons>
 ];
 
 /**
- * The raised "+" in the middle of the tab bar: a new story from scratch. It asks
+ * The floating "+" at the bottom-left of the main screens: a new story from scratch. It asks
  * one question — still or moving background — then opens the editor on the
  * tool for that choice.
  */
@@ -24,21 +24,17 @@ export function CreateButton() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Pressable
+      <Pressable
           onPress={() => setOpen(true)}
           accessibilityRole="button"
           accessibilityLabel={t('createTitle')}
           style={({ pressed }) => ({
-            width: 56,
-            height: 56,
-            borderRadius: 28,
-            marginTop: -22,
+            width: 60,
+            height: 60,
+            borderRadius: 30,
             backgroundColor: ui.accent,
             alignItems: 'center',
             justifyContent: 'center',
-            borderWidth: 4,
-            borderColor: ui.bgElev,
             transform: [{ scale: pressed ? 0.94 : 1 }],
             elevation: 6,
             shadowColor: '#000',
@@ -47,9 +43,8 @@ export function CreateButton() {
             shadowOffset: { width: 0, height: 3 },
           })}
         >
-          <Ionicons name="add" size={30} color={ui.accentInk} />
+          <Ionicons name="add" size={32} color={ui.accentInk} />
         </Pressable>
-      </View>
       <CreateSheet visible={open} onClose={() => setOpen(false)} />
     </>
   );
