@@ -200,6 +200,12 @@ export interface StoryDesign {
   /** 0.7 – 1.4 multiplier on top of the automatic size. */
   fontScale: number;
   align: TextAlign;
+  /** Video background id from the media manifest; null for a still story. */
+  video: string | null;
+  /** Ambient sound id from the media manifest; null for silence. */
+  sound: string | null;
+  /** Length of an exported video story, in seconds (10, 15 or 30). */
+  lengthSec: number;
 }
 
 export interface SavedDesign {

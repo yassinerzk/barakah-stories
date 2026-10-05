@@ -26,6 +26,9 @@ export const DEFAULT_DESIGN: StoryDesign = {
   latinFont: 'cormorant',
   fontScale: 1,
   align: 'center',
+  video: null,
+  sound: null,
+  lengthSec: 15,
 };
 
 /**

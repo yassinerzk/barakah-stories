@@ -1,0 +1,25 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'com.barakah.stories'
+version = '1.0.0'
+
+android {
+  namespace "expo.modules.videocomposer"
+  defaultConfig {
+    versionCode 1
+    versionName '1.0.0'
+  }
+}
+
+// Must match the Media3 version expo-video and expo-audio pin (1.9.0 in SDK 57):
+// Media3 artifacts are only supported when every module is the same version.
+def media3Version = "1.9.0"
+
+dependencies {
+  implementation "androidx.media3:media3-common:${media3Version}"
+  implementation "androidx.media3:media3-effect:${media3Version}"
+  implementation "androidx.media3:media3-transformer:${media3Version}"
+}

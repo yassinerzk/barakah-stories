@@ -18,3 +18,4 @@ export * from './monetization';
 export * from './ads';
 export * from './prayerAlerts';
 export * from './geo';
+export * from './media';
