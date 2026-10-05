@@ -2,19 +2,14 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
-import { useAudioPlayer, type AudioPlayer } from 'expo-audio';
+import { useAudioPlayer } from 'expo-audio';
 import { SOUND_GROUPS, STORY_LENGTHS, toLocaleDigits, type MediaSound, type MediaVideo } from '@barakah/core';
 import { useEditorStore } from '../../store';
 import { useT } from '../../i18n';
 import { ui } from '../../theme';
-import { remoteUrl, useMediaStore } from '../../media/catalog';
+import { playLooping, safePause, remoteUrl, useMediaStore } from '../../media/catalog';
 import { Chip } from '../../components/ui';
 
-/** Loops and plays a player. A plain function, so the React Compiler sees no mutation of hook state. */
-function playLooping(p: AudioPlayer): void {
-  p.loop = true;
-  p.play();
-}
 
 
 function useCatalog() {
@@ -111,7 +106,7 @@ export function SoundPanel() {
   };
   const toggle = (s: MediaSound) => {
     if (previewing === s.id) {
-      player.pause();
+      safePause(player);
       setPreviewing(null);
     } else {
       setPreviewing(s.id);

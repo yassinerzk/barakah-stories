@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { create } from 'zustand';
 import { useT } from '../i18n';
 import { ui } from '../theme';
+import { safePause, safePlay } from '../media/catalog';
 
 /**
  * The full adhan. A notification can only carry a short clip — Android cuts a
@@ -60,7 +61,7 @@ function AdhanBar() {
     let cancelled = false;
     // Plays even with the ringer switch on silent: the user just asked for it.
     void setAudioModeAsync({ playsInSilentMode: true }).finally(() => {
-      if (!cancelled) player.play();
+      if (!cancelled) safePlay(player);
     });
     return () => {
       cancelled = true;
@@ -93,7 +94,7 @@ function AdhanBar() {
       <Text style={{ flex: 1, color: ui.text, fontFamily: font.semibold, fontSize: 16 }}>{t('modeAdhan')}</Text>
       <Pressable
         onPress={() => {
-          player.pause();
+          safePause(player);
           stop();
         }}
         accessibilityRole="button"

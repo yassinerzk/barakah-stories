@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import { Directory, File, Paths } from 'expo-file-system';
 import { create } from 'zustand';
+import type { AudioPlayer } from 'expo-audio';
 import { parseMediaManifest, type MediaAsset, type MediaManifest } from '@barakah/core';
 
 /**
@@ -100,3 +101,34 @@ export const findVideo = (m: MediaManifest | null, id: string | null) =>
   (id && m?.videos.find((v) => v.id === id)) || null;
 export const findSound = (m: MediaManifest | null, id: string | null) =>
   (id && m?.sounds.find((s) => s.id === id)) || null;
+
+/*
+ * Audio players from useAudioPlayer are released by the hook when the source
+ * changes or the component unmounts (and again on every fast refresh), and any
+ * call on a released player throws. These helpers make a late call a no-op.
+ */
+export function safePause(p: AudioPlayer): void {
+  try {
+    p.pause();
+  } catch {
+    // Already released: it is silent anyway.
+  }
+}
+
+export function safePlay(p: AudioPlayer): void {
+  try {
+    p.play();
+  } catch {
+    // Released before it could start.
+  }
+}
+
+/** Loops and plays. A plain function, so the React Compiler sees no mutation of hook state. */
+export function playLooping(p: AudioPlayer): void {
+  try {
+    p.loop = true;
+    p.play();
+  } catch {
+    // Released before it could start.
+  }
+}

@@ -38,7 +38,8 @@ const ADHAN_SOUND = 'adhan.wav';
  * instead of logging a missing-sound error on every re-plan. The real build
  * (and a development build) carries the clip.
  */
-export const hasBundledSounds = Constants.executionEnvironment !== ExecutionEnvironment.StoreClient;
+export const hasBundledSounds =
+  Constants.executionEnvironment !== ExecutionEnvironment.StoreClient && Constants.appOwnership !== 'expo';
 const channelFor = (mode: Exclude<AlertMode, 'off'>) => CHANNELS[mode === 'adhan' && !hasBundledSounds ? 'sound' : mode];
 
 /**

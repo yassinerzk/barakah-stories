@@ -12,7 +12,7 @@ import {
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useAudioPlayer, type AudioPlayer } from 'expo-audio';
+import { useAudioPlayer } from 'expo-audio';
 import { designToText, shouldShowWatermark, toLocaleDigits, type TranslationKey } from '@barakah/core';
 import { useEntitlementStore } from '../src/monetization/store';
 import { WatermarkRow } from '../src/features/editor/WatermarkRow';
@@ -25,14 +25,9 @@ import { TextPanel } from '../src/features/editor/TextPanel';
 import { StylePanel } from '../src/features/editor/StylePanel';
 import { LengthPanel, SoundPanel, VideoPanel } from '../src/features/editor/MediaPanel';
 import { copyText, shareCard, shareVideoStory } from '../src/lib/share';
-import { findSound, findVideo, useMediaStore } from '../src/media/catalog';
+import { playLooping, safePause, findSound, findVideo, useMediaStore } from '../src/media/catalog';
 import { videoExportSupported } from '../modules/video-composer';
 
-/** Loops and plays a player. A plain function, so the React Compiler sees no mutation of hook state. */
-function playLooping(p: AudioPlayer): void {
-  p.loop = true;
-  p.play();
-}
 
 
 type Tool = 'text' | 'style' | 'video' | 'sound' | 'length';
@@ -96,7 +91,7 @@ export default function EditorScreen() {
   const player = useAudioPlayer(design.video && soundUri ? soundUri : null);
   useEffect(() => {
     if (!design.video || !soundUri || muted || busy) {
-      player.pause();
+      safePause(player);
       return;
     }
     playLooping(player);
