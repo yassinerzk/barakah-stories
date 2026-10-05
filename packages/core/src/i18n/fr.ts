@@ -261,4 +261,5 @@ export const fr: Record<TranslationKey, string> = {
   mediaOffline: "Connectez-vous à Internet pour charger vidéos et sons.",
   mediaCredit: "Vidéos : Pexels. Sons : Freesound et Wikimedia Commons (CC0).",
   tools: "Outils",
+  videoNeedsBuild: "L'export vidéo nécessite l'application installée, pas Expo Go.",
 };

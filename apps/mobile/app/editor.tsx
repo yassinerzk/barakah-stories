@@ -127,7 +127,7 @@ export default function EditorScreen() {
         return;
       }
       if (!videoExportSupported) {
-        toast(t('videoAndroidOnly'), 'error');
+        toast(Platform.OS === 'android' ? t('videoNeedsBuild') : t('videoAndroidOnly'), 'error');
         return;
       }
       const bg = video ? await ensure(video) : null;
@@ -143,8 +143,10 @@ export default function EditorScreen() {
         setProgress,
       );
       if (outcome === 'unavailable') toast(t('shareFailedMobile'), 'error');
-    } catch {
-      toast(isVideo ? t('videoFailed') : t('shareFailed'), 'error');
+    } catch (e) {
+      // The detail makes a device-specific encoder failure reportable.
+      const detail = e instanceof Error && e.message ? ` (${e.message})` : '';
+      toast(`${isVideo ? t('videoFailed') : t('shareFailed')}${detail}`, 'error');
     } finally {
       setProgress(null);
       setBusy(false);
@@ -157,6 +159,14 @@ export default function EditorScreen() {
     <View style={{ flex: 1, backgroundColor: '#000', paddingTop: insets.top + 6, paddingBottom: insets.bottom }}>
       {/* the story, full height */}
       <View style={{ alignSelf: 'center', width: cardW, height: cardH, borderRadius: 18, overflow: 'hidden' }}>
+        {/* The text layer alone, captured as the video overlay. It sits directly
+            behind the visible card: Android only draws views inside the window,
+            so an off-screen copy could capture blank. */}
+        {isVideo && (
+          <View pointerEvents="none" importantForAccessibility="no-hide-descendants" style={{ position: 'absolute', left: 0, top: 0 }}>
+            <StoryCard ref={overlayRef} design={design} width={cardW} hijriLabel={hijriLabel} showWatermark={showWatermark} transparent />
+          </View>
+        )}
         <StoryCard
           ref={cardRef}
           design={design}
@@ -212,8 +222,9 @@ export default function EditorScreen() {
         </View>
       </View>
 
-      {/* share bar */}
-      <View style={{ height: BOTTOM_BAR, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingHorizontal: 16 }}>
+      {/* Floating share button, bottom-left like a story app's "Your story". */}
+      <View style={{ height: BOTTOM_BAR }} />
+      <View style={{ position: 'absolute', left: 16, bottom: insets.bottom + 14 }}>
         <Pressable
           onPress={share}
           disabled={busy}
@@ -228,6 +239,11 @@ export default function EditorScreen() {
             minHeight: 50,
             borderRadius: 999,
             opacity: pressed || busy ? 0.75 : 1,
+            elevation: 8,
+            shadowColor: '#000',
+            shadowOpacity: 0.4,
+            shadowRadius: 10,
+            shadowOffset: { width: 0, height: 4 },
           })}
         >
           <Text style={{ color: ui.accentInk, fontFamily: font.semibold, fontSize: 16 }}>
@@ -237,12 +253,6 @@ export default function EditorScreen() {
         </Pressable>
       </View>
 
-      {/* Off-screen: the text layer alone, captured as the video overlay. */}
-      {isVideo && (
-        <View pointerEvents="none" importantForAccessibility="no-hide-descendants" style={{ position: 'absolute', left: -10000, top: 0 }}>
-          <StoryCard ref={overlayRef} design={design} width={360} hijriLabel={hijriLabel} showWatermark={showWatermark} transparent />
-        </View>
-      )}
 
       <ToolSheet tool={tool} onClose={() => setTool(null)} />
     </View>

@@ -100,7 +100,8 @@ export function SoundPanel() {
   useEffect(() => {
     if (previewUri) playLooping(player);
   }, [player, previewUri]);
-  useEffect(() => () => player.pause(), [player]);
+  // No pause-on-unmount: useAudioPlayer releases (and silences) the player itself,
+  // and calling it after release throws.
 
   if (!manifest) return <Notice status={status} />;
 

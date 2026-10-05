@@ -256,4 +256,5 @@ export const ar: Record<TranslationKey, string> = {
   mediaOffline: "اتصل بالإنترنت لتحميل الفيديوهات والأصوات.",
   mediaCredit: "الفيديوهات: Pexels. الأصوات: Freesound وويكيميديا كومنز (CC0).",
   tools: "الأدوات",
+  videoNeedsBuild: "تصدير الفيديو يحتاج إلى نسخة التطبيق المثبتة، وليس Expo Go.",
 };

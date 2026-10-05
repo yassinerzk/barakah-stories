@@ -258,4 +258,5 @@ export const ms: Record<TranslationKey, string> = {
   mediaOffline: "Sambung ke internet untuk memuatkan video dan bunyi.",
   mediaCredit: "Video: Pexels. Bunyi: Freesound dan Wikimedia Commons (CC0).",
   tools: "Alatan",
+  videoNeedsBuild: "Eksport video memerlukan aplikasi yang dipasang, bukan Expo Go.",
 };

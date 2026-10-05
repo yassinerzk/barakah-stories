@@ -254,6 +254,7 @@ export const en = {
   mediaOffline: "Connect to the internet to load videos and sounds.",
   mediaCredit: "Videos: Pexels. Sounds: Freesound and Wikimedia Commons (CC0).",
   tools: "Tools",
+  videoNeedsBuild: "Video export needs the installed app build, not Expo Go.",
 } as const;
 
 export type TranslationKey = keyof typeof en;

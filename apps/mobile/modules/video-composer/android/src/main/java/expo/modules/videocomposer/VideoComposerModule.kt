@@ -117,7 +117,6 @@ class VideoComposerModule : Module() {
       items.add(
         EditedMediaItem.Builder(clipped)
           .setRemoveAudio(true)
-          .setFrameRate(FRAME_RATE)
           .setEffects(videoEffects)
           .build()
       )
@@ -204,7 +203,6 @@ class VideoComposerModule : Module() {
   private companion object {
     const val WIDTH = 1080
     const val HEIGHT = 1920
-    const val FRAME_RATE = 30
     const val VIDEO_BITRATE = 6_000_000
     const val FADE_IN_US = 800_000L
     const val FADE_OUT_US = 1_500_000L

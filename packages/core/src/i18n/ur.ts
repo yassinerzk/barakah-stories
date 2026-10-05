@@ -257,4 +257,5 @@ export const ur: Record<TranslationKey, string> = {
   mediaOffline: "ویڈیوز اور آوازیں لوڈ کرنے کے لیے انٹرنیٹ سے جڑیں۔",
   mediaCredit: "ویڈیوز: Pexels۔ آوازیں: Freesound اور Wikimedia Commons (CC0)۔",
   tools: "ٹولز",
+  videoNeedsBuild: "ویڈیو ایکسپورٹ کے لیے انسٹال شدہ ایپ درکار ہے، Expo Go نہیں۔",
 };
