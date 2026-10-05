@@ -69,6 +69,10 @@ function BackgroundVideo({ uri }: { uri: string }) {
       player={player}
       style={StyleSheet.absoluteFill}
       contentFit="cover"
+      // Android's default SurfaceView renders behind the window, so the card's
+      // own background hid it and it ignored the rounded corners. A
+      // TextureView draws in the view hierarchy like any other view.
+      surfaceType="textureView"
       nativeControls={false}
       pointerEvents="none"
       accessible={false}
