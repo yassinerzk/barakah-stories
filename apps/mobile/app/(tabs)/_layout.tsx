@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import type { ColorValue } from 'react-native';
 import { useT } from '../../src/i18n';
 import { ui } from '../../src/theme';
+import { CreateButton } from '../../src/components/CreateButton';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 const icon =
@@ -26,6 +27,12 @@ export default function TabsLayout() {
     >
       <Tabs.Screen name="index" options={{ title: t('home'), tabBarIcon: icon('home') }} />
       <Tabs.Screen name="quran" options={{ title: t('quran'), tabBarIcon: icon('book') }} />
+      {/* Not a screen: the raised "+" opens the new-story chooser. */}
+      <Tabs.Screen
+        name="create"
+        options={{ title: t('createNew'), tabBarButton: () => <CreateButton /> }}
+        listeners={{ tabPress: (e) => e.preventDefault() }}
+      />
       <Tabs.Screen name="hadith" options={{ title: t('hadith'), tabBarIcon: icon('library') }} />
       <Tabs.Screen name="prayer" options={{ title: t('prayer'), tabBarIcon: icon('moon') }} />
       <Tabs.Screen name="me" options={{ title: t('me'), tabBarIcon: icon('person') }} />

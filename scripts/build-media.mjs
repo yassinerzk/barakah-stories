@@ -58,7 +58,7 @@ for (const v of sources.videos) {
     `[0:v]fps=30,scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,format=yuv420p,split[a][b];` +
     `[a]trim=start=${XFADE_S}:end=${XFADE_S + loop},setpts=PTS-STARTPTS[main];` +
     `[b]trim=start=0:end=${XFADE_S},setpts=PTS-STARTPTS[head];` +
-    `[main][head]xfade=transition=fade:duration=${XFADE_S}:offset=${loop - XFADE_S}[v]`;
+    `[main][head]xfade=transition=fade:duration=${XFADE_S}:offset=${loop - XFADE_S},format=yuv420p[v]`;
   run('ffmpeg', [
     '-v', 'error', '-y', '-ss', String(start), '-t', String(loop + XFADE_S + 0.5), '-i', src,
     '-filter_complex', graph, '-map', '[v]', '-an',

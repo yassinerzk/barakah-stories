@@ -31,3 +31,36 @@ export async function copyText(text: string): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * Renders and shares a video story: the transparent card (text only) is
+ * captured at full size, then the device encoder lays it over the looping
+ * background with the chosen sound. Everything happens on the phone.
+ */
+export async function shareVideoStory(
+  overlayRef: React.RefObject<unknown>,
+  input: { backgroundUri: string; soundUri: string | null; lengthSec: number; clipDurationMs: number; title: string },
+  onProgress: (p: number) => void,
+): Promise<ShareOutcome> {
+  const { composeVideo } = await import('../../modules/video-composer');
+  const overlayUri = await captureRef(overlayRef as never, {
+    format: 'png',
+    quality: 1,
+    width: STORY_WIDTH,
+    height: STORY_HEIGHT,
+    result: 'tmpfile',
+  });
+  const video = await composeVideo(
+    {
+      backgroundUri: input.backgroundUri,
+      overlayUri,
+      soundUri: input.soundUri,
+      durationMs: input.lengthSec * 1000,
+      clipDurationMs: input.clipDurationMs,
+    },
+    onProgress,
+  );
+  if (!(await Sharing.isAvailableAsync())) return 'unavailable';
+  await Sharing.shareAsync(video, { mimeType: 'video/mp4', UTI: 'public.mpeg-4', dialogTitle: input.title });
+  return 'shared';
+}

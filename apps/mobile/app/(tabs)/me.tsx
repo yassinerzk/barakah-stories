@@ -278,6 +278,9 @@ export default function MeScreen() {
             <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>
               {t('adhanCredit')}
             </Text>
+            <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>
+              {t('mediaCredit')}
+            </Text>
           </View>
           <SectionTitle>{t('myPosts')}</SectionTitle>
         </View>

@@ -9,6 +9,7 @@ import { StyleSheet, Text as RNText, View, type TextProps } from 'react-native';
 const Text = (props: TextProps) => <RNText allowFontScaling={false} {...props} />;
 import Svg, { G, Path, Rect } from 'react-native-svg';
 import { Image } from 'expo-image';
+import { useVideoPlayer, VideoView } from 'expo-video';
 import {
   computeTypography,
   getBackground,
@@ -42,6 +43,32 @@ interface StoryCardProps {
   hijriLabel?: string;
   /** Draw the app name at the bottom (free tier). Defaults to true. */
   showWatermark?: boolean;
+  /** Local file of the video background, once downloaded; plays looping and muted. */
+  videoUri?: string | null;
+  /**
+   * Video export: draw only the text, decoration and the legibility shade on a
+   * transparent canvas. The encoder lays this over the moving background.
+   */
+  transparent?: boolean;
+}
+
+/** The looping, silent video behind the card in the editor. */
+function BackgroundVideo({ uri }: { uri: string }) {
+  const player = useVideoPlayer(uri, (p) => {
+    p.loop = true;
+    p.muted = true;
+    p.play();
+  });
+  return (
+    <VideoView
+      player={player}
+      style={StyleSheet.absoluteFill}
+      contentFit="cover"
+      nativeControls={false}
+      pointerEvents="none"
+      accessible={false}
+    />
+  );
 }
 
 /**
@@ -50,7 +77,7 @@ interface StoryCardProps {
  * (captured at 1080x1920) are pixel-for-pixel the same layout.
  */
 export const StoryCard = forwardRef<View, StoryCardProps>(function StoryCard(
-  { design, width, hijriLabel, showWatermark = true },
+  { design, width, hijriLabel, showWatermark = true, videoUri = null, transparent = false },
   ref,
 ) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
@@ -95,10 +122,28 @@ export const StoryCard = forwardRef<View, StoryCardProps>(function StoryCard(
     <View
       ref={ref}
       collapsable={false}
-      style={{ width, height, overflow: 'hidden', backgroundColor: themeBaseColor(theme) }}
+      style={{ width, height, overflow: 'hidden', backgroundColor: transparent ? 'transparent' : themeBaseColor(theme) }}
     >
       {/* background */}
-      {background ? (
+      {design.video && (videoUri || transparent) ? (
+        <>
+          {!transparent && videoUri ? <BackgroundVideo uri={videoUri} /> : null}
+          {/* The same shade a photo gets, so text reads over any footage. */}
+          <Svg
+            key={`scrim-video-${styleKey}`}
+            style={StyleSheet.absoluteFill}
+            viewBox={`0 0 ${STORY_WIDTH} ${STORY_HEIGHT}`}
+            preserveAspectRatio="none"
+          >
+            <GradientFill
+              id={`scrim-video-${styleKey}`}
+              gradient={SCRIMS.soft}
+              width={STORY_WIDTH}
+              height={STORY_HEIGHT}
+            />
+          </Svg>
+        </>
+      ) : background ? (
         <>
           <Image
             source={BACKGROUND_IMAGES[background.id]}

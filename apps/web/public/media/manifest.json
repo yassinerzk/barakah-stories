@@ -1,0 +1,689 @@
+{
+  "version": 1,
+  "videos": [
+    {
+      "id": "mosque-courtyard",
+      "name": {
+        "en": "Mosque courtyard",
+        "ar": "صحن المسجد",
+        "fr": "Cour de mosquée",
+        "id": "Halaman masjid",
+        "ms": "Halaman masjid",
+        "th": "ลานมัสยิด",
+        "ur": "مسجد کا صحن"
+      },
+      "file": "video/mosque-courtyard.mp4",
+      "poster": "video/mosque-courtyard.jpg",
+      "durationMs": 8000,
+      "bytes": 4214106,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/35752487/",
+        "author": "AbdusSamed KARAALİ",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "mosque-night",
+      "name": {
+        "en": "Mosque at night",
+        "ar": "مسجد في الليل",
+        "fr": "Mosquée la nuit",
+        "id": "Masjid malam hari",
+        "ms": "Masjid waktu malam",
+        "th": "มัสยิดยามค่ำ",
+        "ur": "رات میں مسجد"
+      },
+      "file": "video/mosque-night.mp4",
+      "poster": "video/mosque-night.jpg",
+      "durationMs": 8000,
+      "bytes": 3469373,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/19981896/",
+        "author": null,
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "mosque-birds",
+      "name": {
+        "en": "Minaret and birds",
+        "ar": "مئذنة وطيور",
+        "fr": "Minaret et oiseaux",
+        "id": "Menara dan burung",
+        "ms": "Menara dan burung",
+        "th": "หออะซานและฝูงนก",
+        "ur": "مینار اور پرندے"
+      },
+      "file": "video/mosque-birds.mp4",
+      "poster": "video/mosque-birds.jpg",
+      "durationMs": 8000,
+      "bytes": 2459596,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/28459486/",
+        "author": null,
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "mosque-sunset",
+      "name": {
+        "en": "Mosque at sunset",
+        "ar": "مسجد عند الغروب",
+        "fr": "Mosquée au coucher du soleil",
+        "id": "Masjid saat senja",
+        "ms": "Masjid waktu senja",
+        "th": "มัสยิดยามอาทิตย์ตก",
+        "ur": "غروب کے وقت مسجد"
+      },
+      "file": "video/mosque-sunset.mp4",
+      "poster": "video/mosque-sunset.jpg",
+      "durationMs": 8000,
+      "bytes": 2342431,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/30963440/",
+        "author": null,
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "river",
+      "name": {
+        "en": "River",
+        "ar": "نهر",
+        "fr": "Rivière",
+        "id": "Sungai",
+        "ms": "Sungai",
+        "th": "ลำธาร",
+        "ur": "دریا"
+      },
+      "file": "video/river.mp4",
+      "poster": "video/river.jpg",
+      "durationMs": 8000,
+      "bytes": 4377042,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/4937376/",
+        "author": "Yaroslav Shuraev",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "rain-window",
+      "name": {
+        "en": "Rain on the window",
+        "ar": "مطر على النافذة",
+        "fr": "Pluie sur la vitre",
+        "id": "Hujan di jendela",
+        "ms": "Hujan di tingkap",
+        "th": "ฝนที่หน้าต่าง",
+        "ur": "کھڑکی پر بارش"
+      },
+      "file": "video/rain-window.mp4",
+      "poster": "video/rain-window.jpg",
+      "durationMs": 8000,
+      "bytes": 1855423,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/13948147/",
+        "author": "Abdulvahap Demir",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "starry-sky",
+      "name": {
+        "en": "Starry sky",
+        "ar": "سماء مرصعة بالنجوم",
+        "fr": "Ciel étoilé",
+        "id": "Langit berbintang",
+        "ms": "Langit berbintang",
+        "th": "ท้องฟ้าเต็มไปด้วยดาว",
+        "ur": "تاروں بھرا آسمان"
+      },
+      "file": "video/starry-sky.mp4",
+      "poster": "video/starry-sky.jpg",
+      "durationMs": 8000,
+      "bytes": 4230107,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/9245420/",
+        "author": "Nando Paz",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "ocean",
+      "name": {
+        "en": "Ocean waves",
+        "ar": "أمواج البحر",
+        "fr": "Vagues",
+        "id": "Ombak laut",
+        "ms": "Ombak laut",
+        "th": "คลื่นทะเล",
+        "ur": "سمندر کی لہریں"
+      },
+      "file": "video/ocean.mp4",
+      "poster": "video/ocean.jpg",
+      "durationMs": 8000,
+      "bytes": 4341201,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/35594910/",
+        "author": null,
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "forest-light",
+      "name": {
+        "en": "Morning light",
+        "ar": "ضوء الصباح",
+        "fr": "Lumière du matin",
+        "id": "Cahaya pagi",
+        "ms": "Cahaya pagi",
+        "th": "แสงยามเช้า",
+        "ur": "صبح کی روشنی"
+      },
+      "file": "video/forest-light.mp4",
+      "poster": "video/forest-light.jpg",
+      "durationMs": 8000,
+      "bytes": 4133634,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/35451208/",
+        "author": "Matthias Groeneveld",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "desert",
+      "name": {
+        "en": "Desert dunes",
+        "ar": "كثبان الصحراء",
+        "fr": "Dunes",
+        "id": "Bukit pasir",
+        "ms": "Bukit pasir",
+        "th": "เนินทราย",
+        "ur": "صحرا کے ٹیلے"
+      },
+      "file": "video/desert.mp4",
+      "poster": "video/desert.jpg",
+      "durationMs": 7400,
+      "bytes": 3882535,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/32909168/",
+        "author": "Carlos Hinojosa",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "clouds",
+      "name": {
+        "en": "Clouds",
+        "ar": "غيوم",
+        "fr": "Nuages",
+        "id": "Awan",
+        "ms": "Awan",
+        "th": "เมฆ",
+        "ur": "بادل"
+      },
+      "file": "video/clouds.mp4",
+      "poster": "video/clouds.jpg",
+      "durationMs": 8000,
+      "bytes": 2269507,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/29719718/",
+        "author": "Sibgha Noor",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "candle",
+      "name": {
+        "en": "Candlelight",
+        "ar": "ضوء الشمعة",
+        "fr": "Bougie",
+        "id": "Cahaya lilin",
+        "ms": "Cahaya lilin",
+        "th": "แสงเทียน",
+        "ur": "شمع کی روشنی"
+      },
+      "file": "video/candle.mp4",
+      "poster": "video/candle.jpg",
+      "durationMs": 8000,
+      "bytes": 1637206,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/29555838/",
+        "author": null,
+        "license": "Pexels License"
+      }
+    }
+  ],
+  "sounds": [
+    {
+      "id": "stream",
+      "group": "nature",
+      "name": {
+        "en": "Stream",
+        "ar": "جدول ماء",
+        "fr": "Ruisseau",
+        "id": "Aliran sungai",
+        "ms": "Anak sungai",
+        "th": "ลำธาร",
+        "ur": "ندی"
+      },
+      "file": "sound/stream.m4a",
+      "durationMs": 45000,
+      "bytes": 559029,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/433589/",
+        "author": "jackthemurray",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "gentle-stream",
+      "group": "nature",
+      "name": {
+        "en": "Gentle stream",
+        "ar": "جدول هادئ",
+        "fr": "Ruisseau paisible",
+        "id": "Aliran tenang",
+        "ms": "Anak sungai tenang",
+        "th": "ลำธารแผ่วเบา",
+        "ur": "پرسکون ندی"
+      },
+      "file": "sound/gentle-stream.m4a",
+      "durationMs": 45000,
+      "bytes": 562374,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/446019/",
+        "author": "BurghRecords",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "light-rain",
+      "group": "nature",
+      "name": {
+        "en": "Light rain",
+        "ar": "مطر خفيف",
+        "fr": "Pluie légère",
+        "id": "Hujan ringan",
+        "ms": "Hujan renyai",
+        "th": "ฝนพรำ",
+        "ur": "ہلکی بارش"
+      },
+      "file": "sound/light-rain.m4a",
+      "durationMs": 45000,
+      "bytes": 563510,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/200273/",
+        "author": "jmbphilmes",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "rain-window",
+      "group": "nature",
+      "name": {
+        "en": "Rain on the window",
+        "ar": "مطر على النافذة",
+        "fr": "Pluie sur la vitre",
+        "id": "Hujan di jendela",
+        "ms": "Hujan di tingkap",
+        "th": "ฝนที่หน้าต่าง",
+        "ur": "کھڑکی پر بارش"
+      },
+      "file": "sound/rain-window.m4a",
+      "durationMs": 45000,
+      "bytes": 560938,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/235827/",
+        "author": "Metadex",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "thunder-rain",
+      "group": "nature",
+      "name": {
+        "en": "Distant storm",
+        "ar": "عاصفة بعيدة",
+        "fr": "Orage lointain",
+        "id": "Badai di kejauhan",
+        "ms": "Ribut dari jauh",
+        "th": "พายุไกลๆ",
+        "ur": "دور کا طوفان"
+      },
+      "file": "sound/thunder-rain.m4a",
+      "durationMs": 45000,
+      "bytes": 562173,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/319568/",
+        "author": "Soojay",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "dawn-chorus",
+      "group": "nature",
+      "name": {
+        "en": "Birds at dawn",
+        "ar": "طيور الفجر",
+        "fr": "Oiseaux à l'aube",
+        "id": "Kicau burung subuh",
+        "ms": "Kicauan burung subuh",
+        "th": "นกร้องยามรุ่ง",
+        "ur": "صبح کے پرندے"
+      },
+      "file": "sound/dawn-chorus.m4a",
+      "durationMs": 45000,
+      "bytes": 562164,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/573080/",
+        "author": "squashy555",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "nightingale",
+      "group": "nature",
+      "name": {
+        "en": "Nightingale",
+        "ar": "عندليب",
+        "fr": "Rossignol",
+        "id": "Burung bulbul",
+        "ms": "Burung bulbul",
+        "th": "นกไนติงเกล",
+        "ur": "بلبل"
+      },
+      "file": "sound/nightingale.m4a",
+      "durationMs": 45000,
+      "bytes": 566691,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/269570/",
+        "author": "Vonora",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "night-crickets",
+      "group": "nature",
+      "name": {
+        "en": "Night crickets",
+        "ar": "صراصير الليل",
+        "fr": "Grillons la nuit",
+        "id": "Jangkrik malam",
+        "ms": "Cengkerik malam",
+        "th": "จิ้งหรีดยามค่ำ",
+        "ur": "رات کے جھینگر"
+      },
+      "file": "sound/night-crickets.m4a",
+      "durationMs": 45000,
+      "bytes": 563014,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/333221/",
+        "author": "hdfreema",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "waves",
+      "group": "nature",
+      "name": {
+        "en": "Waves",
+        "ar": "أمواج",
+        "fr": "Vagues",
+        "id": "Ombak",
+        "ms": "Ombak",
+        "th": "คลื่น",
+        "ur": "لہریں"
+      },
+      "file": "sound/waves.m4a",
+      "durationMs": 45000,
+      "bytes": 560968,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/339517/",
+        "author": "pulswelle",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "desert-wind",
+      "group": "nature",
+      "name": {
+        "en": "Desert wind",
+        "ar": "رياح الصحراء",
+        "fr": "Vent du désert",
+        "id": "Angin gurun",
+        "ms": "Angin gurun",
+        "th": "ลมทะเลทราย",
+        "ur": "صحرائی ہوا"
+      },
+      "file": "sound/desert-wind.m4a",
+      "durationMs": 45000,
+      "bytes": 562092,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/156414/",
+        "author": "felix.blume",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "forest-spring",
+      "group": "nature",
+      "name": {
+        "en": "Forest in spring",
+        "ar": "غابة في الربيع",
+        "fr": "Forêt au printemps",
+        "id": "Hutan musim semi",
+        "ms": "Hutan musim bunga",
+        "th": "ป่าฤดูใบไม้ผลิ",
+        "ur": "بہار کا جنگل"
+      },
+      "file": "sound/forest-spring.m4a",
+      "durationMs": 45000,
+      "bytes": 561996,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/385280/",
+        "author": "bajko",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "fire-crackle",
+      "group": "nature",
+      "name": {
+        "en": "Crackling fire",
+        "ar": "طقطقة النار",
+        "fr": "Feu crépitant",
+        "id": "Api unggun",
+        "ms": "Api unggun",
+        "th": "เสียงไฟปะทุ",
+        "ur": "آگ کی چٹخ"
+      },
+      "file": "sound/fire-crackle.m4a",
+      "durationMs": 45000,
+      "bytes": 560360,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/414767/",
+        "author": "samarobryn",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "birds-rain",
+      "group": "nature",
+      "name": {
+        "en": "Birds in the rain",
+        "ar": "طيور تحت المطر",
+        "fr": "Oiseaux sous la pluie",
+        "id": "Burung saat hujan",
+        "ms": "Burung dalam hujan",
+        "th": "นกท่ามกลางสายฝน",
+        "ur": "بارش میں پرندے"
+      },
+      "file": "sound/birds-rain.m4a",
+      "durationMs": 45000,
+      "bytes": 561545,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/521360/",
+        "author": "BurghRecords",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "sheep-bells",
+      "group": "nature",
+      "name": {
+        "en": "Flock in the mountains",
+        "ar": "قطيع في الجبال",
+        "fr": "Troupeau en montagne",
+        "id": "Kawanan di pegunungan",
+        "ms": "Kawanan di pergunungan",
+        "th": "ฝูงแกะบนภูเขา",
+        "ur": "پہاڑوں میں ریوڑ"
+      },
+      "file": "sound/sheep-bells.m4a",
+      "durationMs": 45000,
+      "bytes": 559920,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/138424/",
+        "author": "felix.blume",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "takbirat-eid",
+      "group": "islamic",
+      "name": {
+        "en": "Eid takbirat",
+        "ar": "تكبيرات العيد",
+        "fr": "Takbirat de l'Aïd",
+        "id": "Takbir Idul Adha",
+        "ms": "Takbir Hari Raya",
+        "th": "ตักบีรอีด",
+        "ur": "عید کی تکبیرات"
+      },
+      "file": "sound/takbirat-eid.m4a",
+      "durationMs": 45000,
+      "bytes": 561938,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/811869/",
+        "author": "sounds_from_palestine",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "adhan-dubai",
+      "group": "islamic",
+      "name": {
+        "en": "Adhan in the city",
+        "ar": "أذان في المدينة",
+        "fr": "Adhan en ville",
+        "id": "Azan di kota",
+        "ms": "Azan di bandar",
+        "th": "อะซานในเมือง",
+        "ur": "شہر میں اذان"
+      },
+      "file": "sound/adhan-dubai.m4a",
+      "durationMs": 45000,
+      "bytes": 560762,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/144431/",
+        "author": "3bagbrew",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "adhan",
+      "group": "islamic",
+      "name": {
+        "en": "Adhan",
+        "ar": "الأذان",
+        "fr": "Adhan",
+        "id": "Azan",
+        "ms": "Azan",
+        "th": "อะซาน",
+        "ur": "اذان"
+      },
+      "file": "sound/adhan.m4a",
+      "durationMs": 45000,
+      "bytes": 563038,
+      "source": {
+        "site": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg",
+        "author": "Adam-synagda",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "dhikr-allah-hu",
+      "group": "islamic",
+      "name": {
+        "en": "Dhikr",
+        "ar": "ذكر",
+        "fr": "Dhikr",
+        "id": "Zikir",
+        "ms": "Zikir",
+        "th": "ซิกร์",
+        "ur": "ذکر"
+      },
+      "file": "sound/dhikr-allah-hu.m4a",
+      "durationMs": 8900,
+      "bytes": 112139,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/788910/",
+        "author": "ibrahim_baig",
+        "license": "CC0 1.0"
+      }
+    },
+    {
+      "id": "mosque-room",
+      "group": "islamic",
+      "name": {
+        "en": "Inside a mosque",
+        "ar": "داخل المسجد",
+        "fr": "Dans la mosquée",
+        "id": "Di dalam masjid",
+        "ms": "Di dalam masjid",
+        "th": "ภายในมัสยิด",
+        "ur": "مسجد کے اندر"
+      },
+      "file": "sound/mosque-room.m4a",
+      "durationMs": 45000,
+      "bytes": 561836,
+      "source": {
+        "site": "Freesound",
+        "url": "https://freesound.org/s/451616/",
+        "author": "kyles",
+        "license": "CC0 1.0"
+      }
+    }
+  ]
+}

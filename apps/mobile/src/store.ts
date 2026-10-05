@@ -56,7 +56,7 @@ export const useEditorStore = create<EditorState>()(
     }),
     {
       name: 'barakah.editor',
-      version: 1,
+      version: 2, // 2: video, sound and lengthSec — migrateDesign fills the defaults
       storage: storage(),
       migrate: (state) => {
         const s = state as Partial<EditorState>;
