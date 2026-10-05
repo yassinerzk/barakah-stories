@@ -27,6 +27,9 @@ import { LengthPanel, SoundPanel, VideoPanel } from '../src/features/editor/Medi
 import { copyText, shareCard, shareVideoStory } from '../src/lib/share';
 import { playLooping, safePause, findSound, findVideo, remoteUrl, useMediaStore } from '../src/media/catalog';
 import { videoExportSupported } from '../modules/video-composer';
+import { captureRef } from 'react-native-view-shot';
+import * as Sharing from 'expo-sharing';
+import { WebEncoder, type WebEncoderHandle } from '../src/media/WebEncoder';
 
 
 
@@ -74,6 +77,7 @@ export default function EditorScreen() {
   const cardRef = useRef<View>(null);
   const overlayRef = useRef<View>(null);
   const stillRef = useRef<View>(null);
+  const webEncoder = useRef<WebEncoderHandle>(null);
   const posterUri = video ? remoteUrl(video.poster) : null;
   const [tool, setTool] = useState<Tool | null>(start === 'video' ? 'video' : start === 'image' ? 'style' : null);
   const [busy, setBusy] = useState(false);
@@ -123,9 +127,33 @@ export default function EditorScreen() {
         if (outcome === 'unavailable') toast(t('shareFailedMobile'), 'error');
         return;
       }
+      if (!videoExportSupported && video && webEncoder.current) {
+        // No native encoder (Expo Go, iOS): encode in the hidden WebView with the
+        // browser's hardware encoder. If that is unavailable too, fall through to
+        // sharing the story as an image.
+        try {
+          setProgress(0);
+          const overlay = await captureRef(overlayRef as never, { format: 'png', width: 1080, height: 1920, result: 'data-uri' });
+          const { uri } = await webEncoder.current.compose(
+            {
+              backgroundUrl: remoteUrl(video.file),
+              soundUrl: sound ? remoteUrl(sound.file) : null,
+              overlay,
+              durationSec: design.lengthSec,
+            },
+            setProgress,
+          );
+          if (!(await Sharing.isAvailableAsync())) toast(t('shareFailedMobile'), 'error');
+          else await Sharing.shareAsync(uri, { mimeType: 'video/mp4', UTI: 'public.mpeg-4', dialogTitle: design.headline || 'Story' });
+          return;
+        } catch (e) {
+          const detail = e instanceof Error && e.message ? ` (${e.message})` : '';
+          toast(`${t('videoFailed')}${detail}`, 'error');
+          setProgress(null);
+        }
+      }
       if (!videoExportSupported) {
-        // No encoder here (Expo Go, or iOS until its encoder ships): share the
-        // story as an image over the video's still frame rather than failing.
+        // No encoder at all: share the story as an image over the video's still frame.
         const outcome = await shareCard(stillRef, design.headline || 'Story');
         if (outcome === 'unavailable') toast(t('shareFailedMobile'), 'error');
         else toast(t('sharedAsImage'));
@@ -270,6 +298,7 @@ export default function EditorScreen() {
       </View>
 
 
+      {isVideo && !videoExportSupported && <WebEncoder ref={webEncoder} />}
       <ToolSheet tool={tool} onClose={() => setTool(null)} />
     </View>
   );

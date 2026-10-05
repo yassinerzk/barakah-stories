@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Barakah Stories video encoder</title>
+<!--
+  Runs inside the app's hidden WebView. It turns a story into an MP4 entirely on
+  the phone with the browser's own hardware encoder (WebCodecs, through
+  Mediabunny): the looping background clip, the card's text layer drawn over
+  every frame, and the ambient sound with a fade in and out. Nothing is uploaded;
+  the finished file goes straight back to the app. This is what makes video
+  export work where the app has no native encoder (Expo Go, iOS).
+-->
+</head>
+<body style="margin:0;background:#000">
+<canvas id="c" width="1080" height="1920" style="width:2px;height:2px"></canvas>
+<script type="module">
+import {
+  Input, UrlSource, ALL_FORMATS, CanvasSink,
+  Output, BufferTarget, Mp4OutputFormat, CanvasSource, AudioBufferSource,
+  getFirstEncodableVideoCodec, getFirstEncodableAudioCodec,
+} from 'https://cdn.jsdelivr.net/npm/mediabunny@1.61.1/+esm';
+
+const W = 1080, H = 1920, FPS = 30;
+const send = (msg) => window.ReactNativeWebView?.postMessage(JSON.stringify(msg));
+
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Could not read the text layer'));
+    img.src = src;
+  });
+}
+
+/** The ambient sound decoded, repeated to the story's length, with fades. */
+async function buildSound(url, durationSec) {
+  const data = await (await fetch(url)).arrayBuffer();
+  const rate = 44100, channels = 2, length = Math.round(durationSec * rate);
+  const ctx = new OfflineAudioContext(channels, length, rate);
+  const decoded = await ctx.decodeAudioData(data);
+  const out = ctx.createBuffer(channels, length, rate);
+  const fadeIn = Math.min(0.8 * rate, length / 4), fadeOut = Math.min(1.5 * rate, length / 3);
+  for (let ch = 0; ch < channels; ch++) {
+    const src = decoded.getChannelData(Math.min(ch, decoded.numberOfChannels - 1));
+    const dst = out.getChannelData(ch);
+    for (let i = 0; i < length; i++) {
+      let g = 1;
+      if (i < fadeIn) g = Math.sin((i / fadeIn) * Math.PI / 2);
+      else if (i > length - fadeOut) g = Math.cos(((i - (length - fadeOut)) / fadeOut) * Math.PI / 2);
+      dst[i] = src[i % src.length] * g;
+    }
+  }
+  return out;
+}
+
+async function compose({ id, backgroundUrl, soundUrl, overlay, durationSec }) {
+  const canvas = document.getElementById('c');
+  const g = canvas.getContext('2d');
+  const text = await loadImage(overlay);
+
+  const videoCodec = await getFirstEncodableVideoCodec(['avc'], { width: W, height: H });
+  if (!videoCodec) throw new Error('This device cannot encode H.264 video');
+  // AAC encoding arrived in Safari with iOS 26; older devices get a silent video.
+  const audioCodec = soundUrl && typeof AudioEncoder !== 'undefined'
+    ? await getFirstEncodableAudioCodec(['aac'], { numberOfChannels: 2, sampleRate: 44100 })
+    : null;
+
+  const output = new Output({ format: new Mp4OutputFormat({ fastStart: 'in-memory' }), target: new BufferTarget() });
+  const video = new CanvasSource(canvas, { codec: videoCodec, bitrate: 6_000_000 });
+  output.addVideoTrack(video, { frameRate: FPS });
+  const audio = audioCodec ? new AudioBufferSource({ codec: audioCodec, bitrate: 128_000 }) : null;
+  if (audio) output.addAudioTrack(audio);
+  await output.start();
+
+  const input = new Input({ formats: ALL_FORMATS, source: new UrlSource(backgroundUrl) });
+  const track = await input.getPrimaryVideoTrack();
+  if (!track || !(await track.canDecode())) throw new Error('The background video cannot be decoded here');
+  const sink = new CanvasSink(track, { width: W, height: H, fit: 'cover' });
+
+  // The clip is a seamless loop: replay it until the story is long enough.
+  const total = Math.round(durationSec * FPS);
+  let frame = 0;
+  while (frame < total) {
+    for await (const { canvas: bg } of sink.canvases()) {
+      if (frame >= total) break;
+      g.drawImage(bg, 0, 0, W, H);
+      g.drawImage(text, 0, 0, W, H);
+      await video.add(frame / FPS, 1 / FPS);
+      frame++;
+      if (frame % 15 === 0) send({ type: 'progress', id, p: frame / total });
+    }
+  }
+  if (audio) await audio.add(await buildSound(soundUrl, durationSec));
+  await output.finalize();
+
+  // Back to the app in pieces: one huge message is slow on both bridges.
+  const bytes = new Uint8Array(output.target.buffer);
+  const CHUNK = 512 * 1024;
+  let i = 0;
+  for (let off = 0; off < bytes.length; off += CHUNK, i++) {
+    let s = '';
+    const part = bytes.subarray(off, off + CHUNK);
+    for (let k = 0; k < part.length; k += 0x8000) s += String.fromCharCode.apply(null, part.subarray(k, k + 0x8000));
+    send({ type: 'chunk', id, i, data: btoa(s) });
+  }
+  send({ type: 'done', id, total: i, silent: !!soundUrl && !audio });
+}
+
+async function onMessage(event) {
+  let msg;
+  try { msg = JSON.parse(event.data); } catch { return; }
+  if (msg.type !== 'compose') return;
+  try {
+    await compose(msg);
+  } catch (e) {
+    send({ type: 'error', id: msg.id, message: String((e && e.message) || e) });
+  }
+}
+window.addEventListener('message', onMessage);
+document.addEventListener('message', onMessage);
+send({ type: 'ready', webcodecs: typeof VideoEncoder !== 'undefined', audio: typeof AudioEncoder !== 'undefined' });
+</script>
+</body>
+</html>
