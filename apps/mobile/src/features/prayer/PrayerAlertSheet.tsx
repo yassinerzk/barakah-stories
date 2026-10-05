@@ -7,7 +7,7 @@ import { useT } from '../../i18n';
 import { ui } from '../../theme';
 import { usePrayerStore, useToastStore } from '../../store';
 import { usePrayerAlertStore } from '../../notifications/prayerAlertStore';
-import { sendTestAlert } from '../../notifications/prayerScheduler';
+import { hasBundledSounds, sendTestAlert } from '../../notifications/prayerScheduler';
 import { useAdhanStore } from '../../notifications/AdhanPlayer';
 import { Button } from '../../components/ui';
 
@@ -104,6 +104,11 @@ export function PrayerAlertSheet({ prayer: requested, onClose }: Props) {
           })}
         </View>
 
+        {!hasBundledSounds && mode === 'adhan' && (
+          <Text style={{ color: ui.accent, fontFamily: font.regular, fontSize: 13, marginTop: 8, textAlign }}>
+            {t('adhanExpoGoNote')}
+          </Text>
+        )}
         <View style={{ flexDirection: row, gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
           <Button
             label={playing ? t('stopAdhan') : t('playAdhan')}

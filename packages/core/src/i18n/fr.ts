@@ -240,4 +240,5 @@ export const fr: Record<TranslationKey, string> = {
   savedStoryLabel: "Story enregistrée",
   credits: "Crédits",
   adhanCredit: "Adhan de test : « Beautiful adhan », Wikimedia Commons (CC0)",
+  adhanExpoGoNote: "Vous testez dans Expo Go, qui ne peut pas inclure le fichier de l'adhan : les alertes utilisent donc le son du système ici. Installez la version de l'app pour entendre l'adhan dans les alertes.",
 };

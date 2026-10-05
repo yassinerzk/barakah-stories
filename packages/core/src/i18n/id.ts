@@ -237,4 +237,5 @@ export const id: Record<TranslationKey, string> = {
   savedStoryLabel: "Cerita tersimpan",
   credits: "Kredit",
   adhanCredit: "Azan uji: “Beautiful adhan”, Wikimedia Commons (CC0)",
+  adhanExpoGoNote: "Anda menguji di Expo Go, yang tidak dapat memuat file azan, jadi pengingat memakai suara sistem di sini. Pasang versi aplikasi untuk mendengar azan pada pengingat.",
 };

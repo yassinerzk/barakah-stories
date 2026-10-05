@@ -233,6 +233,7 @@ export const en = {
   savedStoryLabel: "Saved story",
   credits: "Credits",
   adhanCredit: "Test adhan: “Beautiful adhan”, Wikimedia Commons (CC0)",
+  adhanExpoGoNote: "You are testing in Expo Go, which cannot include the adhan file, so alerts use the system sound here. Install the app build to hear the adhan in alerts.",
 } as const;
 
 export type TranslationKey = keyof typeof en;

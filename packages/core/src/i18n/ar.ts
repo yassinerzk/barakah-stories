@@ -235,4 +235,5 @@ export const ar: Record<TranslationKey, string> = {
   savedStoryLabel: "قصة محفوظة",
   credits: "المصادر",
   adhanCredit: "أذان تجريبي: «Beautiful adhan»، ويكيميديا كومنز (CC0)",
+  adhanExpoGoNote: "أنت تختبر في Expo Go، وهو لا يتضمن ملف الأذان، لذلك تستخدم التنبيهات صوت النظام هنا. ثبّت نسخة التطبيق لسماع الأذان في التنبيهات.",
 };

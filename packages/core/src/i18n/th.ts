@@ -235,4 +235,5 @@ export const th: Record<TranslationKey, string> = {
   savedStoryLabel: "สตอรี่ที่บันทึกไว้",
   credits: "เครดิต",
   adhanCredit: "อะซานทดสอบ: “Beautiful adhan”, Wikimedia Commons (CC0)",
+  adhanExpoGoNote: "คุณกำลังทดสอบใน Expo Go ซึ่งใส่ไฟล์อะซานไม่ได้ การแจ้งเตือนจึงใช้เสียงของระบบ ติดตั้งแอปเวอร์ชันจริงเพื่อฟังอะซานในการแจ้งเตือน",
 };

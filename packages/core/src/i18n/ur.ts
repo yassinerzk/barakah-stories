@@ -236,4 +236,5 @@ export const ur: Record<TranslationKey, string> = {
   savedStoryLabel: "محفوظ کہانی",
   credits: "حوالہ جات",
   adhanCredit: "آزمائشی اذان: ”Beautiful adhan“، Wikimedia Commons (CC0)",
+  adhanExpoGoNote: "آپ Expo Go میں جانچ کر رہے ہیں، جس میں اذان کی فائل شامل نہیں ہو سکتی، اس لیے یہاں اطلاعات سسٹم کی آواز استعمال کرتی ہیں۔ اطلاعات میں اذان سننے کے لیے ایپ کا بلڈ انسٹال کریں۔",
 };
