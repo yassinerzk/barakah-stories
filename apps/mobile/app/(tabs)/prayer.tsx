@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Platform, Pressable, ScrollView, Switch, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
+import { useIsFocused } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
 import {
@@ -54,8 +55,12 @@ export default function PrayerScreen() {
   const [locating, setLocating] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [alertFor, setAlertFor] = useState<AlertPrayer | null>(null);
-  const [compassOn, setCompassOn] = useState(false);
-  const heading = useHeading(compassOn);
+  // The compass runs whenever this tab is on screen and a location is set, so a
+  // returning user sees it turning at once. It stops when the tab is left, and it
+  // never prompts: without permission it shows the static bearing and a button.
+  const focused = useIsFocused();
+  const [compassAttempt, setCompassAttempt] = useState(0);
+  const heading = useHeading(focused && location !== null, compassAttempt);
 
   const prefs = usePrayerAlertStore((s) => s.prefs);
   const exactAllowed = usePrayerAlertStore((s) => s.exactAllowed);
@@ -80,7 +85,7 @@ export default function PrayerScreen() {
       }
       // No time zone: a position is wherever the phone is, so the phone's own clock applies.
       setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude, label });
-      setCompassOn(true);
+      setCompassAttempt((n) => n + 1);
     } catch {
       toast(t('locationDenied'), 'error');
     } finally {
@@ -90,7 +95,7 @@ export default function PrayerScreen() {
 
   const enableCompass = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status === 'granted') setCompassOn(true);
+    if (status === 'granted') setCompassAttempt((n) => n + 1);
     else toast(t('locationDenied'), 'error');
   };
 

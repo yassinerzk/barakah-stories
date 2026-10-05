@@ -5,8 +5,11 @@ import * as Location from 'expo-location';
 /**
  * Compass heading in degrees (0 = North), or null when unavailable. Uses the
  * true heading when the platform provides one, otherwise magnetic.
+ *
+ * Starts only if location permission is already granted — it never prompts.
+ * Bump `attempt` after the user grants permission to start it straight away.
  */
-export function useHeading(enabled: boolean): number | null {
+export function useHeading(enabled: boolean, attempt = 0): number | null {
   const [heading, setHeading] = useState<number | null>(null);
   useEffect(() => {
     if (!enabled || Platform.OS === 'web') return;
@@ -24,6 +27,6 @@ export function useHeading(enabled: boolean): number | null {
       cancelled = true;
       sub?.remove();
     };
-  }, [enabled]);
+  }, [enabled, attempt]);
   return heading;
 }
