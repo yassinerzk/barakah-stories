@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import { requireOptionalNativeModule } from 'expo';
+import { ExtensionStorage } from '@bacons/apple-targets';
 
 export interface WidgetPrayer {
   id: string;
@@ -26,11 +27,41 @@ interface BarakahWidgetsNative {
   requestPin(kind: 'prayer' | 'dhikr'): boolean;
 }
 
+const APP_GROUP = 'group.com.barakah.stories';
+
 /**
- * Home-screen widgets on Android (iOS widgets live in a separate WidgetKit
- * target). Missing in Expo Go and on the web, where every call is a no-op.
+ * iOS: the WidgetKit extension (apps/mobile/targets/widget) reads the same data
+ * from the App Group. Needs a native iOS build; in Expo Go the storage module is
+ * absent, so this stays null and every call is a no-op.
  */
-const native = Platform.OS === 'android' ? requireOptionalNativeModule<BarakahWidgetsNative>('BarakahWidgets') : null;
+function iosBridge(): BarakahWidgetsNative | null {
+  if (Platform.OS !== 'ios' || !requireOptionalNativeModule('ExtensionStorage')) return null;
+  const store = new ExtensionStorage(APP_GROUP);
+  return {
+    setPrayers: (place, nextLabel, prayers) => {
+      store.set('prayers', JSON.stringify(prayers));
+      store.set('place', place);
+      store.set('nextLabel', nextLabel);
+      ExtensionStorage.reloadWidget();
+    },
+    setDhikr: (dhikr) => {
+      store.set('dhikr', JSON.stringify(dhikr));
+      ExtensionStorage.reloadWidget();
+    },
+    takeTaps: () => {
+      const n = Number(store.get('pendingTaps') ?? 0) || 0;
+      store.set('pendingTaps', '0');
+      return n;
+    },
+    // iOS has no API for an app to add a widget; the gallery shows how instead.
+    canPin: () => false,
+    requestPin: () => false,
+  };
+}
+
+/** Home-screen widgets: a local Kotlin module on Android, WidgetKit on iOS. Missing in Expo Go and on the web. */
+const native: BarakahWidgetsNative | null =
+  Platform.OS === 'android' ? requireOptionalNativeModule<BarakahWidgetsNative>('BarakahWidgets') : iosBridge();
 
 export const widgetsSupported = native !== null;
 

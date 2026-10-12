@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "dependencies": {
+    "@bacons/apple-targets": "^5.0.0",
     "@barakah/core": "*",
     "@expo-google-fonts/amiri": "^0.4.1",
     "@expo-google-fonts/aref-ruqaa": "^0.4.1",
