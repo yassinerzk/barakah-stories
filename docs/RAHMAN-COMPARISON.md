@@ -30,9 +30,28 @@ Ordered by value to our users ÷ effort. Effort: S = days, M = 1–2 weeks, L = 
       We already compute Hijri dates. Doubles as a story-card prompt ("Make a Ramadan card").
 - [ ] **99 Names of Allah** (S) — name a day with Arabic, transliteration, meaning in our 7
       languages; each one opens straight into the story editor. Great content for cards.
-- [ ] **Home-screen widgets** (M–L) — next prayer + countdown, today's times, name/verse of the
-      day. Android: `react-native-android-widget` (works with prebuild). iOS: needs a native
-      WidgetKit target (`expo-apple-targets`) and an EAS build, so it comes after the iOS build exists.
+- [ ] **Home-screen widgets** (M–L). Android first (native Kotlin `AppWidgetProvider`s in a local
+      Expo module, like `prayer-panel`); iOS needs a WidgetKit target (`expo-apple-targets`) and an EAS
+      build, so it comes after the iOS build exists. The set, in priority order:
+  - [ ] **Prayer timer** — next prayer name, its time, and a **live countdown** ("Maghrib in
+        2:43:12"). Android: a `Chronometer` in `RemoteViews` with `setChronometerCountDown(true)` ticks
+        on its own with zero app wake-ups — the same trick our notification panel already uses. iOS:
+        `Text(nextPrayerDate, style: .timer)` does the same. The widget only needs re-rendering at
+        each prayer change: schedule those instants with the existing `AlarmManager` receiver
+        (`PanelReceiver`) and from the 12-hour background re-plan. Sizes: small (next prayer) and
+        medium (next prayer + all six times, current one highlighted).
+  - [ ] **Dhikr counter** — the current dhikr in Arabic, the count and target ("17 / 33"), and a
+        big tap area that **counts on the home screen without opening the app**. Android: a click
+        `PendingIntent` to a `BroadcastReceiver` that increments the count in `SharedPreferences`
+        and redraws the widget (with a vibrate tick); the app's tasbih screen reads the same store,
+        so the counts always agree. iOS 17+: an interactive `Button(intent:)` with an `AppIntent`
+        writing to an App Group store. A second small button resets / switches dhikr; reaching the
+        target gives a stronger haptic and a ✓.
+  - [ ] **Today's prayer times** — all six times, the current one highlighted (lock screen too on iOS).
+  - [ ] **Name of Allah / verse of the day** — rotates daily; tapping opens the story editor with it.
+  - Shared rules: follow the system light/dark and dynamic colours where possible, text readable at
+    the smallest size, `contentDescription` on every element for TalkBack, and no network access from
+    the widget — everything comes from data the app already saved on the phone.
 - [ ] **Qibla: degrees-off and distance to the Kaaba** (S) — "152° off Qibla · 2,414 km to Kaaba",
       plus a Map mode (straight line from you to Makkah). AR mode is not worth it yet.
 - [ ] **More hadith collections** (M) — Abu Dawud, Tirmidhi (and Nasa'i, Ibn Majah) with chapter and
