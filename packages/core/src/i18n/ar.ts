@@ -312,4 +312,6 @@ export const ar: Record<TranslationKey, string> = {
   onbGoPrayer: "إلى مواقيت الصلاة",
   onbStep: "الخطوة {n} من {total}",
   replayIntro: "إعادة عرض المقدمة",
+  homeGreeting: "السلام عليكم",
+  allTimes: "كل المواقيت",
 };

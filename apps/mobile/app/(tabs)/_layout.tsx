@@ -7,6 +7,7 @@ import type { ColorValue } from 'react-native';
 import { useT } from '../../src/i18n';
 import { ui } from '../../src/theme';
 import { CreateButton } from '../../src/components/CreateButton';
+import { FloatingTabBar, TAB_PILL_GAP, TAB_PILL_HEIGHT } from '../../src/components/FloatingTabBar';
 import { ONBOARDING_VERSION, useOnboardingStore, usePrayerStore } from '../../src/store';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
@@ -17,7 +18,7 @@ const icon =
   );
 
 export default function TabsLayout() {
-  const { t, font } = useT();
+  const { t } = useT();
   const insets = useSafeAreaInsets();
   const gate = useOnboardingGate();
   if (gate === 'wait') return <View style={{ flex: 1, backgroundColor: ui.bg }} />;
@@ -25,12 +26,9 @@ export default function TabsLayout() {
   return (
     <View style={{ flex: 1 }}>
       <Tabs
+        tabBar={(props) => <FloatingTabBar {...props} />}
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: ui.accent,
-          tabBarInactiveTintColor: ui.textMuted,
-          tabBarStyle: { backgroundColor: ui.bgElev, borderTopColor: ui.line },
-          tabBarLabelStyle: { fontFamily: font.medium, fontSize: 11 },
           sceneStyle: { backgroundColor: ui.bg },
         }}
       >
@@ -43,7 +41,7 @@ export default function TabsLayout() {
       {/* New story from scratch: a floating button, bottom-left, above the tab bar. */}
       <View
         pointerEvents="box-none"
-        style={{ position: 'absolute', left: 16, bottom: insets.bottom + TAB_BAR_HEIGHT + 16 }}
+        style={{ position: 'absolute', left: 16, bottom: insets.bottom + TAB_PILL_GAP + TAB_PILL_HEIGHT + 16 }}
       >
         <CreateButton />
       </View>
@@ -78,6 +76,3 @@ function useOnboardingGate(): 'wait' | 'onboard' | 'tabs' {
   if (done || hasLocation) return 'tabs';
   return 'onboard';
 }
-
-/** Height of the default bottom tab bar, above the safe-area inset. */
-const TAB_BAR_HEIGHT = 49;

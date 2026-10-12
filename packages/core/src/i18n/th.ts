@@ -312,4 +312,6 @@ export const th: Record<TranslationKey, string> = {
   onbGoPrayer: "ไปที่เวลาละหมาด",
   onbStep: "ขั้นที่ {n} จาก {total}",
   replayIntro: "ดูบทแนะนำอีกครั้ง",
+  homeGreeting: "อัสลามุอะลัยกุม",
+  allTimes: "เวลาทั้งหมด",
 };

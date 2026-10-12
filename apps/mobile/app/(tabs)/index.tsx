@@ -7,11 +7,10 @@ import {
   dailyPicks,
   DEFAULT_DESIGN,
   designFromPost,
-  formatClock,
   getPost,
   getPostsByCategory,
   POSTS,
-  PRAYER_NAMES,
+  tagOf,
   type CategoryId,
   type Post,
 } from '@barakah/core';
@@ -19,13 +18,12 @@ import { useT } from '../../src/i18n';
 import { ui } from '../../src/theme';
 import { useEditorStore, useRecentStore } from '../../src/store';
 import { useHijriToday } from '../../src/hooks/useHijriToday';
-import { weekdayName } from '../../src/hooks/useWeekday';
 import { useLayoutWidth } from '../../src/hooks/useLayoutWidth';
-import { usePrayerTimes } from '../../src/features/prayer/usePrayerTimes';
+import { HomePrayerCard } from '../../src/features/prayer/HomePrayerCard';
 import { PostThumb } from '../../src/components/PostThumb';
 import { PostStrip } from '../../src/components/PostStrip';
 import { ScrollTopButton } from '../../src/components/ScrollTopButton';
-import { BrandMark } from '../../src/brand/BrandMark';
+import { Ionicons } from '@expo/vector-icons';
 import { LanguageSheet } from '../../src/components/LanguageSheet';
 import { useScrollTop } from '../../src/hooks/useScrollTop';
 import { REMINDER_OFFER_DELAY_MS, useReminderStore } from '../../src/notifications/store';
@@ -47,7 +45,6 @@ export default function HomeScreen() {
   const recentIds = useRecentStore((s) => s.ids);
   const touch = useRecentStore((s) => s.touch);
   const load = useEditorStore((s) => s.load);
-  const { next, location } = usePrayerTimes();
   const [category, setCategory] = useState<CategoryId | 'all'>('all');
   // The grid runs to ~150 rows, so getting back to the top by hand is a chore.
   const { ref: listRef, visible: canScrollTop, onScroll, scrollToTop } = useScrollTop<Post[]>();
@@ -91,70 +88,37 @@ export default function HomeScreen() {
 
   const header = (
     <View style={{ paddingTop: insets.top + 8 }}>
-      {/* brand row */}
-      <View style={{ flexDirection: row, alignItems: 'center', justifyContent: 'space-between' }}>
-        <View style={{ flexDirection: row, alignItems: 'center', gap: 10 }}>
-          <View
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 12,
-              backgroundColor: ui.accent,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <BrandMark size={24} color={ui.accentInk} />
-          </View>
-          <View>
-            <Text style={{ color: ui.text, fontFamily: font.semibold, fontSize: 17, textAlign }}>
-              {t('appName')}
-            </Text>
-            <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 12, textAlign }}>
-              {t('tagline')}
-            </Text>
-          </View>
+      {/* greeting */}
+      <View style={{ flexDirection: row, alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+        <View style={{ flex: 1 }}>
+          <Text accessibilityRole="header" style={{ color: ui.text, fontFamily: font.semibold, fontSize: 22, textAlign }}>
+            {t('homeGreeting')}
+          </Text>
+          <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>
+            {new Intl.DateTimeFormat(tagOf(locale), { weekday: 'short', day: 'numeric', month: 'short' }).format(now)}
+            {hijriLabel !== '' ? ` · ${hijriLabel}` : ''}
+          </Text>
         </View>
-        <Chip label={t('language')} onPress={() => setLanguageOpen(true)} />
+        <Pressable
+          onPress={() => setLanguageOpen(true)}
+          accessibilityRole="button"
+          accessibilityLabel={t('language')}
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 24,
+            borderWidth: 1,
+            borderColor: ui.lineStrong,
+            backgroundColor: ui.bgElev,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Ionicons name="language-outline" size={20} color={ui.text} />
+        </Pressable>
       </View>
 
-      {/* today strip */}
-      <Pressable
-        onPress={() => router.push('/prayer')}
-        style={{
-          backgroundColor: ui.bgElev2,
-          borderRadius: ui.radius,
-          borderWidth: 1,
-          borderColor: ui.line,
-          padding: 14,
-          marginTop: 14,
-          gap: 6,
-        }}
-      >
-        <View style={{ flexDirection: row, alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
-          <Text style={{ color: ui.text, fontFamily: font.semibold, fontSize: 19 }}>
-            {weekdayName(now, locale)}
-          </Text>
-          {hijriLabel !== '' && (
-            <Text style={{ color: ui.accent, fontFamily: font.medium }}>{hijriLabel}</Text>
-          )}
-        </View>
-        <View style={{ flexDirection: row, alignItems: 'center', gap: 8 }}>
-          <Text style={{ fontSize: 16 }}>🕌</Text>
-          {next && location ? (
-            <Text style={{ color: ui.textMuted, fontFamily: font.regular }}>
-              {t('nextPrayer')}: {l(PRAYER_NAMES.find((p) => p.id === next.id)!.label)}{' '}
-              <Text style={{ color: ui.text, fontFamily: font.semibold }}>
-                {formatClock(next.time, locale, location.timeZone)}
-              </Text>
-            </Text>
-          ) : (
-            <Text style={{ color: ui.textMuted, fontFamily: font.regular }}>
-              {t('prayerTimes')} · {t('qibla')} ›
-            </Text>
-          )}
-        </View>
-      </Pressable>
+      <HomePrayerCard onOpen={() => router.push('/prayer')} />
 
       <PostStrip title={t('todaysPosts')} posts={todays} hijriLabel={hijriLabel} onOpen={openPost} />
       <PostStrip title={t('recent')} posts={recent} hijriLabel={hijriLabel} onOpen={openPost} />

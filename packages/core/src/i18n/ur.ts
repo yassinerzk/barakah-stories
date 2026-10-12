@@ -313,4 +313,6 @@ export const ur: Record<TranslationKey, string> = {
   onbGoPrayer: "نماز کے اوقات پر جائیں",
   onbStep: "مرحلہ {n} از {total}",
   replayIntro: "تعارف دوبارہ دیکھیں",
+  homeGreeting: "السلام علیکم",
+  allTimes: "تمام اوقات",
 };

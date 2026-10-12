@@ -376,7 +376,7 @@ function Stars({ width, height }: { width: number; height: number }) {
 }
 
 /** H:MM:SS to `at`. Owns its one-second timer so nothing else redraws each second. */
-function Countdown({ at, locale, fontFamily, size }: { at: Date; locale: Locale; fontFamily?: string; size: number }) {
+export function Countdown({ at, locale, fontFamily, size }: { at: Date; locale: Locale; fontFamily?: string; size: number }) {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000);

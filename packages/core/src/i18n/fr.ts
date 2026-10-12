@@ -317,4 +317,6 @@ export const fr: Record<TranslationKey, string> = {
   onbGoPrayer: "Voir les heures de prière",
   onbStep: "Étape {n} sur {total}",
   replayIntro: "Revoir l'introduction",
+  homeGreeting: "Assalamu alaykum",
+  allTimes: "Tous les horaires",
 };

@@ -310,6 +310,8 @@ export const en = {
   onbGoPrayer: "Go to prayer times",
   onbStep: "Step {n} of {total}",
   replayIntro: "Replay the introduction",
+  homeGreeting: "Assalamu alaikum",
+  allTimes: "All times",
 } as const;
 
 export type TranslationKey = keyof typeof en;
