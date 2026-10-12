@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/barakah_prayer_root"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="14dp"
+  android:background="@drawable/barakah_widget_bg">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+      <TextView android:id="@+id/barakah_next_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFA9B8B1" android:textSize="11sp" android:letterSpacing="0.1" android:maxLines="1" />
+      <Chronometer android:id="@+id/barakah_countdown" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFD9B65C" android:textSize="30sp" android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="end">
+      <TextView android:id="@+id/barakah_next_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF3EFE4" android:textSize="17sp" android:textStyle="bold" />
+      <TextView android:id="@+id/barakah_place" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFA9B8B1" android:textSize="11sp" android:maxLines="1" />
+    </LinearLayout>
+  </LinearLayout>
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+      <TextView android:id="@+id/barakah_p0_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFA9B8B1" android:textSize="10sp" android:maxLines="1" />
+      <TextView android:id="@+id/barakah_p0_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF3EFE4" android:textSize="12sp" android:maxLines="1" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+      <TextView android:id="@+id/barakah_p1_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFA9B8B1" android:textSize="10sp" android:maxLines="1" />
+      <TextView android:id="@+id/barakah_p1_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF3EFE4" android:textSize="12sp" android:maxLines="1" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+      <TextView android:id="@+id/barakah_p2_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFA9B8B1" android:textSize="10sp" android:maxLines="1" />
+      <TextView android:id="@+id/barakah_p2_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF3EFE4" android:textSize="12sp" android:maxLines="1" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+      <TextView android:id="@+id/barakah_p3_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFA9B8B1" android:textSize="10sp" android:maxLines="1" />
+      <TextView android:id="@+id/barakah_p3_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF3EFE4" android:textSize="12sp" android:maxLines="1" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+      <TextView android:id="@+id/barakah_p4_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFA9B8B1" android:textSize="10sp" android:maxLines="1" />
+      <TextView android:id="@+id/barakah_p4_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF3EFE4" android:textSize="12sp" android:maxLines="1" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+      <TextView android:id="@+id/barakah_p5_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFA9B8B1" android:textSize="10sp" android:maxLines="1" />
+      <TextView android:id="@+id/barakah_p5_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF3EFE4" android:textSize="12sp" android:maxLines="1" />
+    </LinearLayout>
+  </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="barakah_widget_prayer_name">Heures de prière</string>
+  <string name="barakah_widget_prayer_desc">Prochaine prière avec compte à rebours et horaires du jour</string>
+  <string name="barakah_widget_dhikr_name">Compteur de dhikr</string>
+  <string name="barakah_widget_dhikr_desc">Touchez pour compter votre dhikr</string>
+  <string name="barakah_widget_open_app">Ouvrez l\'application pour configurer</string>
+  <string name="barakah_widget_open">Ouvrir</string>
+</resources>

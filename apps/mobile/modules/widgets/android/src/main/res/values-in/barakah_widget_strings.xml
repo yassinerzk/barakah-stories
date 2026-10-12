@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="barakah_widget_prayer_name">Jadwal salat</string>
+  <string name="barakah_widget_prayer_desc">Salat berikutnya dengan hitung mundur dan jadwal hari ini</string>
+  <string name="barakah_widget_dhikr_name">Penghitung zikir</string>
+  <string name="barakah_widget_dhikr_desc">Ketuk untuk menghitung zikir</string>
+  <string name="barakah_widget_open_app">Buka aplikasi untuk mengatur</string>
+  <string name="barakah_widget_open">Buka</string>
+</resources>

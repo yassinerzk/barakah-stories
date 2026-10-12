@@ -12,6 +12,7 @@ import { ReminderSheet } from '../src/notifications/ReminderSheet';
 import { startPrayerAlerts } from '../src/notifications/prayerAlertStore';
 import { AdhanPlayer, useAdhanFromNotifications } from '../src/notifications/AdhanPlayer';
 import { AnimatedSplash } from '../src/brand/AnimatedSplash';
+import { startWidgetSync } from '../src/widgets/sync';
 
 SplashScreen.preventAutoHideAsync().catch(() => undefined);
 
@@ -32,6 +33,8 @@ export default function RootLayout() {
   // Tops up the prayer-alert schedule and the panel, and keeps them in step with
   // the location, method and language for as long as the app is running.
   useEffect(() => startPrayerAlerts(), []);
+  // Home-screen widgets follow the prayer times and the tasbih (Android).
+  useEffect(() => startWidgetSync(), []);
   useAdhanFromNotifications();
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => undefined);

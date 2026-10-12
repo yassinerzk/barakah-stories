@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="barakah_widget_prayer_name">เวลาละหมาด</string>
+  <string name="barakah_widget_prayer_desc">ละหมาดถัดไปพร้อมนับถอยหลังและเวลาวันนี้</string>
+  <string name="barakah_widget_dhikr_name">ตัวนับซิกร์</string>
+  <string name="barakah_widget_dhikr_desc">แตะเพื่อนับซิกร์</string>
+  <string name="barakah_widget_open_app">เปิดแอปเพื่อตั้งค่า</string>
+  <string name="barakah_widget_open">เปิด</string>
+</resources>

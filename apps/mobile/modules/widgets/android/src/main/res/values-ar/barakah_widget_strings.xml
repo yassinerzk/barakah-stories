@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="barakah_widget_prayer_name">مواقيت الصلاة</string>
+  <string name="barakah_widget_prayer_desc">الصلاة القادمة مع عدّاد تنازلي ومواقيت اليوم</string>
+  <string name="barakah_widget_dhikr_name">عدّاد الذكر</string>
+  <string name="barakah_widget_dhikr_desc">اضغط لعدّ أذكارك</string>
+  <string name="barakah_widget_open_app">افتح التطبيق للإعداد</string>
+  <string name="barakah_widget_open">فتح</string>
+</resources>

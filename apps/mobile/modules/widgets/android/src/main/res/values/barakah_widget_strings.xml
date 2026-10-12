@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="barakah_widget_prayer_name">Prayer times</string>
+  <string name="barakah_widget_prayer_desc">Next prayer with a live countdown and today\'s times</string>
+  <string name="barakah_widget_dhikr_name">Dhikr counter</string>
+  <string name="barakah_widget_dhikr_desc">Tap to count your dhikr</string>
+  <string name="barakah_widget_open_app">Open the app to set up</string>
+  <string name="barakah_widget_open">Open</string>
+</resources>

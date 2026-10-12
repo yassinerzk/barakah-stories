@@ -1,0 +1,24 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <application>
+    <!-- Home-screen widgets. Exported because the launcher hosts them; they only
+         accept the system's widget broadcasts and their own explicit intents. -->
+    <receiver
+      android:name=".PrayerWidget"
+      android:label="@string/barakah_widget_prayer_name"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider" android:resource="@xml/barakah_prayer_widget_info" />
+    </receiver>
+    <receiver
+      android:name=".DhikrWidget"
+      android:label="@string/barakah_widget_dhikr_name"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider" android:resource="@xml/barakah_dhikr_widget_info" />
+    </receiver>
+  </application>
+</manifest>

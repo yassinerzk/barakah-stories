@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="barakah_widget_prayer_name">نماز کے اوقات</string>
+  <string name="barakah_widget_prayer_desc">اگلی نماز اور آج کے اوقات</string>
+  <string name="barakah_widget_dhikr_name">ذکر کاؤنٹر</string>
+  <string name="barakah_widget_dhikr_desc">ذکر گننے کے لیے ٹیپ کریں</string>
+  <string name="barakah_widget_open_app">ترتیب کے لیے ایپ کھولیں</string>
+  <string name="barakah_widget_open">کھولیں</string>
+</resources>

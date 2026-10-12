@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/barakah_dhikr_root"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:gravity="center"
+  android:padding="12dp"
+  android:background="@drawable/barakah_widget_bg">
+  <TextView android:id="@+id/barakah_dhikr_arabic" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#FFF3EFE4" android:textSize="20sp" android:maxLines="1" />
+  <TextView android:id="@+id/barakah_dhikr_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:paddingLeft="16dp" android:paddingRight="16dp" android:paddingTop="6dp" android:paddingBottom="6dp" android:background="@drawable/barakah_widget_button" android:textColor="#FF1B1400" android:textSize="18sp" android:textStyle="bold" />
+  <TextView android:id="@+id/barakah_dhikr_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="#FFA9B8B1" android:textSize="11sp" android:maxLines="1" />
+  <TextView android:id="@+id/barakah_dhikr_open" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:padding="4dp" android:text="@string/barakah_widget_open" android:textColor="#FFD9B65C" android:textSize="11sp" />
+</LinearLayout>
