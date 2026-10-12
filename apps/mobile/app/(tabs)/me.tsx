@@ -270,6 +270,7 @@ export default function MeScreen() {
           >
             <AccessibilityPanel />
           </View>
+          <Button label={t('replayIntro')} variant="ghost" onPress={() => router.push('/onboarding')} />
           <SectionTitle>{t('credits')}</SectionTitle>
           <View style={{ gap: 4 }}>
             <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>

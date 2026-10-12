@@ -309,6 +309,7 @@ export const en = {
   onbFirstCard: "Create your first card",
   onbGoPrayer: "Go to prayer times",
   onbStep: "Step {n} of {total}",
+  replayIntro: "Replay the introduction",
 } as const;
 
 export type TranslationKey = keyof typeof en;

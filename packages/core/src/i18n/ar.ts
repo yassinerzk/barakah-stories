@@ -311,4 +311,5 @@ export const ar: Record<TranslationKey, string> = {
   onbFirstCard: "اصنع بطاقتك الأولى",
   onbGoPrayer: "إلى مواقيت الصلاة",
   onbStep: "الخطوة {n} من {total}",
+  replayIntro: "إعادة عرض المقدمة",
 };

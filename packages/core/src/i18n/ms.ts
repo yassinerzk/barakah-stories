@@ -313,4 +313,5 @@ export const ms: Record<TranslationKey, string> = {
   onbFirstCard: "Cipta kad pertama",
   onbGoPrayer: "Ke waktu solat",
   onbStep: "Langkah {n} daripada {total}",
+  replayIntro: "Main semula pengenalan",
 };

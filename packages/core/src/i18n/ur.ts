@@ -312,4 +312,5 @@ export const ur: Record<TranslationKey, string> = {
   onbFirstCard: "اپنا پہلا کارڈ بنائیں",
   onbGoPrayer: "نماز کے اوقات پر جائیں",
   onbStep: "مرحلہ {n} از {total}",
+  replayIntro: "تعارف دوبارہ دیکھیں",
 };

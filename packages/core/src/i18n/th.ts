@@ -311,4 +311,5 @@ export const th: Record<TranslationKey, string> = {
   onbFirstCard: "สร้างการ์ดแรก",
   onbGoPrayer: "ไปที่เวลาละหมาด",
   onbStep: "ขั้นที่ {n} จาก {total}",
+  replayIntro: "ดูบทแนะนำอีกครั้ง",
 };

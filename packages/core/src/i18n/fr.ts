@@ -316,4 +316,5 @@ export const fr: Record<TranslationKey, string> = {
   onbFirstCard: "Créer ma première carte",
   onbGoPrayer: "Voir les heures de prière",
   onbStep: "Étape {n} sur {total}",
+  replayIntro: "Revoir l'introduction",
 };

@@ -313,4 +313,5 @@ export const id: Record<TranslationKey, string> = {
   onbFirstCard: "Buat kartu pertama",
   onbGoPrayer: "Ke jadwal salat",
   onbStep: "Langkah {n} dari {total}",
+  replayIntro: "Putar ulang pengenalan",
 };
