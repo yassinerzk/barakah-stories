@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import { requireOptionalNativeModule } from 'expo';
-import { ExtensionStorage } from '@bacons/apple-targets';
+import type { ExtensionStorage as ExtensionStorageClass } from '@bacons/apple-targets';
 
 export interface WidgetPrayer {
   id: string;
@@ -36,6 +36,9 @@ const APP_GROUP = 'group.com.barakah.stories';
  */
 function iosBridge(): BarakahWidgetsNative | null {
   if (Platform.OS !== 'ios' || !requireOptionalNativeModule('ExtensionStorage')) return null;
+  // Loaded only here, on a native iOS build: in Expo Go the package is never evaluated.
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { ExtensionStorage } = require('@bacons/apple-targets') as { ExtensionStorage: typeof ExtensionStorageClass };
   const store = new ExtensionStorage(APP_GROUP);
   return {
     setPrayers: (place, nextLabel, prayers) => {

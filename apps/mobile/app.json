@@ -8,12 +8,6 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#0b1f1c",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0b1f1c"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.barakah.stories",
@@ -83,7 +77,17 @@
           "supportsPictureInPicture": false
         }
       ],
-      "@bacons/apple-targets"
+      "@bacons/apple-targets",
+      "expo-sharing",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "backgroundColor": "#0b1f1c",
+          "resizeMode": "contain",
+          "imageWidth": 200
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": false
