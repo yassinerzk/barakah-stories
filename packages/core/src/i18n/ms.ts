@@ -351,4 +351,13 @@ export const ms: Record<TranslationKey, string> = {
   makeCard: "Cipta kad",
   duasTitle: "Doa & zikir",
   allCategories: "Semua",
+  ayahOf: "Ayat {n} daripada {total}",
+  continueBtn: "Teruskan",
+  surahs: "Surah",
+  bookmarks: "Penanda",
+  noBookmarks: "Sentuh ♡ pada mana-mana ayat untuk menyimpannya di sini.",
+  readingSettings: "Tetapan bacaan",
+  saveAyah: "Tanda ayat {n}",
+  removeAyah: "Buang tanda ayat {n}",
+  ayahLabel: "Ayat {n}",
 };

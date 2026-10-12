@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Pressable, Text, View, type ViewToken } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,9 +10,12 @@ import { useEditorStore, useQuranStore } from '../../src/store';
 import { LARGE_TEXT_SCALE, useA11yStore } from '../../src/a11y';
 import { loadChapter } from '../../src/quran/chapters';
 import { useChapterTranslation } from '../../src/quran/useChapterTranslation';
-import { Button, Chip } from '../../src/components/ui';
+import { Chip } from '../../src/components/ui';
+import { StarBadge } from '../../src/components/StarBadge';
+import { SurahCartouche } from '../../src/quran/SurahCartouche';
 
 const BISMILLAH = 'بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ';
+const fill = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k: string) => v[k] ?? '');
 
 export default function SurahScreen() {
   const { id, ayah } = useLocalSearchParams<{ id: string; ayah?: string }>();
@@ -35,6 +38,9 @@ export default function SurahScreen() {
   const markFinished = useQuranStore((s) => s.markFinished);
   const unmarkFinished = useQuranStore((s) => s.unmarkFinished);
   const loadDesign = useEditorStore((s) => s.load);
+  const bookmarks = useQuranStore((s) => s.bookmarks);
+  const toggleBookmark = useQuranStore((s) => s.toggleBookmark);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const createStory = (verse: QuranVerse) => {
     if (!meta) return;
     loadDesign(designFromVerses(meta, [verse], locale));
@@ -75,61 +81,61 @@ export default function SurahScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: ui.bg }}>
-      <View
-        style={{
-          paddingTop: insets.top + 6,
-          paddingHorizontal: 16,
-          paddingBottom: 10,
-          borderBottomWidth: 1,
-          borderBottomColor: ui.line,
-          gap: 8,
-        }}
-      >
-        <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'center' }}>
-          <Button label={`← ${t('back')}`} size="sm" variant="ghost" onPress={() => router.back()} />
-          <Text style={{ color: ui.accent, fontFamily: 'Amiri_700Bold', fontSize: 26 }}>{meta.name}</Text>
+      <View style={{ paddingTop: insets.top + 4, paddingHorizontal: 4, borderBottomWidth: settingsOpen ? 1 : 0, borderBottomColor: ui.line }}>
+        <View style={{ flexDirection: row, alignItems: 'center', minHeight: 56 }}>
+          <Pressable
+            onPress={() => router.back()}
+            accessibilityRole="button"
+            accessibilityLabel={t('back')}
+            style={{ width: 48, height: 48, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Ionicons name={row === 'row-reverse' ? 'chevron-forward' : 'chevron-back'} size={22} color={ui.text} />
+          </Pressable>
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text accessibilityRole="header" style={{ color: ui.text, fontFamily: font.semibold, fontSize: 16 }}>
+              {meta.transliteration}
+            </Text>
+            <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 12 }}>
+              {toLocaleDigits(meta.total_verses, locale)} {t('verses')} · {t(meta.type)}
+            </Text>
+          </View>
+          <Pressable
+            onPress={() => setSettingsOpen((o) => !o)}
+            accessibilityRole="button"
+            accessibilityLabel={t('readingSettings')}
+            accessibilityState={{ expanded: settingsOpen }}
+            style={{ width: 48, height: 48, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Text style={{ color: settingsOpen ? ui.accent : ui.text, fontFamily: font.semibold, fontSize: 17 }}>Aa</Text>
+          </Pressable>
         </View>
-        <View style={{ flexDirection: row, gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-          <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, flexShrink: 1 }}>
-            {meta.transliteration} · {meta.translation} · {toLocaleDigits(meta.total_verses, locale)}{' '}
-            {t('verses')}
-          </Text>
-        </View>
-        {/* Attribution has to travel with the text it belongs to. */}
-        {credit && showTranslation && (
-          <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 11, textAlign }}>
-            {t('translation')}: {credit}
-          </Text>
+        {settingsOpen && (
+          <View style={{ flexDirection: row, gap: 8, flexWrap: 'wrap', paddingHorizontal: 12, paddingBottom: 10 }}>
+            <Chip label={t('showTranslation')} active={showTranslation} onPress={() => setShowTranslation(!showTranslation)} />
+            <Chip
+              label="A−"
+              accessibilityLabel={t('fontSmaller')}
+              onPress={() => setFontScale(Math.max(0.7, Math.round((fontScale - 0.1) * 10) / 10))}
+            />
+            <Chip
+              label="A+"
+              accessibilityLabel={t('fontLarger')}
+              onPress={() => setFontScale(Math.min(1.8, Math.round((fontScale + 0.1) * 10) / 10))}
+            />
+            <Chip
+              label={done ? `✓ ${t('finished')}` : t('markFinished')}
+              active={done}
+              onPress={() => (done ? unmarkFinished(surah) : markFinished(surah))}
+            />
+          </View>
         )}
-        <View style={{ flexDirection: row, gap: 8, flexWrap: 'wrap' }}>
-          <Chip
-            label={t('showTranslation')}
-            active={showTranslation}
-            onPress={() => setShowTranslation(!showTranslation)}
-          />
-          <Chip
-            label="A−"
-            accessibilityLabel={t('fontSmaller')}
-            onPress={() => setFontScale(Math.max(0.7, Math.round((fontScale - 0.1) * 10) / 10))}
-          />
-          <Chip
-            label="A+"
-            accessibilityLabel={t('fontLarger')}
-            onPress={() => setFontScale(Math.min(1.8, Math.round((fontScale + 0.1) * 10) / 10))}
-          />
-          <Chip
-            label={done ? `✓ ${t('finished')}` : t('markFinished')}
-            active={done}
-            onPress={() => (done ? unmarkFinished(surah) : markFinished(surah))}
-          />
-        </View>
       </View>
 
       <FlatList
         ref={listRef}
         data={chapter.verses}
         keyExtractor={(v) => String(v.id)}
-        contentContainerStyle={{ padding: 16, paddingBottom: insets.bottom + 40 }}
+        contentContainerStyle={{ padding: 16, paddingTop: 8, paddingBottom: insets.bottom + 40 }}
         initialNumToRender={12}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{ itemVisiblePercentThreshold: 40 }}
@@ -137,69 +143,81 @@ export default function SurahScreen() {
           setTimeout(() => listRef.current?.scrollToIndex({ index: info.index, animated: false }), 400);
         }}
         ListHeaderComponent={
-          showBismillah ? (
-            <Text
-              style={{
-                color: ui.accent,
-                fontFamily: 'Amiri_400Regular',
-                fontSize: 28,
-                textAlign: 'center',
-                marginBottom: 16,
-                lineHeight: 52,
-              }}
-            >
-              {BISMILLAH}
-            </Text>
-          ) : null
-        }
-        renderItem={({ item }) => (
-          <View style={{ paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: ui.line, gap: 10 }}>
-            <Text
-              style={{
-                color: ui.text,
-                fontFamily: boldArabic ? 'Amiri_700Bold' : 'Amiri_400Regular',
-                fontSize: arabicSize,
-                lineHeight: arabicSize * 1.9,
-                textAlign: 'right',
-                writingDirection: 'rtl',
-              }}
-            >
-              {item.text}{' '}
-              <Text style={{ color: ui.accent, fontSize: arabicSize * 0.75 }}>
-                ﴿{toLocaleDigits(item.id, 'ar')}﴾
-              </Text>
-            </Text>
-            {showTranslation && (
-              <Text
-                style={{
-                  color: ui.textMuted,
-                  fontFamily: font.regular,
-                  fontSize: 15 * Math.sqrt(fontScale),
-                  lineHeight: 24 * Math.sqrt(fontScale),
-                }}
-              >
-                {toLocaleDigits(item.id, locale)}. {translated?.get(item.id) ?? item.translation}
+          <View style={{ gap: 10, marginBottom: 10 }}>
+            <SurahCartouche
+              name={meta.name}
+              subtitle={`${meta.translation} · ${toLocaleDigits(meta.total_verses, locale)} ${t('verses')} · ${t(meta.type)}`}
+            />
+            {showBismillah && (
+              <Text style={{ color: ui.text, fontFamily: 'Amiri_400Regular', fontSize: 24, textAlign: 'center', lineHeight: 46 }}>{BISMILLAH}</Text>
+            )}
+            {/* Attribution has to travel with the text it belongs to. */}
+            {credit && showTranslation && (
+              <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 11, textAlign: 'center' }}>
+                {t('translation')}: {credit}
               </Text>
             )}
-            <Pressable
-              onPress={() => createStory(item)}
-              accessibilityRole="button"
-              accessibilityLabel={t('createStory')}
-              style={({ pressed }) => ({
-                flexDirection: row,
-                alignItems: 'center',
-                gap: 6,
-                alignSelf: 'flex-start',
-                opacity: pressed ? 0.6 : 1,
-              })}
-            >
-              <Ionicons name="share-social-outline" size={16} color={ui.accent} />
-              <Text style={{ color: ui.accent, fontFamily: font.medium, fontSize: 13 }}>
-                {t('createStory')}
-              </Text>
-            </Pressable>
           </View>
-        )}
+        }
+        renderItem={({ item }) => {
+          const kept = bookmarks.some((bm) => bm.surah === surah && bm.ayah === item.id);
+          const n = toLocaleDigits(item.id, locale);
+          return (
+            <View
+              style={{
+                borderRadius: 18,
+                backgroundColor: ui.bgElev,
+                borderWidth: 1,
+                borderColor: 'rgba(217,182,92,0.16)',
+                paddingTop: 12,
+                paddingHorizontal: 14,
+                paddingBottom: 6,
+                marginBottom: 8,
+              }}
+            >
+              <Text
+                style={{
+                  color: ui.text,
+                  fontFamily: boldArabic ? 'Amiri_700Bold' : 'Amiri_400Regular',
+                  fontSize: arabicSize,
+                  lineHeight: arabicSize * 1.9,
+                  textAlign: 'right',
+                  writingDirection: 'rtl',
+                }}
+              >
+                {item.text}
+              </Text>
+              {showTranslation && (
+                <Text style={{ color: ui.text, fontFamily: font.regular, fontSize: 15 * Math.sqrt(fontScale), lineHeight: 23 * Math.sqrt(fontScale), textAlign }}>
+                  {translated?.get(item.id) ?? item.translation}
+                </Text>
+              )}
+              <View style={{ flexDirection: row, alignItems: 'center', marginTop: 4 }}>
+                <View accessible accessibilityLabel={fill(t('ayahLabel'), { n })}>
+                  <StarBadge label={n} size={34} fontFamily={font.semibold} />
+                </View>
+                <View style={{ flex: 1 }} />
+                <Pressable
+                  onPress={() => toggleBookmark({ surah, ayah: item.id })}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: kept }}
+                  accessibilityLabel={fill(t(kept ? 'removeAyah' : 'saveAyah'), { n })}
+                  style={{ width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <Ionicons name={kept ? 'heart' : 'heart-outline'} size={19} color={kept ? ui.accent : ui.textMuted} />
+                </Pressable>
+                <Pressable
+                  onPress={() => createStory(item)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${t('createStory')}, ${fill(t('ayahLabel'), { n })}`}
+                  style={{ width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <Ionicons name="share-outline" size={19} color={ui.textMuted} />
+                </Pressable>
+              </View>
+            </View>
+          );
+        }}
       />
     </View>
   );

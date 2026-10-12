@@ -349,4 +349,13 @@ export const th: Record<TranslationKey, string> = {
   makeCard: "สร้างการ์ด",
   duasTitle: "ดุอาอ์และอัซการ",
   allCategories: "ทั้งหมด",
+  ayahOf: "อายะฮ์ที่ {n} จาก {total}",
+  continueBtn: "อ่านต่อ",
+  surahs: "ซูเราะฮ์",
+  bookmarks: "ที่บันทึกไว้",
+  noBookmarks: "แตะ ♡ ที่อายะฮ์ใดก็ได้เพื่อเก็บไว้ที่นี่",
+  readingSettings: "ตั้งค่าการอ่าน",
+  saveAyah: "บันทึกอายะฮ์ที่ {n}",
+  removeAyah: "นำอายะฮ์ที่ {n} ออก",
+  ayahLabel: "อายะฮ์ที่ {n}",
 };

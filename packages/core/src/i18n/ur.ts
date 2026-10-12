@@ -350,4 +350,13 @@ export const ur: Record<TranslationKey, string> = {
   makeCard: "کارڈ بنائیں",
   duasTitle: "دعائیں اور اذکار",
   allCategories: "سب",
+  ayahOf: "آیت {n} از {total}",
+  continueBtn: "جاری رکھیں",
+  surahs: "سورتیں",
+  bookmarks: "محفوظ",
+  noBookmarks: "کسی بھی آیت پر ♡ دبائیں تاکہ وہ یہاں محفوظ ہو جائے۔",
+  readingSettings: "پڑھنے کی ترتیبات",
+  saveAyah: "آیت {n} محفوظ کریں",
+  removeAyah: "آیت {n} محفوظ سے ہٹائیں",
+  ayahLabel: "آیت {n}",
 };

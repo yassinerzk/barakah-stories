@@ -178,7 +178,14 @@ export const useToastStore = create<ToastState>()((set, get) => ({
 /* ---------------- quran progress ---------------- */
 import { addFinished, removeFinished, type QuranPosition, type QuranProgress } from '@barakah/core';
 
+export interface AyahRef {
+  surah: number;
+  ayah: number;
+}
 interface QuranState extends QuranProgress {
+  /** Ayahs the reader kept with ♡, newest first. On this phone only. */
+  bookmarks: AyahRef[];
+  toggleBookmark: (ref: AyahRef) => void;
   showTranslation: boolean;
   fontScale: number;
   setLastRead: (pos: QuranPosition) => void;
@@ -195,6 +202,15 @@ export const useQuranStore = create<QuranState>()(
       lastRead: null,
       finished: [],
       updatedAt: 0,
+      bookmarks: [],
+      toggleBookmark: (ref) => {
+        const has = get().bookmarks.some((b) => b.surah === ref.surah && b.ayah === ref.ayah);
+        set({
+          bookmarks: has
+            ? get().bookmarks.filter((b) => !(b.surah === ref.surah && b.ayah === ref.ayah))
+            : [ref, ...get().bookmarks],
+        });
+      },
       showTranslation: true,
       fontScale: 1,
       setLastRead: (lastRead) => set({ lastRead, updatedAt: Date.now() }),

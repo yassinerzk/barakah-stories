@@ -354,4 +354,13 @@ export const fr: Record<TranslationKey, string> = {
   makeCard: "Créer une carte",
   duasTitle: "Douas et adhkar",
   allCategories: "Tout",
+  ayahOf: "Verset {n} sur {total}",
+  continueBtn: "Continuer",
+  surahs: "Sourates",
+  bookmarks: "Favoris",
+  noBookmarks: "Touchez ♡ sur un verset pour le garder ici.",
+  readingSettings: "Réglages de lecture",
+  saveAyah: "Enregistrer le verset {n}",
+  removeAyah: "Retirer le verset {n} des favoris",
+  ayahLabel: "Verset {n}",
 };

@@ -347,6 +347,15 @@ export const en = {
   makeCard: "Make a card",
   duasTitle: "Duas & adhkar",
   allCategories: "All",
+  ayahOf: "Ayah {n} of {total}",
+  continueBtn: "Continue",
+  surahs: "Surahs",
+  bookmarks: "Bookmarks",
+  noBookmarks: "Tap ♡ on any ayah to keep it here.",
+  readingSettings: "Reading settings",
+  saveAyah: "Bookmark ayah {n}",
+  removeAyah: "Remove bookmark from ayah {n}",
+  ayahLabel: "Ayah {n}",
 } as const;
 
 export type TranslationKey = keyof typeof en;

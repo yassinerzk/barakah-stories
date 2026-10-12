@@ -349,4 +349,13 @@ export const ar: Record<TranslationKey, string> = {
   makeCard: "اصنع بطاقة",
   duasTitle: "الأدعية والأذكار",
   allCategories: "الكل",
+  ayahOf: "الآية {n} من {total}",
+  continueBtn: "متابعة",
+  surahs: "السور",
+  bookmarks: "المحفوظات",
+  noBookmarks: "اضغط ♡ على أي آية لحفظها هنا.",
+  readingSettings: "إعدادات القراءة",
+  saveAyah: "احفظ الآية {n}",
+  removeAyah: "أزل الآية {n} من المحفوظات",
+  ayahLabel: "الآية {n}",
 };
