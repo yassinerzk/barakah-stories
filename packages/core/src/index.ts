@@ -21,3 +21,5 @@ export * from './geo';
 export * from './media';
 export * from './sunArc';
 export * from './methodForCountry';
+export * from './practice';
+export * from './names99';

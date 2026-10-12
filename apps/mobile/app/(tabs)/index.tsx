@@ -9,14 +9,17 @@ import {
   designFromPost,
   getPost,
   getPostsByCategory,
+  deedStats,
   POSTS,
   tagOf,
+  toLocaleDigits,
   type CategoryId,
   type Post,
 } from '@barakah/core';
 import { useT } from '../../src/i18n';
 import { ui } from '../../src/theme';
 import { useEditorStore, useRecentStore } from '../../src/store';
+import { useDeedsStore } from '../../src/practice/store';
 import { useHijriToday } from '../../src/hooks/useHijriToday';
 import { useLayoutWidth } from '../../src/hooks/useLayoutWidth';
 import { HomePrayerCard } from '../../src/features/prayer/HomePrayerCard';
@@ -28,6 +31,15 @@ import { LanguageSheet } from '../../src/components/LanguageSheet';
 import { useScrollTop } from '../../src/hooks/useScrollTop';
 import { REMINDER_OFFER_DELAY_MS, useReminderStore } from '../../src/notifications/store';
 import { Button, Chip, SectionTitle } from '../../src/components/ui';
+
+/** Home's shortcuts to the daily-practice screens. */
+const PRACTICE = [
+  { route: '/tasbih', label: 'tasbih', icon: 'radio-button-on-outline' },
+  { route: '/deeds', label: 'deeds', icon: 'checkmark-done-outline' },
+  { route: '/duas', label: 'duas', icon: 'hand-left-outline' },
+  { route: '/names', label: 'names99', icon: 'sparkles-outline' },
+  { route: '/calendar', label: 'calendar', icon: 'calendar-outline' },
+] as const;
 
 function chunk<T>(items: T[], size: number): T[][] {
   const out: T[][] = [];
@@ -45,6 +57,8 @@ export default function HomeScreen() {
   const recentIds = useRecentStore((s) => s.ids);
   const touch = useRecentStore((s) => s.touch);
   const load = useEditorStore((s) => s.load);
+  const deedLog = useDeedsStore((s) => s.log);
+  const streak = useMemo(() => deedStats(deedLog, now).streak, [deedLog, now]);
   const [category, setCategory] = useState<CategoryId | 'all'>('all');
   // The grid runs to ~150 rows, so getting back to the top by hand is a chore.
   const { ref: listRef, visible: canScrollTop, onScroll, scrollToTop } = useScrollTop<Post[]>();
@@ -119,6 +133,47 @@ export default function HomeScreen() {
       </View>
 
       <HomePrayerCard onOpen={() => router.push('/prayer')} />
+
+      {/* daily practice */}
+      <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'baseline', marginTop: 20, marginBottom: 10 }}>
+        <Text accessibilityRole="header" style={{ color: ui.text, fontFamily: font.semibold, fontSize: 17 }}>
+          {t('dailyPractice')}
+        </Text>
+        {streak > 0 && (
+          <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13 }}>
+            {t('streakDays').replace('{n}', toLocaleDigits(streak, locale))}
+          </Text>
+        )}
+      </View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -16 }} contentContainerStyle={{ paddingHorizontal: 16, gap: 8 }}>
+        {PRACTICE.map((p) => (
+          <Pressable
+            key={p.route}
+            onPress={() => router.push(p.route)}
+            accessibilityRole="button"
+            accessibilityLabel={t(p.label)}
+            style={({ pressed }) => ({
+              width: 84,
+              minHeight: 84,
+              borderRadius: 16,
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 6,
+              paddingVertical: 8,
+              backgroundColor: pressed ? ui.bgElev2 : ui.bgElev,
+              borderWidth: 1,
+              borderColor: 'rgba(217,182,92,0.18)',
+            })}
+          >
+            <View style={{ width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(217,182,92,0.14)' }}>
+              <Ionicons name={p.icon} size={18} color={ui.accent} />
+            </View>
+            <Text numberOfLines={1} style={{ color: ui.text, fontFamily: font.medium, fontSize: 12 }}>
+              {t(p.label)}
+            </Text>
+          </Pressable>
+        ))}
+      </ScrollView>
 
       <PostStrip title={t('todaysPosts')} posts={todays} hijriLabel={hijriLabel} onOpen={openPost} />
       <PostStrip title={t('recent')} posts={recent} hijriLabel={hijriLabel} onOpen={openPost} />
