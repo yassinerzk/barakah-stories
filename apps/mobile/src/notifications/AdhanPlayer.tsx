@@ -32,7 +32,7 @@ export const useAdhanStore = create<AdhanState>()((set) => ({
 }));
 
 /** Opens the player when the user taps a prayer alert set to adhan, including a cold start. */
-export function useAdhanFromNotifications(): void {
+function useAdhanFromNotificationsNative(): void {
   const play = useAdhanStore((s) => s.play);
   const last = Notifications.useLastNotificationResponse();
   useEffect(() => {
@@ -43,6 +43,9 @@ export function useAdhanFromNotifications(): void {
     }
   }, [last, play]);
 }
+
+/** The web build has no notification responses; picked once per platform, so hook order never changes. */
+export const useAdhanFromNotifications: () => void = Platform.OS === 'web' ? () => undefined : useAdhanFromNotificationsNative;
 
 export function AdhanPlayer() {
   const playing = useAdhanStore((s) => s.playing);

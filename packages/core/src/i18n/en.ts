@@ -256,6 +256,22 @@ export const en = {
   tools: "Tools",
   videoNeedsBuild: "Video export needs the installed app build, not Expo Go.",
   sharedAsImage: "Shared as an image. Video export needs the installed app.",
+  greetMorning: "Good morning",
+  greetAfternoon: "Good afternoon",
+  greetEvening: "Good evening",
+  greetNight: "Peaceful night",
+  todaysPrayers: "Today's prayers",
+  passedOf: "{n} of {total} passed",
+  nowBadge: "NOW",
+  adhanAt: "Adhan at {time}",
+  kmToKaaba: "{km} km to the Kaaba",
+  openCompass: "Open compass",
+  calcLabel: "Calculation",
+  asrMethod: "Asr method",
+  prevDay: "Previous day",
+  nextDay: "Next day",
+  nextIn: "Next · in {h} h {m} min",
+  passedLabel: "Passed",
 } as const;
 
 export type TranslationKey = keyof typeof en;

@@ -1,6 +1,7 @@
 import { reducedMotionNow } from '../a11y';
 import { useEffect } from 'react';
-import { Animated, Easing, StyleSheet, useAnimatedValue, useWindowDimensions, View } from 'react-native';
+import { Animated, Easing, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { useAnimValue } from '../hooks/useAnimValue';
 import { SvgXml } from 'react-native-svg';
 import { ui } from '../theme';
 import {
@@ -51,9 +52,9 @@ interface AnimatedSplashProps {
 
 export function AnimatedSplash({ onDone }: AnimatedSplashProps) {
   const { width, height } = useWindowDimensions();
-  const travel = useAnimatedValue(0);
-  const spin = useAnimatedValue(0);
-  const fade = useAnimatedValue(0);
+  const travel = useAnimValue(0);
+  const spin = useAnimValue(0);
+  const fade = useAnimValue(0);
 
   // A square stage: both files share one viewBox, so drawing them at the same
   // size in the same place makes their coordinates line up exactly.

@@ -11,12 +11,18 @@ export interface SunArc {
   t: number;
   /** Before sunrise or after Maghrib: draw the moon, not the sun. */
   isNight: boolean;
+  /** Which sky to paint: Fajr→sunrise, sunrise→Maghrib, Maghrib→Isha, otherwise night. */
+  phase: DayPhase;
   /** The latest time that has started (sunrise included), or null before Fajr. */
   current: PrayerName | null;
+  /** How many of the day's times have already started. */
+  passed: number;
   markers: SunArcMarker[];
 }
 
-const EMPTY: SunArc = { t: 0, isNight: true, current: null, markers: [] };
+export type DayPhase = 'dawn' | 'day' | 'evening' | 'night';
+
+const EMPTY: SunArc = { t: 0, isNight: true, phase: 'night', current: null, passed: 0, markers: [] };
 
 /**
  * The prayer-screen arc: the day's times laid along it by time, Fajr at the
@@ -43,9 +49,19 @@ export function sunArc(times: readonly PrayerTime[], now: Date): SunArc {
   const started = valid.filter((p) => p.time.getTime() <= nowMs);
   const current = started.length ? started[started.length - 1].id : null;
 
-  const sunrise = valid.find((p) => p.id === 'sunrise')?.time.getTime();
-  const maghrib = valid.find((p) => p.id === 'maghrib')?.time.getTime();
-  const isDay = sunrise !== undefined && maghrib !== undefined && nowMs >= sunrise && nowMs < maghrib;
+  const timeOf = (id: PrayerName) => valid.find((p) => p.id === id)?.time.getTime();
+  const between = (from: PrayerName, to: PrayerName) => {
+    const a = timeOf(from);
+    const b = timeOf(to);
+    return a !== undefined && b !== undefined && nowMs >= a && nowMs < b;
+  };
+  const phase: DayPhase = between('sunrise', 'maghrib')
+    ? 'day'
+    : between('fajr', 'sunrise')
+      ? 'dawn'
+      : between('maghrib', 'isha')
+        ? 'evening'
+        : 'night';
 
-  return { t: at(nowMs), isNight: !isDay, current, markers };
+  return { t: at(nowMs), isNight: phase !== 'day', phase, current, passed: started.length, markers };
 }

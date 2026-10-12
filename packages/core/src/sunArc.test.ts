@@ -57,6 +57,20 @@ describe('sunArc', () => {
 
   it('returns an empty arc when fewer than two times are valid', () => {
     const arc = sunArc([], day);
-    expect(arc).toEqual({ t: 0, isNight: true, current: null, markers: [] });
+    expect(arc).toEqual({ t: 0, isNight: true, phase: 'night', current: null, passed: 0, markers: [] });
+  });
+
+  it('names the phase of the day for the sky: dawn, day, evening, night', () => {
+    expect(sunArc(times(), shift(at('fajr'), -30)).phase).toBe('night');
+    expect(sunArc(times(), shift(at('fajr'), 10)).phase).toBe('dawn');
+    expect(sunArc(times(), at('dhuhr')).phase).toBe('day');
+    expect(sunArc(times(), shift(at('maghrib'), 10)).phase).toBe('evening');
+    expect(sunArc(times(), shift(at('isha'), 10)).phase).toBe('night');
+  });
+
+  it('counts the times already passed', () => {
+    expect(sunArc(times(), shift(at('fajr'), -1)).passed).toBe(0);
+    expect(sunArc(times(), shift(at('asr'), 1)).passed).toBe(4);
+    expect(sunArc(times(), shift(at('isha'), 1)).passed).toBe(6);
   });
 });

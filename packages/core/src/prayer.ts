@@ -145,6 +145,18 @@ export function qiblaBearing(point: GeoPoint): number {
   return Qibla(new Coordinates(point.lat, point.lng));
 }
 
+const KAABA: GeoPoint = { lat: 21.422487, lng: 39.826206 };
+const EARTH_RADIUS_KM = 6371.0088;
+
+/** Great-circle (haversine) distance from `point` to the Kaaba, in kilometres. */
+export function distanceToKaabaKm(point: GeoPoint): number {
+  const rad = (d: number) => (d * Math.PI) / 180;
+  const dLat = rad(KAABA.lat - point.lat);
+  const dLng = rad(KAABA.lng - point.lng);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(rad(point.lat)) * Math.cos(rad(KAABA.lat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * EARTH_RADIUS_KM * Math.asin(Math.min(1, Math.sqrt(a)));
+}
+
 export function formatClock(date: Date, locale: Locale, timeZone?: string): string {
   // Arabic keeps its own 12-hour convention and Arabic-Indic digits; everywhere
   // else a 24-hour clock avoids an am/pm abbreviation in seven languages.

@@ -1,4 +1,4 @@
-import { computePrayerTimes, nextPrayer, qiblaBearing, splitCountdown, PRAYER_NAMES } from './prayer';
+import { computePrayerTimes, distanceToKaabaKm, nextPrayer, qiblaBearing, splitCountdown, PRAYER_NAMES } from './prayer';
 import { CITIES } from './cities';
 
 const makkah = { lat: 21.4225, lng: 39.8262 };
@@ -31,6 +31,12 @@ describe('prayer', () => {
     expect(qiblaBearing({ lat: 51.5074, lng: -0.1278 })).toBeCloseTo(119, 0); // London
     expect(qiblaBearing({ lat: 40.7128, lng: -74.006 })).toBeCloseTo(58.5, 0); // New York
     expect(qiblaBearing({ lat: -6.2088, lng: 106.8456 })).toBeCloseTo(295, 0); // Jakarta
+  });
+
+  it('measures the great-circle distance to the Kaaba', () => {
+    expect(distanceToKaabaKm({ lat: 21.4225, lng: 39.8262 })).toBeLessThan(1); // Makkah
+    expect(distanceToKaabaKm({ lat: 51.5074, lng: -0.1278 })).toBeCloseTo(4790, -1); // London
+    expect(distanceToKaabaKm({ lat: -6.2088, lng: 106.8456 })).toBeCloseTo(7920, -2); // Jakarta
   });
 
   it('names every prayer in every app language, since alerts show the name', () => {

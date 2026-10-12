@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { Animated, Pressable, useAnimatedValue } from 'react-native';
+import { Animated, Pressable } from 'react-native';
+import { useAnimValue } from '../hooks/useAnimValue';
 import { Ionicons } from '@expo/vector-icons';
 import { useT } from '../i18n';
 import { ui } from '../theme';
@@ -20,7 +21,7 @@ interface ScrollTopButtonProps {
  */
 export function ScrollTopButton({ visible, onPress, bottom = 16 }: ScrollTopButtonProps) {
   const { t, rtl } = useT();
-  const anim = useAnimatedValue(0);
+  const anim = useAnimValue(0);
 
   useEffect(() => {
     Animated.timing(anim, {
