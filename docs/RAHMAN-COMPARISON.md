@@ -65,6 +65,53 @@ Ordered by value to our users ÷ effort. Effort: S = days, M = 1–2 weeks, L = 
       cite sources only (Quran/hadith search that links to our own texts), never issue rulings.
 - [ ] Apple Watch / CarPlay — skip until there is an iOS app.
 
+### 1b. More from their website (rahman.center, checked 2026-10-13)
+
+The site lists features the store listing doesn't. Already covered above: prayer times, adhan,
+Qibla, tasbih, 99 Names, deeds + streak, Quran + reciters, hadith, stories, Hajj & Umrah, Hijri
+calendar, mosques nearby, AI assistant, widgets, Apple Watch, CarPlay. New items:
+
+- [ ] **Live countdown on the lock screen** (M) — iOS Live Activity / Dynamic Island for the next
+      prayer. Android equivalent: we already have the ongoing next-prayer notification panel; on
+      Android 16 it can become a "Live Update" (promoted ongoing notification shown in the status
+      bar chip). iOS part waits for the iOS build.
+- [ ] **Dua & dhikr collections by category** (S–M) — morning/evening, after salah, sleep, travel,
+      distress, food… Readable lists with Arabic, transliteration, translation, source, a counter on
+      each, and "make a card". We already ship adhkar texts for cards (`content/posts/adhkar.ts`);
+      this gives them a reading screen.
+- [ ] **Learn to pray** (M) — wudu → salah step by step, illustrated (no faces), with the words
+      said at each step in Arabic + transliteration + translation, and audio. Scholar review first.
+- [ ] **Qada (missed prayers) tracker** (S) — set how many of each prayer you owe, tap to log a
+      made-up prayer, see what's left. Local only.
+- [ ] **Khatm / Hatim tracker** (S) — Quran completion progress by juz/page, with a reading plan
+      ("finish in 30 days" → pages per day). Feeds the daily-deeds "Quran reading" tick.
+- [ ] **Word-by-word Quran with synced audio** (L) — tap a word for its meaning; highlight words
+      as the reciter reads. Needs word-by-word data (quran.com / QUL, check licence) and timing data
+      per reciter. Comes after plain recitation audio.
+- [ ] **Verse of the day** (S) — in-app card + lock-screen / home widget; tap → story editor.
+- [ ] **Ramadan timetable** (S) — suhoor (Fajr) and iftar (Maghrib) for the whole month for the
+      user's location, with countdown to iftar on Home during Ramadan; shareable as a card.
+- [ ] **Zakat calculator** (S–M) — cash, gold, silver, investments, debts; nisab from gold or silver
+      price entered by the user (or fetched daily). Clear "estimate, ask a scholar" note.
+- [ ] **Islamic wallpapers** (S) — we already have a large background library: let people save any
+      background (or a finished card) as a phone wallpaper at screen resolution. Cheap win.
+- [ ] **Sleep stories** (part of section 3) — longer, slower narrated stories with a sleep timer
+      and dimmed player.
+- [ ] **Live Kaaba stream** (S) — only through the official Saudi broadcast's YouTube embed (the
+      broadcaster's terms allow embedding; never re-stream). Low priority.
+- [ ] **"Custom flows"** — their routine builder (chain dhikr / duas / Quran into one session).
+      Revisit after tasbih and duas exist; it is a combination of them.
+- [ ] **Learn to read Quran** (alphabet, vowels) — already listed above as a large content project.
+- [ ] **More languages** — they ship 33; we ship 7. Next candidates by Muslim population and Play
+      reach: Turkish, Bengali, Persian, German, Spanish, Russian, Hindi, Hausa, Swahili. Each needs a
+      reviewed translation of the UI and of the Quran/hadith translations we show.
+- [ ] **iPad / tablets** — see the tablet plan (responsive layout) below.
+- [ ] **Android Auto** (instead of CarPlay) — allowed for media apps, so Quran recitation can play in
+      the car through a Media3 `MediaSession` once recitation audio exists. Not for prayer times.
+- [ ] **Watch: synced counters** — the watch tasbih count syncs to the phone (Wear OS Data Layer /
+      WatchConnectivity), with haptics on each count and at the target.
+- [ ] Family Sharing — an App Store purchase setting; applies when Pro exists on iOS.
+
 ---
 
 ## 2. Design ideas for sections we already have
