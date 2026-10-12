@@ -145,6 +145,16 @@ Flow — about 6 short screens, one idea each, a progress dots row, **Skip** alw
       `PrayerAlertSheet`), preview the adhan, then **Turn on alerts** → notification permission
       (Android 13+ `POST_NOTIFICATIONS`, iOS). On Android 12+, if exact alarms are off, one extra line
       with **Allow on-time alerts** → opens the system exact-alarm page (`SCHEDULE_EXACT_ALARM`).
+- [ ] **5b. Widgets** (only once widgets exist — see section 1) — a swipeable gallery of our widgets
+      rendered live with the user's real data (next prayer + countdown, today's times, Name / verse of
+      the day), each with **Add to home screen**:
+      - Android 8+: calls `AppWidgetManager.requestPinAppWidget()` (guarded by
+        `isRequestPinAppWidgetSupported()`), which shows the system "Add widget?" dialog; a callback
+        tells us it was added so the button turns into "Added ✓". A small function in our local
+        `prayer-panel` module, or the pin API of `react-native-android-widget`.
+      - Launchers without pin support, and **iOS** (apps cannot add widgets there): a short looping
+        how-to (long-press the home screen → + → search "Barakah") instead of the button.
+      - Optional and skippable like every other step; the same gallery lives in Settings → Widgets.
 - [ ] **6. Ready** — "Create your first card" (opens the editor with a starter design) or "Go to
       prayer times". Optional, non-blocking "Sign in to sync" link — never required.
 
@@ -237,6 +247,6 @@ worth copying for our own store listing:
 2. Tasbih + daily deeds + streak (section 1) — small, offline, and they bring people back every day.
 3. Islamic calendar countdowns + 99 Names — small, and both feed new story-card content.
 4. Quran audio + last-read + ayah cards (2.3) — bigger, licence work first.
-5. Android widgets.
+5. Android widgets, plus the widget gallery (onboarding step 5b and Settings → Widgets).
 6. Narrated stories — a content project with a budget (scripts, review, art, voice).
 7. New store screenshots (3.2) once 1–3 have shipped.
