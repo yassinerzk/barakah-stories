@@ -5,7 +5,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import {
   designFromPost,
-  getSection,
   HADITH_BOOKS,
   HADITH_SOURCES,
   normalizeText,
@@ -20,7 +19,7 @@ import { useT } from '../../src/i18n';
 import { ui } from '../../src/theme';
 import { useEditorStore, useHadithStore, useRecentStore } from '../../src/store';
 import { useHadithLibrary } from '../../src/hadith/library';
-import { Button, Chip, SectionTitle } from '../../src/components/ui';
+import { Chip, SectionTitle } from '../../src/components/ui';
 import { HadithCard } from '../../src/components/HadithCard';
 
 const BOOKS: HadithBookId[] = ['bukhari', 'muslim'];
@@ -76,19 +75,23 @@ export default function HadithScreen() {
 
   const header = (
     <View style={{ gap: 12, paddingTop: insets.top + 12 }}>
-      <Text style={{ color: ui.text, fontFamily: font.semibold, fontSize: 24, textAlign }}>
-        {t('hadithTitle')}
-      </Text>
+      <View>
+        <Text accessibilityRole="header" style={{ color: ui.text, fontFamily: font.semibold, fontSize: 26, textAlign }}>
+          {t('hadithTitle')}
+        </Text>
+        {locale !== 'ar' && <Text style={{ color: ui.accent, fontFamily: 'Amiri_400Regular', fontSize: 18, textAlign }}>ٱلْحَدِيث</Text>}
+      </View>
       <View
         style={{
           flexDirection: row,
           alignItems: 'center',
           gap: 8,
           backgroundColor: ui.bgElev,
-          borderRadius: 12,
+          borderRadius: 24,
           borderWidth: 1,
-          borderColor: ui.lineStrong,
-          paddingHorizontal: 12,
+          borderColor: 'rgba(255,255,255,0.20)',
+          paddingHorizontal: 14,
+          minHeight: 48,
         }}
       >
         <Ionicons name="search" size={18} color={ui.textMuted} importantForAccessibility="no" accessibilityElementsHidden />
@@ -126,91 +129,111 @@ export default function HadithScreen() {
 
       {debounced === '' && (
         <View style={{ gap: 12 }}>
-          {BOOKS.map((b) => {
-            const meta = HADITH_BOOKS[b];
-            const st = status[b];
-            const ready = st === 'ready' || !!entries[b];
-            const last = lastRead[b];
-            return (
-              <View
-                key={b}
-                style={{
-                  backgroundColor: ui.bgElev2,
-                  borderRadius: ui.radius,
-                  borderWidth: 1,
-                  borderColor: ui.line,
-                  padding: 16,
-                  gap: 8,
-                }}
-              >
-                <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Text style={{ color: ui.text, fontFamily: font.semibold, fontSize: 18 }}>{meta.name}</Text>
-                  <Text style={{ color: ui.accent, fontFamily: 'Amiri_700Bold', fontSize: 22 }}>
-                    {meta.nameAr}
-                  </Text>
-                </View>
-                <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>
-                  {toLocaleDigits(meta.sections.length, locale)} {t('topics')} ·{' '}
-                  {toLocaleDigits(meta.hadithCount, locale)} {t('hadithNumber')}
-                </Text>
-                {ready ? (
-                  <View style={{ flexDirection: row, gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-                    <Button
-                      label={`📖 ${t('readFullBook')}`}
-                      size="sm"
-                      variant="primary"
-                      onPress={() => router.push({ pathname: '/hadith/[book]', params: { book: b } })}
-                    />
-                    {last && (
-                      <Button
-                        label={`${t('continueReading')} · ${getSection(b, last.section)?.en ?? ''}`}
-                        size="sm"
-                        onPress={() =>
-                          router.push({
-                            pathname: '/hadith/[book]/[section]',
-                            params: { book: b, section: String(last.section), number: String(last.number) },
-                          })
-                        }
-                      />
+          <View style={{ flexDirection: row, gap: 10 }}>
+            {BOOKS.map((b) => {
+              const meta = HADITH_BOOKS[b];
+              const st = status[b];
+              const ready = st === 'ready' || !!entries[b];
+              const last = lastRead[b];
+              const openBook = () => router.push({ pathname: '/hadith/[book]', params: { book: b } });
+              return (
+                <View
+                  key={b}
+                  style={{
+                    flex: 1,
+                    minHeight: 220,
+                    borderRadius: 20,
+                    padding: 14,
+                    gap: 6,
+                    overflow: 'hidden',
+                    backgroundColor: ui.bgElev,
+                    borderWidth: 1,
+                    borderColor: 'rgba(217,182,92,0.22)',
+                  }}
+                >
+                  <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <View
+                      style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 12,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: ready ? 'rgba(217,182,92,0.16)' : 'rgba(255,255,255,0.06)',
+                      }}
+                    >
+                      <Ionicons name="book-outline" size={21} color={ready ? ui.accent : ui.textMuted} />
+                    </View>
+                    {ready ? (
+                      <View style={{ flexDirection: row, alignItems: 'center', gap: 3 }}>
+                        <Ionicons name="checkmark" size={14} color={ui.accent} />
+                        <Text style={{ color: ui.accent, fontFamily: font.regular, fontSize: 11 }}>{t('downloadedBook')}</Text>
+                      </View>
+                    ) : (
+                      <View style={{ flexDirection: row, alignItems: 'center', gap: 3 }}>
+                        <Ionicons name="cloud-download-outline" size={15} color={ui.textMuted} />
+                        <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 11 }}>~{HADITH_SOURCES[b].approxMb} MB</Text>
+                      </View>
                     )}
-                    <Text
-                      style={{
-                        color: ui.success === '#1f5a44' ? '#7fd1a8' : ui.accent,
-                        fontFamily: font.regular,
-                        fontSize: 12,
-                      }}
-                    >
-                      ✓ {t('downloadedBook')}
-                    </Text>
                   </View>
-                ) : (
-                  <View style={{ gap: 6 }}>
-                    <Button
-                      label={
-                        st === 'loading'
-                          ? t('downloading')
-                          : `⬇ ${t('downloadBook')} (~${HADITH_SOURCES[b].approxMb} MB)`
-                      }
-                      size="sm"
-                      variant="primary"
-                      disabled={st === 'loading'}
+                  <Text style={{ color: ui.text, fontFamily: font.semibold, fontSize: 16, lineHeight: 20, textAlign }}>{meta.name}</Text>
+                  <Text style={{ color: ui.accent, fontFamily: 'Amiri_400Regular', fontSize: 17, textAlign }}>{meta.nameAr}</Text>
+                  <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 12, textAlign }}>
+                    {toLocaleDigits(meta.sections.length, locale)} {t('topics')} · {toLocaleDigits(meta.hadithCount, locale)} {t('hadithNumber')}
+                  </Text>
+                  <View style={{ flex: 1 }} />
+                  {ready ? (
+                    <Pressable
+                      onPress={openBook}
+                      accessibilityRole="button"
+                      accessibilityLabel={`${t('readFullBook')}: ${meta.name}`}
+                      style={({ pressed }) => ({ minHeight: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center', backgroundColor: pressed ? '#C9A24A' : ui.accent })}
+                    >
+                      <Text style={{ color: ui.accentInk, fontFamily: font.semibold, fontSize: 14 }}>{t('readFullBook')}</Text>
+                    </Pressable>
+                  ) : (
+                    <Pressable
                       onPress={() => void ensure(b)}
-                    />
-                    <Text
-                      style={{
-                        color: st === 'error' ? ui.danger : ui.textMuted,
-                        fontFamily: font.regular,
-                        fontSize: 12,
-                        textAlign,
-                      }}
+                      disabled={st === 'loading'}
+                      accessibilityRole="button"
+                      accessibilityState={{ busy: st === 'loading' }}
+                      accessibilityLabel={`${t('downloadBook')}: ${meta.name}`}
+                      style={({ pressed }) => ({
+                        minHeight: 44,
+                        borderRadius: 12,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderWidth: 1,
+                        borderColor: ui.lineStrong,
+                        backgroundColor: pressed ? ui.bgElev2 : 'transparent',
+                      })}
                     >
-                      {st === 'error' ? t('shareFailed') : t('downloadHint')}
-                    </Text>
-                  </View>
-                )}
-              </View>
-            );
-          })}
+                      <Text style={{ color: st === 'error' ? ui.danger : ui.text, fontFamily: font.semibold, fontSize: 14 }}>
+                        {st === 'loading' ? t('downloading') : st === 'error' ? t('shareFailed') : t('downloadBook')}
+                      </Text>
+                    </Pressable>
+                  )}
+                  {ready && last && (
+                    <Pressable
+                      onPress={() =>
+                        router.push({
+                          pathname: '/hadith/[book]/[section]',
+                          params: { book: b, section: String(last.section), number: String(last.number) },
+                        })
+                      }
+                      accessibilityRole="button"
+                      style={{ minHeight: 40, justifyContent: 'center' }}
+                    >
+                      <Text numberOfLines={1} style={{ color: ui.accent, fontFamily: font.medium, fontSize: 12, textAlign: 'center' }}>
+                        {t('continueReading')} ›
+                      </Text>
+                    </Pressable>
+                  )}
+                </View>
+              );
+            })}
+          </View>
+          <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 12, textAlign }}>{t('downloadHint')}</Text>
           <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 11, textAlign }}>
             {t('attribution')}
           </Text>
