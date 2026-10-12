@@ -21,3 +21,11 @@ export const ui = {
 } as const;
 
 export const space = (n: number) => n * 4;
+
+/** Shared motion timings, so every animation in the app moves with the same feel. */
+export const motion = {
+  /** A screen's one signature reveal (the prayer arc drawing in). */
+  revealMs: 900,
+  /** Something already on screen moving to a new place. */
+  moveMs: 600,
+} as const;

@@ -9,6 +9,7 @@ import {
   CALC_METHODS,
   formatClock,
   PRAYER_NAMES,
+  sunArc,
   toLocaleDigits,
   type AlertMode,
   type AlertPrayer,
@@ -21,6 +22,8 @@ import { useHeading } from '../../src/features/prayer/useHeading';
 import { QiblaCompass } from '../../src/features/prayer/QiblaCompass';
 import { LocationSheet } from '../../src/features/prayer/LocationSheet';
 import { PrayerAlertSheet } from '../../src/features/prayer/PrayerAlertSheet';
+import { PrayerSunArc } from '../../src/features/prayer/PrayerSunArc';
+import { NextPrayerCountdown } from '../../src/features/prayer/NextPrayerCountdown';
 import { usePrayerAlertStore } from '../../src/notifications/prayerAlertStore';
 import { openBatterySettings, openExactAlarmSettings, panelSupported } from '../../modules/prayer-panel';
 import { announce, useA11yStore, useScreenReader } from '../../src/a11y';
@@ -46,7 +49,7 @@ export default function PrayerScreen() {
   const { t, l, locale, font, row, textAlign } = useT();
   const insets = useSafeAreaInsets();
   const toast = useToastStore((s) => s.show);
-  const { location, times, next, countdown, qibla } = usePrayerTimes();
+  const { location, times, next, countdown, qibla, now } = usePrayerTimes();
   const setLocation = usePrayerStore((s) => s.setLocation);
   const method = usePrayerStore((s) => s.method);
   const setMethod = usePrayerStore((s) => s.setMethod);
@@ -149,28 +152,24 @@ export default function PrayerScreen() {
         </Text>
       ) : (
         <>
-          {/* next prayer */}
+          {/* the day as an arc, with the sun at the present moment */}
+          <View style={{ marginTop: 16 }}>
+            <PrayerSunArc
+              arc={sunArc(times, now)}
+              labels={Object.fromEntries(
+                times.map((tm, i) => [tm.id, { name: l(PRAYER_NAMES[i].label), time: formatClock(tm.time, locale, tz) }]),
+              )}
+            />
+          </View>
+
+          {/* next prayer, counting down */}
           {next && countdown && (
-            <View
-              accessible
-              accessibilityLabel={`${t('nextPrayer')}: ${l(PRAYER_NAMES.find((p) => p.id === next.id)!.label)}, ${formatClock(next.time, locale, tz)}`}
-              style={{ backgroundColor: ui.bgElev2, borderRadius: ui.radius, padding: 16, marginTop: 12, borderWidth: 1, borderColor: ui.line }}
-            >
-              <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>{t('nextPrayer')}</Text>
-              <View style={{ flexDirection: row, justifyContent: 'space-between', alignItems: 'baseline' }}>
-                <Text style={{ color: ui.text, fontFamily: font.semibold, fontSize: 28 }}>
-                  {l(PRAYER_NAMES.find((p) => p.id === next.id)!.label)}
-                </Text>
-                <Text style={{ color: ui.accent, fontFamily: font.semibold, fontSize: 28, fontVariant: ['tabular-nums'] }}>
-                  {formatClock(next.time, locale, tz)}
-                </Text>
-              </View>
-              <Text style={{ color: ui.textMuted, fontFamily: font.regular, textAlign }}>
-                {t('inTime')} {toLocaleDigits(countdown.hours, locale)}
-                {t('hoursShort')} {toLocaleDigits(countdown.minutes, locale)}
-                {t('minutesShort')}
-              </Text>
-            </View>
+            <NextPrayerCountdown
+              name={l(PRAYER_NAMES.find((p) => p.id === next.id)!.label)}
+              time={formatClock(next.time, locale, tz)}
+              at={next.time}
+              accessibilityLabel={`${t('nextPrayer')}: ${l(PRAYER_NAMES.find((p) => p.id === next.id)!.label)}, ${formatClock(next.time, locale, tz)}, ${t('inTime')} ${toLocaleDigits(countdown.hours, locale)}${t('hoursShort')} ${toLocaleDigits(countdown.minutes, locale)}${t('minutesShort')}`}
+            />
           )}
 
           {/* times, each with its alert */}

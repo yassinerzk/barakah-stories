@@ -13,7 +13,7 @@ export function usePrayerTimes() {
     return () => clearInterval(id);
   }, []);
   return useMemo(() => {
-    if (!location) return { location: null, times: [], next: null, countdown: null, qibla: null };
+    if (!location) return { location: null, times: [], next: null, countdown: null, qibla: null, now };
     const settings = { method, madhab };
     const times = computePrayerTimes(location, now, settings);
     const next = nextPrayer(location, now, settings);
@@ -23,6 +23,7 @@ export function usePrayerTimes() {
       next,
       countdown: splitCountdown(next.time.getTime() - now.getTime()),
       qibla: qiblaBearing(location),
+      now,
     };
   }, [location, method, madhab, now]);
 }
