@@ -121,6 +121,63 @@ How we build it — checklist:
 - [ ] A starry night background on the prayer screen at night only; plain surface by day.
 - [ ] Tab bar as a floating rounded pill with an active "chip" behind the selected tab.
 
+### 2.7 Onboarding (first launch)
+
+Rahman opens with a short onboarding: an overview of what the app does, then it sets up location,
+notifications and the other settings its features need. We have none today — location is asked the
+first time the Prayer tab opens, notifications when alerts are switched on.
+
+Flow — about 6 short screens, one idea each, a progress dots row, **Skip** always visible:
+
+- [ ] **1. Language** — the 7 languages with their own names (العربية, Français…), preselected from
+      the phone; switches RTL immediately so the rest of onboarding is already in that language.
+- [ ] **2. Overview** — 2–3 swipeable cards: "Make Islamic story cards and videos", "Prayer times,
+      adhan and Qibla", "Quran and hadith, offline". Real app visuals, not stock art. This is where the
+      one motion moment lives (cards slide in; reduced motion = fade).
+- [ ] **3. Location** — explain first, then ask: "Your location is used only on this phone to work out
+      prayer times and the Qibla. It is never sent to us." Buttons: **Use my location** (system prompt,
+      approximate is enough — accept `ACCESS_COARSE_LOCATION` if the user picks it) and **Choose my city**
+      (opens the existing `LocationSheet`). Denied → falls back to the city picker, never a dead end.
+- [ ] **4. Prayer settings** — calculation method preselected from the country (MWL, Umm al-Qura,
+      ISNA, Egyptian, Karachi…), Asr: Shafi'i / Hanafi. Shown with the resulting times for today so the
+      choice is concrete. Editable later in settings.
+- [ ] **5. Alerts** — choose adhan / sound / vibrate / off for all prayers at once (per-prayer stays in
+      `PrayerAlertSheet`), preview the adhan, then **Turn on alerts** → notification permission
+      (Android 13+ `POST_NOTIFICATIONS`, iOS). On Android 12+, if exact alarms are off, one extra line
+      with **Allow on-time alerts** → opens the system exact-alarm page (`SCHEDULE_EXACT_ALARM`).
+- [ ] **6. Ready** — "Create your first card" (opens the editor with a starter design) or "Go to
+      prayer times". Optional, non-blocking "Sign in to sync" link — never required.
+
+Store rules this must follow:
+
+- [ ] Ask each permission **only right after the screen that explains it**, and only when the user
+      taps the button — never several system prompts in a row on launch.
+- [ ] Every permission step has a **Not now** that continues; no feature screen blocks the app
+      (Apple guideline 5.1.1; Play user-data policy). The app must be fully usable with nothing granted.
+- [ ] Our buttons must not look like or pre-empt the system dialog ("Allow" / "Don't Allow" wording is
+      reserved for the system prompt on iOS). Use "Use my location", "Turn on alerts".
+- [ ] Explanation text matches the Data safety form and privacy policy (location: on-device only,
+      not collected) and the `NSLocationWhenInUseUsageDescription` string.
+- [ ] No background location, no full-screen intent, no `USE_EXACT_ALARM` — same as today.
+- [ ] If permission was permanently denied, the step shows **Open settings** instead of asking again.
+
+How we build it:
+
+- [ ] `useOnboardingStore` (persisted, versioned): `completedVersion`. Show onboarding when it is
+      below the current version, so a future big release can show a short "What's new" page instead
+      of the whole flow. Existing users updating to this version skip straight to "What's new".
+- [ ] Route `app/onboarding.tsx` (Expo Router), redirected to from `_layout.tsx` before the tabs
+      render; no flash of the home screen.
+- [ ] Pager with `react-native-pager-view` or a horizontal `FlatList` with `pagingEnabled`; works in
+      RTL; back button / gesture goes to the previous step.
+- [ ] Reuse, don't duplicate: `LocationSheet`, the alert prefs store, `service.ts` permission request,
+      `canScheduleExactAlarms()`.
+- [ ] Accessibility: every step's title is announced on change; buttons ≥48 dp; works at the largest
+      font size (scrolls instead of clipping); progress read as "Step 3 of 6".
+- [ ] i18n: all copy in 7 languages.
+- [ ] Settings → "Replay introduction" so it can be seen again.
+- [ ] Tests: store logic (version gating), and an E2E path for grant / deny / skip on each step.
+
 ---
 
 ## 3. Storytelling
@@ -175,6 +232,8 @@ worth copying for our own store listing:
 ## 4. Suggested order
 
 1. Prayer screen redesign with the sun arc (2.1) — the biggest visible upgrade, all local, no new data.
+   Build onboarding (2.7) right alongside it: both touch location and alerts, and onboarding is what
+   makes alerts actually get turned on.
 2. Tasbih + daily deeds + streak (section 1) — small, offline, and they bring people back every day.
 3. Islamic calendar countdowns + 99 Names — small, and both feed new story-card content.
 4. Quran audio + last-read + ayah cards (2.3) — bigger, licence work first.
