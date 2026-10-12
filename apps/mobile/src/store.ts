@@ -109,6 +109,8 @@ export interface PrayerLocation extends GeoPoint {
   label: string;
   /** IANA zone when the location is a preset city; undefined = device zone. */
   timeZone?: string;
+  /** ISO 3166 country code, when known; picks the suggested calculation method. */
+  country?: string;
 }
 interface PrayerState {
   location: PrayerLocation | null;
@@ -129,6 +131,24 @@ export const usePrayerStore = create<PrayerState>()(
       setMadhab: (madhab) => set({ madhab }),
     }),
     { name: 'barakah.prayer', version: 1, storage: storage() },
+  ),
+);
+
+/* ---------------- onboarding ---------------- */
+/** Bump when onboarding gains a step everyone should see once. */
+export const ONBOARDING_VERSION = 1;
+interface OnboardingState {
+  /** The onboarding version this person has finished or skipped; 0 = never. */
+  completedVersion: number;
+  complete: () => void;
+}
+export const useOnboardingStore = create<OnboardingState>()(
+  persist(
+    (set) => ({
+      completedVersion: 0,
+      complete: () => set({ completedVersion: ONBOARDING_VERSION }),
+    }),
+    { name: 'barakah.onboarding', version: 1, storage: storage() },
   ),
 );
 

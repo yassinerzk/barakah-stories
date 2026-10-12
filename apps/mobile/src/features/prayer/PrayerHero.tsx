@@ -315,7 +315,9 @@ function Body({ night, size }: { night: boolean; size: number }) {
       </Defs>
       <Circle cx={c} cy={c} r={c} fill="url(#sunGlow)" />
       {night ? (
-        <Path transform={`translate(${c - 11 * k} ${c - 12 * k}) scale(${k})`} d="M19 2 A12 12 0 1 1 3 22 A10 10 0 1 0 19 2 Z" fill="#FFF1C4" />
+        // The two arcs' end points sit closer than either diameter, or SVG
+        // stretches both radii and the crescent collapses to nothing.
+        <Path transform={`translate(${c - 9 * k} ${c - 12 * k}) scale(${0.75 * k})`} d="M16 0 A16 16 0 1 1 0 24 A13 13 0 1 0 16 0 Z" fill="#FFF1C4" />
       ) : (
         <Circle cx={c} cy={c} r={8.5 * k} fill="#FFF1C4" />
       )}

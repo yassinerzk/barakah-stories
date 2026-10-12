@@ -20,3 +20,4 @@ export * from './prayerAlerts';
 export * from './geo';
 export * from './media';
 export * from './sunArc';
+export * from './methodForCountry';

@@ -25,6 +25,7 @@ import { useHeading } from '../../src/features/prayer/useHeading';
 import { QiblaCompass } from '../../src/features/prayer/QiblaCompass';
 import { LocationSheet } from '../../src/features/prayer/LocationSheet';
 import { PrayerAlertSheet } from '../../src/features/prayer/PrayerAlertSheet';
+import { locateMe } from '../../src/features/prayer/locateMe';
 import { PrayerHero } from '../../src/features/prayer/PrayerHero';
 import { PrayerTimeline } from '../../src/features/prayer/PrayerTimeline';
 import { DateSwitcher, PrayerHeader, QiblaSummary, SettingTile, greetingFor } from '../../src/features/prayer/PrayerParts';
@@ -78,27 +79,14 @@ export default function PrayerScreen() {
 
   const useMyLocation = async () => {
     setLocating(true);
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        toast(t('locationDenied'), 'error');
-        return;
-      }
-      const pos = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
-      let label = `${pos.coords.latitude.toFixed(2)}, ${pos.coords.longitude.toFixed(2)}`;
-      if (Platform.OS !== 'web') {
-        const places = await Location.reverseGeocodeAsync(pos.coords).catch(() => []);
-        const p = places[0];
-        if (p) label = [p.city ?? p.subregion ?? p.region, p.country].filter(Boolean).join(', ');
-      }
-      // No time zone: a position is wherever the phone is, so the phone's own clock applies.
-      setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude, label });
-      setCompassAttempt((n) => n + 1);
-    } catch {
+    const result = await locateMe();
+    setLocating(false);
+    if (!result.ok) {
       toast(t('locationDenied'), 'error');
-    } finally {
-      setLocating(false);
+      return;
     }
+    setLocation(result.location);
+    setCompassAttempt((n) => n + 1);
   };
 
   const enableCompass = async () => {

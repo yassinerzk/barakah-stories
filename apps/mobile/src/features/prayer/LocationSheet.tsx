@@ -81,7 +81,7 @@ export function LocationSheet({ visible, onClose, onPick, onUseMyLocation, locat
     setQuery('');
   };
   const pickCity = (c: GeoCity) => {
-    onPick({ lat: c.lat, lng: c.lng, label: `${c.name}, ${nameOf(c.cc)}`, timeZone: c.timeZone });
+    onPick({ lat: c.lat, lng: c.lng, label: `${c.name}, ${nameOf(c.cc)}`, timeZone: c.timeZone, country: c.cc });
     close();
   };
 
