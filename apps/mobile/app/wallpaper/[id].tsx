@@ -62,7 +62,7 @@ function Preview({ wallpaper }: { wallpaper: Wallpaper }) {
   const save = () =>
     void run(async () => {
       const outcome = await saveWallpaper(art, `barakah-${wallpaper.id}`, t('wallpaperSave'));
-      if (outcome === 'unavailable') toast(t('shareFailed'), 'error');
+      if (outcome === 'unavailable') toast(t('shareFailedMobile'), 'error');
     });
   const close = () => (router.canGoBack() ? router.back() : router.replace('/wallpapers'));
 
@@ -132,12 +132,14 @@ function LockClock({ top, width }: { top: number; width: number }) {
 /** Android's choice of where the wallpaper goes. */
 function TargetSheet({ visible, onPick, onClose }: { visible: boolean; onPick: (target: WallpaperTarget) => void; onClose: () => void }) {
   const { t, font, row, textAlign } = useT();
+  const insets = useSafeAreaInsets();
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <Pressable
         onPress={onClose}
         accessible={false}
-        style={{ flex: 1, backgroundColor: 'rgba(4,10,9,0.6)', justifyContent: 'flex-end', padding: 16 }}
+        // The modal draws under Android's navigation bar; the card stays above it.
+        style={{ flex: 1, backgroundColor: 'rgba(4,10,9,0.6)', justifyContent: 'flex-end', padding: 16, paddingBottom: 16 + insets.bottom }}
       >
         {/* Taps inside the card must not dismiss it. */}
         <Pressable

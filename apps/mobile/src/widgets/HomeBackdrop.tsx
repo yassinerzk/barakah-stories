@@ -1,6 +1,7 @@
 import { useId, type ReactNode } from 'react';
-import { StyleSheet, View, type ViewStyle } from 'react-native';
-import Svg, { Defs, LinearGradient, RadialGradient, Rect, Stop } from 'react-native-svg';
+import { View, type ViewStyle } from 'react-native';
+import { Defs, LinearGradient, RadialGradient, Rect, Stop } from 'react-native-svg';
+import { SvgFill } from '../components/SvgFill';
 
 /**
  * A phone's home screen in miniature, for showing a widget where it will sit.
@@ -11,7 +12,7 @@ export function HomeBackdrop({ children, icons = false, style }: { children: Rea
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   return (
     <View style={[{ overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }, style]}>
-      <Svg style={StyleSheet.absoluteFill} width="100%" height="100%" preserveAspectRatio="none">
+      <SvgFill preserveAspectRatio="none">
         <Defs>
           <LinearGradient id={`hb${uid}`} x1="0.4" y1="0" x2="0.6" y2="1">
             <Stop offset="0" stopColor="#1A2E3A" />
@@ -25,7 +26,7 @@ export function HomeBackdrop({ children, icons = false, style }: { children: Rea
         </Defs>
         <Rect width="100%" height="100%" fill={`url(#hb${uid})`} />
         <Rect width="100%" height="100%" fill={`url(#hg${uid})`} />
-      </Svg>
+      </SvgFill>
       {icons && <IconRow />}
       {children}
       {icons && <IconRow />}

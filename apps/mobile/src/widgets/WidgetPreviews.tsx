@@ -1,6 +1,7 @@
 import { useId } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import { Text, View } from 'react-native';
+import { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import { SvgFill } from '../components/SvgFill';
 import { DHIKR_PRESETS, formatClock, pick, PRAYER_NAMES, toLocaleDigits } from '@barakah/core';
 import { useT } from '../i18n';
 import { ui } from '../theme';
@@ -22,7 +23,7 @@ function Shell({ children, style }: { children: React.ReactNode; style: object }
   const id = `wbg${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   return (
     <View style={[{ borderRadius: 24, borderWidth: 1, borderColor: 'rgba(217,182,92,0.45)', overflow: 'hidden' }, style]}>
-      <Svg style={StyleSheet.absoluteFill} width="100%" height="100%" preserveAspectRatio="none">
+      <SvgFill preserveAspectRatio="none">
         <Defs>
           <LinearGradient id={id} x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor="#12302B" />
@@ -30,7 +31,7 @@ function Shell({ children, style }: { children: React.ReactNode; style: object }
           </LinearGradient>
         </Defs>
         <Rect width="100%" height="100%" fill={`url(#${id})`} />
-      </Svg>
+      </SvgFill>
       {children}
     </View>
   );

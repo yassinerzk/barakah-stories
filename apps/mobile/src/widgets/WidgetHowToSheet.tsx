@@ -1,4 +1,5 @@
 import { Modal, Platform, Pressable, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { toLocaleDigits, type TranslationKey } from '@barakah/core';
 import { useT } from '../i18n';
@@ -25,13 +26,15 @@ const STEPS: Record<'ios' | 'android', readonly TranslationKey[]> = {
 /** The three steps to add a widget by hand, for this phone's system. */
 export function WidgetHowToSheet({ visible, onClose }: { visible: boolean; onClose: () => void }) {
   const { t, locale, font, row, textAlign } = useT();
+  const insets = useSafeAreaInsets();
   const steps = STEPS[Platform.OS === 'ios' ? 'ios' : 'android'];
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <Pressable
         onPress={onClose}
         accessible={false}
-        style={{ flex: 1, backgroundColor: 'rgba(4,10,9,0.72)', justifyContent: 'flex-end', padding: 16 }}
+        // The modal draws under Android's navigation bar; the card stays above it.
+        style={{ flex: 1, backgroundColor: 'rgba(4,10,9,0.72)', justifyContent: 'flex-end', padding: 16, paddingBottom: 16 + insets.bottom }}
       >
         {/* Taps inside the card must not dismiss it. */}
         <Pressable

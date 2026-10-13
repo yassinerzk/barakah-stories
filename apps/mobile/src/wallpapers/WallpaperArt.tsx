@@ -13,10 +13,11 @@ import { wallpaperText } from './words';
 const SPACE_W = 1080;
 /**
  * Where the words go, as shares of the height: below the clock that lock
- * screens draw near the top, and above the shortcuts along the bottom.
+ * screens draw near the top, and above the row of app icons that home
+ * screens keep along the bottom (and the lock screen's shortcuts).
  */
-const WORDS_TOP = 0.44;
-const WORDS_BOTTOM = 0.2;
+const WORDS_TOP = 0.38;
+const WORDS_BOTTOM = 0.26;
 const SIDE_MARGIN = 0.08;
 /** Space under the star rule, as a share of the text size. */
 const ORNAMENT_CLEARANCE = 0.45;

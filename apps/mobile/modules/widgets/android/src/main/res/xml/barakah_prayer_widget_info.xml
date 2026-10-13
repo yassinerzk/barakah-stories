@@ -7,5 +7,6 @@
   android:resizeMode="horizontal|vertical"
   android:updatePeriodMillis="0"
   android:initialLayout="@layout/barakah_widget_prayer"
+  android:previewImage="@drawable/barakah_widget_prayer_preview"
   android:description="@string/barakah_widget_prayer_desc"
   android:widgetCategory="home_screen" />

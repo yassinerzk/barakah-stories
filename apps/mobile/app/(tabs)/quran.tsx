@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Svg, { Circle, Defs, Path, Pattern, RadialGradient, Rect, Stop } from 'react-native-svg';
+import { Circle, Defs, Path, Pattern, RadialGradient, Rect, Stop } from 'react-native-svg';
 import { continuePosition, getChapterMeta, QURAN_INDEX, toLocaleDigits } from '@barakah/core';
 import { useT } from '../../src/i18n';
 import { ui } from '../../src/theme';
 import { useQuranStore, type AyahRef } from '../../src/store';
 import { loadChapter } from '../../src/quran/chapters';
 import { StarBadge } from '../../src/components/StarBadge';
+import { SvgFill } from '../../src/components/SvgFill';
 
 const GOLD_SOFT = 'rgba(217,182,92,';
 const fill = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k: string) => v[k] ?? '');
@@ -46,7 +47,7 @@ export default function QuranScreen() {
         accessibilityLabel={`${t('continueReading')}: ${meta.transliteration}, ${fill(t('ayahOf'), { n: digits(pos.ayah), total: digits(meta.total_verses) })}`}
         style={{ borderRadius: 22, overflow: 'hidden', borderWidth: 1, borderColor: `${GOLD_SOFT}0.45)`, backgroundColor: ui.bgElev, padding: 18 }}
       >
-        <Svg width="100%" height="100%" style={{ position: 'absolute', left: 0, top: 0 }} importantForAccessibility="no-hide-descendants" accessibilityElementsHidden>
+        <SvgFill>
           <Defs>
             <Pattern id="gQ" width={40} height={40} patternUnits="userSpaceOnUse">
               <Path d="M20 4 L24 16 L36 20 L24 24 L20 36 L16 24 L4 20 L16 16 Z" fill="none" stroke={ui.accent} strokeWidth={0.7} />
@@ -58,7 +59,7 @@ export default function QuranScreen() {
           </Defs>
           <Rect width="100%" height="100%" fill="url(#gQ)" opacity={0.08} />
           <Circle cx="85%" cy={50} r={70} fill="url(#qg)" />
-        </Svg>
+        </SvgFill>
         <Text style={{ color: ui.accent, fontFamily: font.medium, fontSize: 11, letterSpacing: 1.5, textAlign }}>
           {(lastRead ? t('continueReading') : t('startReading')).toLocaleUpperCase(locale)}
         </Text>

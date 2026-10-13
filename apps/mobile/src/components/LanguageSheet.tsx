@@ -1,4 +1,5 @@
 import { Modal, Pressable, ScrollView, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LOCALES, type Locale } from '@barakah/core';
 import { useT } from '../i18n';
 import { ui } from '../theme';
@@ -21,6 +22,7 @@ interface LanguageSheetProps {
  */
 export function LanguageSheet({ visible, onClose }: LanguageSheetProps) {
   const { t, row, textAlign } = useT();
+  const insets = useSafeAreaInsets();
   const locale = useSettingsStore((s) => s.locale);
   const setLocale = useSettingsStore((s) => s.setLocale);
 
@@ -39,6 +41,8 @@ export function LanguageSheet({ visible, onClose }: LanguageSheetProps) {
           backgroundColor: 'rgba(4,10,9,0.72)',
           justifyContent: 'flex-end',
           padding: 16,
+          // The modal draws under Android's navigation bar; the card stays above it.
+          paddingBottom: 16 + insets.bottom,
         }}
       >
         {/* Taps inside the card must not dismiss it. */}
