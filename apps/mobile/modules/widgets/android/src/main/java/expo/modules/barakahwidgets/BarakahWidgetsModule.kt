@@ -1,8 +1,10 @@
 package expo.modules.barakahwidgets
 
+import android.app.WallpaperManager
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import expo.modules.kotlin.exception.Exceptions
 import expo.modules.kotlin.modules.Module
@@ -57,6 +59,25 @@ class BarakahWidgetsModule : Module() {
       if (!manager.isRequestPinAppWidgetSupported) return@Function false
       val provider = if (kind == "dhikr") DhikrWidget::class.java else PrayerWidget::class.java
       manager.requestPinAppWidget(ComponentName(context, provider), null, null)
+    }
+
+    // Wallpapers screen. SET_WALLPAPER is a normal permission: granted at install, never a prompt.
+    Function("canSetWallpaper") {
+      val manager = WallpaperManager.getInstance(context)
+      manager.isWallpaperSupported && manager.isSetWallpaperAllowed
+    }
+
+    // `uri` is the picture the app just drew (a file in its own cache); `target` is home, lock or both.
+    AsyncFunction("setWallpaper") { uri: String, target: String ->
+      val manager = WallpaperManager.getInstance(context)
+      val which = when (target) {
+        "home" -> WallpaperManager.FLAG_SYSTEM
+        "lock" -> WallpaperManager.FLAG_LOCK
+        else -> WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK
+      }
+      val stream = context.contentResolver.openInputStream(Uri.parse(uri)) ?: return@AsyncFunction false
+      // setStream returns the new wallpaper's id, or 0 when the system refused it.
+      stream.use { manager.setStream(it, null, true, which) } != 0
     }
   }
 }

@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- Wallpapers screen: a normal permission, granted at install without a prompt. -->
+  <uses-permission android:name="android.permission.SET_WALLPAPER" />
   <application>
     <!-- Home-screen widgets. Exported because the launcher hosts them; they only
          accept the system's widget broadcasts and their own explicit intents. -->

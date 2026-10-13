@@ -13,6 +13,7 @@
       "bundleIdentifier": "com.barakah.stories",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Your location is used to calculate prayer times and the Qibla direction on this device, and to look up your city name. It is never sent to us.",
+        "NSPhotoLibraryAddUsageDescription": "Lets you save the cards and wallpapers you make to your photo library.",
         "ITSAppUsesNonExemptEncryption": false
       },
       "entitlements": {

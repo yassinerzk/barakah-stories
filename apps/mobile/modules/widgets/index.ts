@@ -19,12 +19,17 @@ export interface WidgetDhikr {
   target: number;
 }
 
+export type WallpaperTarget = 'home' | 'lock' | 'both';
+
 interface BarakahWidgetsNative {
   setPrayers(place: string, nextLabel: string, prayers: WidgetPrayer[]): void;
   setDhikr(dhikr: WidgetDhikr): void;
   takeTaps(): number;
   canPin(): boolean;
   requestPin(kind: 'prayer' | 'dhikr'): boolean;
+  /** Android only (iOS has no API for it), and missing from builds made before the Wallpapers screen. */
+  canSetWallpaper?(): boolean;
+  setWallpaper?(uri: string, target: WallpaperTarget): Promise<boolean>;
 }
 
 const APP_GROUP = 'group.com.barakah.stories';
@@ -104,6 +109,25 @@ export function canPinWidget(): boolean {
 export function pinWidget(kind: 'prayer' | 'dhikr'): boolean {
   try {
     return native?.requestPin(kind) ?? false;
+  } catch {
+    return false;
+  }
+}
+
+/** True where the app can set the wallpaper itself (Android); elsewhere the picture is saved instead. */
+export function canSetWallpaper(): boolean {
+  try {
+    return native?.canSetWallpaper?.() ?? false;
+  } catch {
+    return false;
+  }
+}
+
+/** Resolves false when the phone refuses it; the screen then says so. */
+export async function setWallpaper(uri: string, target: WallpaperTarget): Promise<boolean> {
+  if (!native?.setWallpaper) return false;
+  try {
+    return await native.setWallpaper(uri, target);
   } catch {
     return false;
   }

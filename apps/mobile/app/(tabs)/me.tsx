@@ -270,6 +270,11 @@ export default function MeScreen() {
           >
             <AccessibilityPanel />
           </View>
+          <SectionTitle>{t('forYourPhone')}</SectionTitle>
+          <View style={{ flexDirection: row, gap: 8 }}>
+            <Button label={t('widgetsTitle')} variant="ghost" onPress={() => router.push('/widgets')} style={{ flex: 1 }} />
+            <Button label={t('wallpapersTitle')} variant="ghost" onPress={() => router.push('/wallpapers')} style={{ flex: 1 }} />
+          </View>
           <Button label={t('replayIntro')} variant="ghost" onPress={() => router.push('/onboarding')} />
           <SectionTitle>{t('credits')}</SectionTitle>
           <View style={{ gap: 4 }}>

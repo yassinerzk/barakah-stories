@@ -41,6 +41,12 @@ const PRACTICE = [
   { route: '/calendar', label: 'calendar', icon: 'calendar-outline' },
 ] as const;
 
+/** Home's shortcuts to what the app can put on the phone itself. */
+const FOR_PHONE = [
+  { route: '/widgets', title: 'widgetsTitle', body: 'widgetsTagline', icon: 'apps-outline' },
+  { route: '/wallpapers', title: 'wallpapersTitle', body: 'wallpapersTagline', icon: 'image-outline' },
+] as const;
+
 function chunk<T>(items: T[], size: number): T[][] {
   const out: T[][] = [];
   for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
@@ -174,6 +180,49 @@ export default function HomeScreen() {
           </Pressable>
         ))}
       </ScrollView>
+
+      {/* for your phone: widgets and wallpapers */}
+      <Text accessibilityRole="header" style={{ color: ui.text, fontFamily: font.semibold, fontSize: 17, textAlign, marginTop: 20, marginBottom: 10 }}>
+        {t('forYourPhone')}
+      </Text>
+      <View style={{ flexDirection: row, gap: 10 }}>
+        {FOR_PHONE.map((p) => (
+          <Pressable
+            key={p.route}
+            onPress={() => router.push(p.route)}
+            accessibilityRole="button"
+            accessibilityLabel={`${t(p.title)}. ${t(p.body)}`}
+            style={({ pressed }) => ({
+              flex: 1,
+              minHeight: 96,
+              gap: 8,
+              padding: 12,
+              borderRadius: 16,
+              backgroundColor: pressed ? ui.bgElev2 : ui.bgElev,
+              borderWidth: 1,
+              borderColor: 'rgba(217,182,92,0.18)',
+            })}
+          >
+            <View
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 18,
+                alignItems: 'center',
+                justifyContent: 'center',
+                alignSelf: row === 'row' ? 'flex-start' : 'flex-end',
+                backgroundColor: 'rgba(217,182,92,0.14)',
+              }}
+            >
+              <Ionicons name={p.icon} size={18} color={ui.accent} />
+            </View>
+            <Text style={{ color: ui.text, fontFamily: font.semibold, fontSize: 15, textAlign }}>{t(p.title)}</Text>
+            <Text numberOfLines={2} style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 12, lineHeight: 16, textAlign }}>
+              {t(p.body)}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
 
       <PostStrip title={t('todaysPosts')} posts={todays} hijriLabel={hijriLabel} onOpen={openPost} />
       <PostStrip title={t('recent')} posts={recent} hijriLabel={hijriLabel} onOpen={openPost} />

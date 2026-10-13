@@ -12,8 +12,11 @@ import { locateMe } from '../src/features/prayer/locateMe';
 import { TopBar } from '../src/features/onboarding/OnbChrome';
 import { LanguageStep, ReadyStep, WelcomeStep } from '../src/features/onboarding/IntroSteps';
 import { AlertsStep, LocationStep, SettingsStep } from '../src/features/onboarding/SetupSteps';
+import { WidgetsStep } from '../src/features/onboarding/WidgetsStep';
+import { requestWidget, WidgetHowToSheet, type WidgetKind } from '../src/widgets/WidgetHowToSheet';
+import { widgetsSupported } from '../modules/widgets';
 
-type Step = 'language' | 'welcome' | 'location' | 'settings' | 'alerts' | 'ready';
+type Step = 'language' | 'welcome' | 'location' | 'settings' | 'alerts' | 'widgets' | 'ready';
 const MODE_KEY = { adhan: 'modeAdhan', sound: 'modeSound', vibrate: 'modeVibrate', off: 'modeOff' } as const;
 /** The steps keep a readable width on tablets. */
 const MAX_W = 560;
@@ -49,9 +52,19 @@ export default function Onboarding() {
   const [mode, setMode] = useState<AlertMode>('adhan');
   const [busy, setBusy] = useState(false);
   const [suggested, setSuggested] = useState(false);
+  const [widgetHowTo, setWidgetHowTo] = useState(false);
 
   // Calculation settings need a place to preview; without one that step is left out.
-  const steps: Step[] = ['language', 'welcome', 'location', ...(location ? (['settings'] as const) : []), 'alerts', 'ready'];
+  // The widgets step needs the native widgets, which Expo Go and the web don't have.
+  const steps: Step[] = [
+    'language',
+    'welcome',
+    'location',
+    ...(location ? (['settings'] as const) : []),
+    'alerts',
+    ...(widgetsSupported ? (['widgets'] as const) : []),
+    'ready',
+  ];
   const index = Math.max(0, steps.indexOf(step));
   const prevStep = index > 0 ? steps[index - 1] : null;
   const next = () => setStep(steps[Math.min(index + 1, steps.length - 1)]);
@@ -107,6 +120,12 @@ export default function Onboarding() {
     next();
   };
 
+  // The launcher's own dialog takes over when it can place the widget; otherwise the steps.
+  const addWidget = (kind: WidgetKind) => {
+    if (requestWidget(kind) === 'manual') setWidgetHowTo(true);
+    else next();
+  };
+
   const chips = [
     LOCALES.find((l) => l.id === locale)?.label,
     location?.label.split(',')[0].trim(),
@@ -139,6 +158,7 @@ export default function Onboarding() {
           />
         )}
         {step === 'alerts' && <AlertsStep mode={mode} busy={busy} onMode={setMode} onTurnOn={turnOnAlerts} onNotNow={next} />}
+        {step === 'widgets' && <WidgetsStep onAdd={addWidget} onLater={next} />}
         {step === 'ready' && <ReadyStep chips={chips} onFirstCard={() => finish('card')} onPrayer={() => finish('prayer')} />}
       </View>
       <LocationSheet
@@ -150,6 +170,13 @@ export default function Onboarding() {
         }}
         onUseMyLocation={locate}
         locating={locating}
+      />
+      <WidgetHowToSheet
+        visible={widgetHowTo}
+        onClose={() => {
+          setWidgetHowTo(false);
+          next();
+        }}
       />
     </View>
   );

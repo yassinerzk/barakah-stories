@@ -6,6 +6,8 @@ interface PatternProps {
   color: string;
   opacity: number;
   uid: string;
+  /** Height of the drawing space; 1920 for cards, taller for a phone-shaped wallpaper. */
+  height?: number;
 }
 
 function star8Points(cx: number, cy: number, outer: number): string {
@@ -19,8 +21,8 @@ function star8Points(cx: number, cy: number, outer: number): string {
   return pts.join(' ');
 }
 
-/** Tiled geometric pattern in the 1080x1920 card space (inside an <Svg>). */
-export function PatternLayer({ id, color, opacity, uid }: PatternProps) {
+/** Tiled geometric pattern in the 1080-wide card space (inside an <Svg>). */
+export function PatternLayer({ id, color, opacity, uid, height = 1920 }: PatternProps) {
   if (id === 'none' || opacity <= 0) return null;
   const pid = `pat-${id}-${uid}`;
   const T = 180;
@@ -77,7 +79,7 @@ export function PatternLayer({ id, color, opacity, uid }: PatternProps) {
           {tile}
         </SvgPattern>
       </Defs>
-      <Rect width={1080} height={1920} fill={`url(#${pid})`} opacity={opacity} />
+      <Rect width={1080} height={height} fill={`url(#${pid})`} opacity={opacity} />
     </>
   );
 }
