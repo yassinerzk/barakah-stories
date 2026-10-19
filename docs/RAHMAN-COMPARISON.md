@@ -33,14 +33,17 @@ Ordered by value to our users ÷ effort. Effort: S = days, M = 1–2 weeks, L = 
 - [ ] **Home-screen widgets** (M–L). Android first (native Kotlin `AppWidgetProvider`s in a local
       Expo module, like `prayer-panel`); iOS needs a WidgetKit target (`expo-apple-targets`) and an EAS
       build, so it comes after the iOS build exists. The set, in priority order:
-  - [ ] **Prayer timer** — next prayer name, its time, and a **live countdown** ("Maghrib in
+  - _Status (Oct 2026): prayer timer and dhikr counter done — Android tested on an emulator
+    (added from the in-app Widgets page or onboarding, taps on the dhikr widget join the in-app
+    tasbih); iOS WidgetKit code written, needs the Apple team ID and an EAS build._
+  - [x] **Prayer timer** — next prayer name, its time, and a **live countdown** ("Maghrib in
         2:43:12"). Android: a `Chronometer` in `RemoteViews` with `setChronometerCountDown(true)` ticks
         on its own with zero app wake-ups — the same trick our notification panel already uses. iOS:
         `Text(nextPrayerDate, style: .timer)` does the same. The widget only needs re-rendering at
         each prayer change: schedule those instants with the existing `AlarmManager` receiver
         (`PanelReceiver`) and from the 12-hour background re-plan. Sizes: small (next prayer) and
         medium (next prayer + all six times, current one highlighted).
-  - [ ] **Dhikr counter** — the current dhikr in Arabic, the count and target ("17 / 33"), and a
+  - [x] **Dhikr counter** — the current dhikr in Arabic, the count and target ("17 / 33"), and a
         big tap area that **counts on the home screen without opening the app**. Android: a click
         `PendingIntent` to a `BroadcastReceiver` that increments the count in `SharedPreferences`
         and redraws the widget (with a vibrate tick); the app's tasbih screen reads the same store,
@@ -93,8 +96,10 @@ calendar, mosques nearby, AI assistant, widgets, Apple Watch, CarPlay. New items
       user's location, with countdown to iftar on Home during Ramadan; shareable as a card.
 - [ ] **Zakat calculator** (S–M) — cash, gold, silver, investments, debts; nisab from gold or silver
       price entered by the user (or fetched daily). Clear "estimate, ask a scholar" note.
-- [ ] **Islamic wallpapers** (S) — we already have a large background library: let people save any
+- [x] **Islamic wallpapers** (S) — we already have a large background library: let people save any
       background (or a finished card) as a phone wallpaper at screen resolution. Cheap win.
+      _Done (Oct 2026): 21 designs (Home → For your phone → Wallpapers); Android sets home / lock /
+      both directly, iOS saves through the share sheet. Still open: "set a finished card as wallpaper"._
 - [ ] **Sleep stories** (part of section 3) — longer, slower narrated stories with a sleep timer
       and dimmed player.
 - [ ] **Live Kaaba stream** (S) — only through the official Saudi broadcast's YouTube embed (the
