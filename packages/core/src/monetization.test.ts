@@ -33,7 +33,8 @@ describe('monetization', () => {
   });
 
   it('the placeholder adapter reports nothing is available', async () => {
-    expect(await NOOP_ADAPTER.purchasePro()).toBe('unavailable');
+    expect(await NOOP_ADAPTER.purchasePro('yearly')).toBe('unavailable');
+    expect(await NOOP_ADAPTER.loadPrices()).toEqual({});
     expect(await NOOP_ADAPTER.showRewardedAd()).toBe('unavailable');
     expect(await NOOP_ADAPTER.restorePurchases()).toBe('free');
   });

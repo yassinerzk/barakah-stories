@@ -4,6 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
 import { DHIKR_PRESETS, tallyStats, tagOf, toLocaleDigits } from '@barakah/core';
 import { useT } from '../src/i18n';
+import { ProGate } from '../src/monetization/ProLock';
 import { ui } from '../src/theme';
 import { announce, useA11yStore } from '../src/a11y';
 import { ScreenHeader } from '../src/components/ScreenHeader';
@@ -16,7 +17,7 @@ const TARGETS: readonly TasbihTarget[] = [33, 99, 100];
 const fill = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k: string) => v[k] ?? '');
 
 /** A digital tasbih: one big button, a ring that fills to the target, and today's tally. */
-export default function TasbihScreen() {
+function TasbihScreen() {
   const { t, l, locale, font, row } = useT();
   const haptics = useA11yStore((s) => s.haptics);
   const tally = useTasbihStore((s) => s.tally);
@@ -194,5 +195,14 @@ function RoundButton({ icon, label, onPress }: { icon: keyof typeof Ionicons.gly
     >
       <Ionicons name={icon} size={20} color={ui.text} />
     </Pressable>
+  );
+}
+
+/** A Pro tool: free users see how to unlock it. */
+export default function TasbihRoute() {
+  return (
+    <ProGate title="tasbih">
+      <TasbihScreen />
+    </ProGate>
   );
 }

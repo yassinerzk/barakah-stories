@@ -20,6 +20,8 @@ export const DEV_ADAPTER: MonetizationAdapter = {
     await wait(1500);
     return 'rewarded';
   },
+  // Sample prices; the real ones come from Google Play / the App Store.
+  loadPrices: async () => ({ monthly: '$2.99', yearly: '$19.99', lifetime: '$39.99' }),
 };
 
 /** The adapter this build uses. Swap here when the SDKs are wired in. */
@@ -34,3 +36,10 @@ export const adapter: MonetizationAdapter = __DEV__ ? DEV_ADAPTER : NOOP_ADAPTER
  * Becomes true on its own the moment a real adapter is selected above.
  */
 export const monetizationReady = adapter.id !== NOOP_ADAPTER.id;
+
+/**
+ * Pro locks only apply where Pro can be bought. A build without billing keeps
+ * every feature open: locking people out of something they cannot pay for
+ * would just take features away.
+ */
+export const proLocksActive = monetizationReady;

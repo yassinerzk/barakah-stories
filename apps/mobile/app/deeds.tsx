@@ -3,6 +3,7 @@ import Svg, { Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
 import { Ionicons } from '@expo/vector-icons';
 import { dayKey, deedStats, formatClock, PRAYER_DEEDS, PRAYER_NAMES, tagOf, toLocaleDigits, type DeedId } from '@barakah/core';
 import { useT } from '../src/i18n';
+import { ProGate } from '../src/monetization/ProLock';
 import { ui } from '../src/theme';
 import { ScreenHeader } from '../src/components/ScreenHeader';
 import { useDeedsStore } from '../src/practice/store';
@@ -19,7 +20,7 @@ const RING_R = 40;
 const RING_C = 2 * Math.PI * RING_R;
 
 /** A checklist for the day — the five prayers and four remembrances — with a streak to keep. */
-export default function DeedsScreen() {
+function DeedsScreen() {
   const { t, l, locale, font, row, textAlign } = useT();
   const log = useDeedsStore((s) => s.log);
   const toggle = useDeedsStore((s) => s.toggle);
@@ -234,5 +235,14 @@ export default function DeedsScreen() {
         </View>
       </ScrollView>
     </View>
+  );
+}
+
+/** A Pro tool: free users see how to unlock it. */
+export default function DeedsRoute() {
+  return (
+    <ProGate title="deedsTitle">
+      <DeedsScreen />
+    </ProGate>
   );
 }

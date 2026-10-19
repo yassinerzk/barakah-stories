@@ -3,6 +3,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { dayKey, HIJRI_MONTHS, hijriMonth, localeMeta, tagOf, toLocaleDigits, upcomingEvents } from '@barakah/core';
 import { useT } from '../src/i18n';
+import { ProGate } from '../src/monetization/ProLock';
 import { ui } from '../src/theme';
 import { ScreenHeader } from '../src/components/ScreenHeader';
 
@@ -10,7 +11,7 @@ const fill = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (
 const GOLD_SOFT = 'rgba(217,182,92,';
 
 /** The Hijri month as a grid with the Gregorian date under each day, and the next events with countdowns. */
-export default function CalendarScreen() {
+function CalendarScreen() {
   const { t, l, locale, font, row } = useT();
   const [offset, setOffset] = useState(0);
   const today = new Date();
@@ -175,5 +176,14 @@ function MonthButton({ icon, label, onPress }: { icon: keyof typeof Ionicons.gly
     <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} style={{ width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }}>
       <Ionicons name={icon} size={20} color={ui.text} />
     </Pressable>
+  );
+}
+
+/** A Pro tool: free users see how to unlock it. */
+export default function CalendarRoute() {
+  return (
+    <ProGate title="calendarTitle">
+      <CalendarScreen />
+    </ProGate>
   );
 }

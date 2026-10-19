@@ -1,7 +1,9 @@
 import { FlatList, Pressable, Text, useWindowDimensions, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { getBackground, getTheme, pick, WALLPAPERS, type Wallpaper } from '@barakah/core';
+import { FREE_WALLPAPERS, getBackground, getTheme, isFreeItem, pick, WALLPAPERS, type Wallpaper } from '@barakah/core';
+import { usePro } from '../src/monetization/usePro';
+import { ProLock } from '../src/monetization/ProLock';
 import { useT } from '../src/i18n';
 import { ui } from '../src/theme';
 import { ScreenHeader } from '../src/components/ScreenHeader';
@@ -21,6 +23,7 @@ export default function WallpapersScreen() {
   const { t, locale, font, row, textAlign } = useT();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { locked } = usePro();
   const { width, height } = useWindowDimensions();
   const layoutW = Math.min(width > 0 ? width : 390, MAX_W);
   const cols = layoutW >= 700 ? 4 : 3;
@@ -51,16 +54,21 @@ export default function WallpapersScreen() {
             {t('wallpapersIntro')}
           </Text>
         }
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={() => router.push({ pathname: '/wallpaper/[id]', params: { id: item.id } })}
-            accessibilityRole="button"
-            accessibilityLabel={describe(item)}
-            style={({ pressed }) => ({ borderRadius: 14, overflow: 'hidden', borderWidth: 1, borderColor: ui.line, opacity: pressed ? 0.85 : 1 })}
-          >
-            <WallpaperArt wallpaper={item} width={tileW} height={tileH} thumb />
-          </Pressable>
-        )}
+        renderItem={({ item, index }) => {
+          // Locked ones still open full screen: people can look before they buy.
+          const proOnly = locked && !isFreeItem(index, FREE_WALLPAPERS);
+          return (
+            <Pressable
+              onPress={() => router.push({ pathname: '/wallpaper/[id]', params: { id: item.id } })}
+              accessibilityRole="button"
+              accessibilityLabel={proOnly ? `${describe(item)}, ${t('proOnly')}` : describe(item)}
+              style={({ pressed }) => ({ borderRadius: 14, overflow: 'hidden', borderWidth: 1, borderColor: ui.line, opacity: pressed ? 0.85 : 1 })}
+            >
+              <WallpaperArt wallpaper={item} width={tileW} height={tileH} thumb />
+              {proOnly && <ProLock size={14} />}
+            </Pressable>
+          );
+        }}
       />
     </View>
   );

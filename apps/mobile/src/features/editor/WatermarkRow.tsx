@@ -3,6 +3,7 @@ import { canRemoveWatermark } from '@barakah/core';
 import { useEditorStore, useToastStore } from '../../store';
 import { useEntitlementStore } from '../../monetization/store';
 import { monetizationReady } from '../../monetization/adapter';
+import type { ProReason } from '../../monetization/usePro';
 import { useT } from '../../i18n';
 import { ui } from '../../theme';
 
@@ -14,14 +15,13 @@ import { ui } from '../../theme';
  * knowing the option is coming — but the switch is disabled and marked so.
  * Leaving it live would offer a choice whose only outcome is an apology.
  */
-export function WatermarkRow() {
+export function WatermarkRow({ onLocked }: { onLocked: (reason: ProReason) => void }) {
   const { t, font, row } = useT();
   const toast = useToastStore((s) => s.show);
   const hide = useEditorStore((s) => s.design.hideWatermark);
   const patch = useEditorStore((s) => s.patch);
   const entitlements = useEntitlementStore((s) => s.entitlements);
   const watchAd = useEntitlementStore((s) => s.watchAd);
-  const purchasePro = useEntitlementStore((s) => s.purchasePro);
   const busy = useEntitlementStore((s) => s.busy);
   const entitled = canRemoveWatermark(entitlements);
 
@@ -37,16 +37,8 @@ export function WatermarkRow() {
           } else toast(t('notAvailableYet'), 'error');
         },
       },
-      {
-        text: t('goPro'),
-        onPress: async () => {
-          const outcome = await purchasePro();
-          if (outcome === 'purchased') {
-            patch({ hideWatermark: true });
-            toast(t('purchased'), 'success');
-          } else toast(t('notAvailableYet'), 'error');
-        },
-      },
+      // Going Pro means choosing a plan, so it opens the Pro screen.
+      { text: t('goPro'), onPress: () => onLocked('watermark') },
       { text: t('cancel'), style: 'cancel' },
     ]);
   };

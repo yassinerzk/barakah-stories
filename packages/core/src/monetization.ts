@@ -5,6 +5,8 @@
  * and ad SDKs can be added later without touching the UI.
  */
 
+import type { ProPlan } from './pro';
+
 export const APP_NAME = 'Barakah Stories';
 
 /** Text drawn at the bottom of every story for free users. */
@@ -14,6 +16,8 @@ export type Tier = 'free' | 'pro';
 
 export interface Entitlements {
   tier: Tier;
+  /** Which Pro plan was bought, when known. */
+  plan?: ProPlan;
   /** Epoch ms until which a rewarded ad keeps stories watermark-free. */
   adRewardUntil: number;
   /** When these entitlements were last confirmed (purchase restore, server sync). */
@@ -47,9 +51,12 @@ export function grantAdReward(e: Entitlements, now = Date.now()): Entitlements {
   return { ...e, adRewardUntil: Math.max(e.adRewardUntil, now) + AD_REWARD_DURATION_MS, updatedAt: now };
 }
 
-export function grantPro(e: Entitlements, now = Date.now()): Entitlements {
-  return { ...e, tier: 'pro', updatedAt: now };
+export function grantPro(e: Entitlements, now = Date.now(), plan?: ProPlan): Entitlements {
+  return { ...e, tier: 'pro', plan: plan ?? e.plan, updatedAt: now };
 }
+
+/** Localised store prices per plan ("€2.99"), filled in once the store has answered. */
+export type PlanPrices = Partial<Record<ProPlan, string>>;
 
 export type PurchaseOutcome = 'purchased' | 'cancelled' | 'unavailable' | 'error';
 export type AdOutcome = 'rewarded' | 'dismissed' | 'unavailable' | 'error';
@@ -61,15 +68,18 @@ export type AdOutcome = 'rewarded' | 'dismissed' | 'unavailable' | 'error';
  */
 export interface MonetizationAdapter {
   readonly id: string;
-  purchasePro(): Promise<PurchaseOutcome>;
+  purchasePro(plan: ProPlan): Promise<PurchaseOutcome>;
   restorePurchases(): Promise<Tier>;
   showRewardedAd(): Promise<AdOutcome>;
+  /** Prices as the store will charge them, in the person's currency. */
+  loadPrices(): Promise<PlanPrices>;
 }
 
 /** Adapter used until a billing/ads SDK is integrated. */
 export const NOOP_ADAPTER: MonetizationAdapter = {
   id: 'noop',
   purchasePro: async () => 'unavailable',
+  loadPrices: async () => ({}),
   restorePurchases: async () => 'free',
   showRewardedAd: async () => 'unavailable',
 };

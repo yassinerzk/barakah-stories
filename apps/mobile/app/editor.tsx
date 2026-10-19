@@ -13,8 +13,9 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAudioPlayer } from 'expo-audio';
-import { designToText, shouldShowWatermark, toLocaleDigits, type TranslationKey } from '@barakah/core';
+import { designToText, FREE_STORIES_PER_MONTH, shouldShowWatermark, storiesLeft, toLocaleDigits, type TranslationKey } from '@barakah/core';
 import { useEntitlementStore } from '../src/monetization/store';
+import { usePro, type ProReason } from '../src/monetization/usePro';
 import { WatermarkRow } from '../src/features/editor/WatermarkRow';
 import { useT } from '../src/i18n';
 import { ui } from '../src/theme';
@@ -64,6 +65,11 @@ export default function EditorScreen() {
   const toast = useToastStore((s) => s.show);
   const entitlements = useEntitlementStore((s) => s.entitlements);
   const showWatermark = shouldShowWatermark(design.hideWatermark, entitlements);
+  // Free users: 3 image stories a month, no video. Counted when a story is shared.
+  const { locked, openPro } = usePro();
+  const quota = useEntitlementStore((s) => s.quota);
+  const countStory = useEntitlementStore((s) => s.countStory);
+  const left = storiesLeft(quota, new Date());
 
   const manifest = useMediaStore((s) => s.manifest);
   const local = useMediaStore((s) => s.local);
@@ -120,11 +126,16 @@ export default function EditorScreen() {
 
   const share = async () => {
     if (busy) return;
+    if (locked && (isVideo || left === 0)) {
+      openPro(isVideo ? 'video' : 'stories');
+      return;
+    }
     setBusy(true);
     try {
       if (!isVideo) {
         const outcome = await shareCard(cardRef, design.headline || 'Story');
         if (outcome === 'unavailable') toast(t('shareFailedMobile'), 'error');
+        else if (locked) countStory();
         return;
       }
       if (!videoExportSupported && video && webEncoder.current) {
@@ -268,6 +279,19 @@ export default function EditorScreen() {
 
       {/* Floating share button, bottom-right. */}
       <View style={{ height: BOTTOM_BAR }} />
+      {locked && !isVideo && (
+        <Pressable
+          onPress={() => openPro('stories')}
+          accessibilityRole="button"
+          style={{ position: 'absolute', left: 16, bottom: insets.bottom + 26, maxWidth: winW * 0.45 }}
+        >
+          <Text style={{ color: left > 0 ? ui.textMuted : ui.accent, fontFamily: font.medium, fontSize: 12 }}>
+            {t('storiesLeftOf')
+              .replace('{n}', toLocaleDigits(left, locale))
+              .replace('{total}', toLocaleDigits(FREE_STORIES_PER_MONTH, locale))}
+          </Text>
+        </Pressable>
+      )}
       <View style={{ position: 'absolute', right: 16, bottom: insets.bottom + 14 }}>
         <Pressable
           onPress={share}
@@ -299,10 +323,21 @@ export default function EditorScreen() {
 
 
       {isVideo && !videoExportSupported && <WebEncoder ref={webEncoder} />}
-      <ToolSheet tool={tool} onClose={() => setTool(null)} />
+      <ToolSheet
+        tool={tool}
+        onClose={() => setTool(null)}
+        onLocked={(reason) => {
+          // Close the sheet first: a screen pushed under an open modal stays hidden on iOS.
+          setTool(null);
+          setTimeout(() => openPro(reason), SHEET_CLOSE_MS);
+        }}
+      />
     </View>
   );
 }
+
+/** Time for the tool sheet's slide-out before the Pro screen opens. */
+const SHEET_CLOSE_MS = 350;
 
 function RoundButton({ icon, label, onPress }: { icon: IconName; label: string; onPress: () => void }) {
   return (
@@ -321,7 +356,7 @@ function RoundButton({ icon, label, onPress }: { icon: IconName; label: string; 
 const SHEET_TITLE: Record<Tool, TranslationKey> = { text: 'text', style: 'style', video: 'video', sound: 'sound', length: 'length' };
 
 /** One tool's panel in a sheet over the lower half of the screen. */
-function ToolSheet({ tool, onClose }: { tool: Tool | null; onClose: () => void }) {
+function ToolSheet({ tool, onClose, onLocked }: { tool: Tool | null; onClose: () => void; onLocked: (reason: ProReason) => void }) {
   const { t, font, textAlign } = useT();
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
@@ -353,11 +388,11 @@ function ToolSheet({ tool, onClose }: { tool: Tool | null; onClose: () => void }
             {tool === 'text' && <TextPanel />}
             {tool === 'style' && (
               <>
-                <StylePanel />
-                <WatermarkRow />
+                <StylePanel onLocked={onLocked} />
+                <WatermarkRow onLocked={onLocked} />
               </>
             )}
-            {tool === 'video' && <VideoPanel />}
+            {tool === 'video' && <VideoPanel onLocked={onLocked} />}
             {tool === 'sound' && <SoundPanel />}
             {tool === 'length' && <LengthPanel />}
           </ScrollView>

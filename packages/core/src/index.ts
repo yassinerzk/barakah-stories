@@ -24,3 +24,4 @@ export * from './methodForCountry';
 export * from './practice';
 export * from './names99';
 export * from './wallpapers';
+export * from './pro';

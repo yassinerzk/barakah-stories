@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { DEFAULT_DESIGN, DIVINE_NAMES, nameOfTheDay, toLocaleDigits, type DivineName } from '@barakah/core';
 import { useT } from '../src/i18n';
+import { ProGate } from '../src/monetization/ProLock';
 import { ui } from '../src/theme';
 import { useEditorStore } from '../src/store';
 import { ScreenHeader } from '../src/components/ScreenHeader';
@@ -13,7 +14,7 @@ import { Button } from '../src/components/ui';
 const GOLD_SOFT = 'rgba(217,182,92,';
 
 /** The 99 Names of Allah: today's Name on top, then all of them; each opens into a card. */
-export default function NamesScreen() {
+function NamesScreen() {
   const { t, l, locale, font } = useT();
   const router = useRouter();
   const insets = useSafeAreaInsets();
@@ -130,5 +131,14 @@ export default function NamesScreen() {
         </Pressable>
       </Modal>
     </View>
+  );
+}
+
+/** A Pro tool: free users see how to unlock it. */
+export default function NamesRoute() {
+  return (
+    <ProGate title="namesTitle">
+      <NamesScreen />
+    </ProGate>
   );
 }

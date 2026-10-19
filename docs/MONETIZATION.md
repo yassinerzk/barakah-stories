@@ -1,5 +1,65 @@
 # Monetization plan
 
+## Pro plans and payment setup (October 2026 — supersedes the model table below)
+
+**Free:** prayer times and alerts, Quran, hadith, duas, widgets. Stories: 3 image stories a month
+(counted on the phone, reset on the 1st), no video, a starter set of themes / photos / decorations /
+Arabic fonts, the first 6 wallpapers.
+**Pro:** unlimited and video stories, every style and wallpaper, no app name on stories, Tasbih,
+Daily deeds, Calendar and 99 Names.
+
+| Plan     | Product id             | Type                        |
+| -------- | ---------------------- | --------------------------- |
+| Monthly  | `barakah_pro_monthly`  | auto-renewing subscription  |
+| Yearly   | `barakah_pro_yearly`   | auto-renewing subscription  |
+| Lifetime | `barakah_pro_lifetime` | one-time (non-consumable)   |
+
+The lifetime plan is offered for **3 days from the person's first open** (`lifetimeOffer` in
+`packages/core/src/pro.ts`); after that the Pro screen shows it as "Expired". The window is real,
+not a fake timer, which keeps the scarcity honest for store review. It is measured on the phone, so
+a reinstall starts it again; make it server-side (Supabase `first_open_at`) if that matters.
+
+The locks only switch on where Pro can actually be bought (`proLocksActive` in
+`apps/mobile/src/monetization/adapter.ts`). Today's store build has no billing, so nothing is
+locked there; development builds use a simulated store so the flow can be tested in Expo Go.
+
+### Steps to take payments
+
+1. **Google Play Console**
+   - Setup → Payments profile: create the merchant account (bank account, tax info).
+   - Monetize → Products → Subscriptions: create `barakah_pro_monthly` (one auto-renewing base plan,
+     1 month) and `barakah_pro_yearly` (base plan, 1 year). Set prices; Play converts per country.
+   - Monetize → Products → In-app products: create `barakah_pro_lifetime` (one-time).
+   - Products can only be activated once a build with the billing permission is uploaded to a
+     testing track (the RevenueCat SDK adds it).
+   - Setup → License testing: add your Gmail so test purchases are free.
+2. **App Store Connect** (needs the paid Apple Developer account)
+   - Agreements, Tax and Banking: sign the Paid Apps agreement, add bank and tax details.
+   - Subscriptions: a group "Barakah Pro" with `barakah_pro_monthly` and `barakah_pro_yearly`.
+   - In-App Purchases: `barakah_pro_lifetime`, type Non-Consumable.
+   - Users and Access → Sandbox: add a sandbox tester.
+3. **RevenueCat** (free until $2.5k/month revenue)
+   - New project → add the Android app (`com.barakah.stories`, plus a Google service-account JSON
+     with Play financial access) and the iOS app (bundle id, App Store Connect API key).
+   - Products: import the three ids. Entitlement: `pro`, attached to all three.
+   - Offering `default` with packages Monthly, Annual and Lifetime.
+   - Copy the two **public** SDK keys (safe in the app) into `.env` as
+     `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` and `EXPO_PUBLIC_REVENUECAT_IOS_KEY`, and into the
+     GitHub Actions secrets for CI builds.
+4. **App code** (one adapter, nothing else changes): `npx expo install react-native-purchases`,
+   add `RevenueCatAdapter` implementing `MonetizationAdapter` —
+   `purchasePro(plan)` → `Purchases.purchasePackage(package for that plan)`,
+   `restorePurchases()` → `Purchases.restorePurchases()`,
+   `loadPrices()` → `Purchases.getOfferings()` → each package's `product.priceString`,
+   Pro = `customerInfo.entitlements.active.pro` — then select it in `adapter.ts`.
+   `proLocksActive` turns on by itself.
+5. **Store declarations**: Play Data safety → add "Financial info → Purchase history" (collected by
+   RevenueCat for purchases, not shared). Mention RevenueCat in `docs/PRIVACY.md` and
+   `apps/web/public/privacy.html`. Add the subscription terms link to the store listing.
+6. **Test** on the internal testing track (Android) and TestFlight sandbox (iOS): buy each plan,
+   restore on a second device, cancel a subscription and confirm Pro ends at period end.
+7. **Release**: bump `versionCode`, upload the AAB, roll out.
+
 ## Model
 
 | Tier      | Price                          | What it changes                                                                                                                            |

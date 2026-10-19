@@ -6,6 +6,11 @@ import {
   BACKGROUNDS,
   FONT_SCALE_MAX,
   FONT_SCALE_MIN,
+  FREE_ARABIC_FONTS,
+  FREE_DECORATIONS,
+  FREE_PHOTOS,
+  FREE_THEMES,
+  isFreeItem,
   LATIN_FONTS,
   THEMES,
 } from '@barakah/core';
@@ -17,21 +22,33 @@ import { DECORATIONS } from '../../components/Decorations';
 import { BACKGROUND_THUMBS } from '../../backgrounds';
 import { ARABIC_FACES, LATIN_FACES } from '../../fonts';
 import { Button, Chip, SectionTitle } from '../../components/ui';
+import { usePro, type ProReason } from '../../monetization/usePro';
+import { ProLock } from '../../monetization/ProLock';
 
 const pickRandom = <T,>(items: readonly T[]): T => items[Math.floor(Math.random() * items.length)];
 const clamp = (n: number) => Math.min(FONT_SCALE_MAX, Math.max(FONT_SCALE_MIN, Math.round(n * 20) / 20));
 
-export function StylePanel() {
+/**
+ * Theme, photo, decoration and fonts. Free users get the first few of each;
+ * the rest carry a lock and open Pro instead of applying.
+ */
+export function StylePanel({ onLocked }: { onLocked: (reason: ProReason) => void }) {
   const { t, l, row, font } = useT();
+  const { locked } = usePro();
   const design = useEditorStore((s) => s.design);
   const patch = useEditorStore((s) => s.patch);
   const reset = useEditorStore((s) => s.reset);
+  /** Whether item `index` of a list with `free` free items is out of reach. */
+  const isLocked = (index: number, free: number) => locked && !isFreeItem(index, free);
+  const choose = (index: number, free: number, apply: () => void) => (isLocked(index, free) ? onLocked('style') : apply());
+  const reachable = <T,>(items: readonly T[], free: number) => (locked ? items.slice(0, free) : items);
   const surprise = () =>
     patch({
-      theme: pickRandom(THEMES).id,
-      decoration: pickRandom(DECORATIONS.filter((d) => d.id !== 'none')).id,
-      arabicFont: pickRandom(ARABIC_FONTS).id,
+      theme: pickRandom(reachable(THEMES, FREE_THEMES)).id,
+      decoration: pickRandom(reachable(DECORATIONS, FREE_DECORATIONS).filter((d) => d.id !== 'none')).id,
+      arabicFont: pickRandom(reachable(ARABIC_FONTS, FREE_ARABIC_FONTS)).id,
     });
+  const lockMark = (index: number, free: number, label: string) => (isLocked(index, free) ? `🔒 ${label}` : label);
 
   return (
     <View style={{ gap: 6 }}>
@@ -42,15 +59,15 @@ export function StylePanel() {
 
       <SectionTitle>{t('theme')}</SectionTitle>
       <View style={{ flexDirection: row, flexWrap: 'wrap', gap: 10 }}>
-        {THEMES.map((th) => {
+        {THEMES.map((th, i) => {
           const active = design.theme === th.id;
           return (
             <Pressable
               key={th.id}
               accessibilityRole="button"
-              accessibilityLabel={l(th.name)}
+              accessibilityLabel={isLocked(i, FREE_THEMES) ? `${l(th.name)}, ${t('proOnly')}` : l(th.name)}
               accessibilityState={{ selected: active }}
-              onPress={() => patch({ theme: th.id })}
+              onPress={() => choose(i, FREE_THEMES, () => patch({ theme: th.id }))}
               style={{
                 width: 48,
                 height: 48,
@@ -64,6 +81,7 @@ export function StylePanel() {
                 <GradientFill id={`sw-${th.id}`} gradient={th.gradient} width={42} height={42} />
                 <Circle cx={21} cy={21} r={6} fill={th.accent} />
               </Svg>
+              {isLocked(i, FREE_THEMES) && <ProLock size={10} />}
             </Pressable>
           );
         })}
@@ -95,13 +113,13 @@ export function StylePanel() {
             {t('photoNone')}
           </Text>
         </Pressable>
-        {BACKGROUNDS.map((b) => (
+        {BACKGROUNDS.map((b, i) => (
           <Pressable
             key={b.id}
             accessibilityRole="button"
-            accessibilityLabel={l(b.name)}
+            accessibilityLabel={isLocked(i, FREE_PHOTOS) ? `${l(b.name)}, ${t('proOnly')}` : l(b.name)}
             accessibilityState={{ selected: design.background === b.id }}
-            onPress={() => patch({ background: b.id })}
+            onPress={() => choose(i, FREE_PHOTOS, () => patch({ background: b.id }))}
             style={{
               width: 64,
               height: 114,
@@ -117,31 +135,32 @@ export function StylePanel() {
               style={{ width: '100%', height: '100%' }}
               contentFit="cover"
             />
+            {isLocked(i, FREE_PHOTOS) && <ProLock size={12} />}
           </Pressable>
         ))}
       </ScrollView>
 
       <SectionTitle>{t('decoration')}</SectionTitle>
       <View style={{ flexDirection: row, flexWrap: 'wrap', gap: 8 }}>
-        {DECORATIONS.map((d) => (
+        {DECORATIONS.map((d, i) => (
           <Chip
             key={d.id}
-            label={l(d.name)}
+            label={lockMark(i, FREE_DECORATIONS, l(d.name))}
             active={design.decoration === d.id}
-            onPress={() => patch({ decoration: d.id })}
+            onPress={() => choose(i, FREE_DECORATIONS, () => patch({ decoration: d.id }))}
           />
         ))}
       </View>
 
       <SectionTitle>{t('arabicFont')}</SectionTitle>
       <View style={{ flexDirection: row, flexWrap: 'wrap', gap: 8 }}>
-        {ARABIC_FONTS.map((f) => (
+        {ARABIC_FONTS.map((f, i) => (
           <Chip
             key={f.id}
-            label={f.name.ar ?? f.name.en}
+            label={lockMark(i, FREE_ARABIC_FONTS, f.name.ar ?? f.name.en)}
             fontFamily={ARABIC_FACES[f.id].regular}
             active={design.arabicFont === f.id}
-            onPress={() => patch({ arabicFont: f.id })}
+            onPress={() => choose(i, FREE_ARABIC_FONTS, () => patch({ arabicFont: f.id }))}
           />
         ))}
       </View>

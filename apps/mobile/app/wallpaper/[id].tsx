@@ -3,7 +3,8 @@ import { Modal, Platform, Pressable, Text, useWindowDimensions, View } from 'rea
 import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { formatClock, getWallpaper, tagOf, type TranslationKey, type Wallpaper } from '@barakah/core';
+import { formatClock, FREE_WALLPAPERS, getWallpaper, isFreeItem, tagOf, WALLPAPERS, type TranslationKey, type Wallpaper } from '@barakah/core';
+import { usePro } from '../../src/monetization/usePro';
 import { useT } from '../../src/i18n';
 import { ui } from '../../src/theme';
 import { useToastStore } from '../../src/store';
@@ -41,6 +42,8 @@ function Preview({ wallpaper }: { wallpaper: Wallpaper }) {
   const [busy, setBusy] = useState(false);
   const [choosing, setChoosing] = useState(false);
   const direct = canSetWallpaper();
+  const { locked, openPro } = usePro();
+  const proOnly = locked && !isFreeItem(WALLPAPERS.indexOf(wallpaper), FREE_WALLPAPERS);
 
   const run = async (task: () => Promise<void>) => {
     setBusy(true);
@@ -92,13 +95,17 @@ function Preview({ wallpaper }: { wallpaper: Wallpaper }) {
       </Pressable>
       <View style={{ position: 'absolute', left: 0, right: 0, bottom: insets.bottom + 16, alignItems: 'center', paddingHorizontal: 16 }}>
         <View style={{ width: '100%', maxWidth: 520, gap: 10 }}>
-          <GoldButton
-            label={direct ? t('setAsWallpaper') : t('wallpaperSave')}
-            icon={direct ? 'phone-portrait-outline' : 'download-outline'}
-            busy={busy}
-            onPress={() => (direct ? setChoosing(true) : save())}
-          />
-          {!direct && Platform.OS === 'ios' && (
+          {proOnly ? (
+            <GoldButton label={t('unlockWithPro')} icon="star" onPress={() => openPro('wallpaper')} />
+          ) : (
+            <GoldButton
+              label={direct ? t('setAsWallpaper') : t('wallpaperSave')}
+              icon={direct ? 'phone-portrait-outline' : 'download-outline'}
+              busy={busy}
+              onPress={() => (direct ? setChoosing(true) : save())}
+            />
+          )}
+          {!proOnly && !direct && Platform.OS === 'ios' && (
             <Text style={{ color: 'rgba(255,255,255,0.9)', fontFamily: font.regular, fontSize: 13, lineHeight: 18, textAlign: 'center', ...SHADE }}>
               {t('wallpaperIosHint')}
             </Text>

@@ -31,14 +31,17 @@ import { LanguageSheet } from '../../src/components/LanguageSheet';
 import { useScrollTop } from '../../src/hooks/useScrollTop';
 import { REMINDER_OFFER_DELAY_MS, useReminderStore } from '../../src/notifications/store';
 import { Button, Chip, SectionTitle } from '../../src/components/ui';
+import { usePro } from '../../src/monetization/usePro';
+import { ProLock } from '../../src/monetization/ProLock';
 
 /** Home's shortcuts to the daily-practice screens. */
 const PRACTICE = [
-  { route: '/tasbih', label: 'tasbih', icon: 'radio-button-on-outline' },
-  { route: '/deeds', label: 'deeds', icon: 'checkmark-done-outline' },
-  { route: '/duas', label: 'duas', icon: 'hand-left-outline' },
-  { route: '/names', label: 'names99', icon: 'sparkles-outline' },
-  { route: '/calendar', label: 'calendar', icon: 'calendar-outline' },
+  { route: '/tasbih', label: 'tasbih', icon: 'radio-button-on-outline', pro: true },
+  { route: '/deeds', label: 'deeds', icon: 'checkmark-done-outline', pro: true },
+  // Duas are religious content: free for everyone.
+  { route: '/duas', label: 'duas', icon: 'hand-left-outline', pro: false },
+  { route: '/names', label: 'names99', icon: 'sparkles-outline', pro: true },
+  { route: '/calendar', label: 'calendar', icon: 'calendar-outline', pro: true },
 ] as const;
 
 /** Home's shortcuts to what the app can put on the phone itself. */
@@ -64,6 +67,8 @@ export default function HomeScreen() {
   const touch = useRecentStore((s) => s.touch);
   const load = useEditorStore((s) => s.load);
   const deedLog = useDeedsStore((s) => s.log);
+  // The practice tools are Pro; their buttons show a lock for free users.
+  const { locked } = usePro();
   const streak = useMemo(() => deedStats(deedLog, now).streak, [deedLog, now]);
   const [category, setCategory] = useState<CategoryId | 'all'>('all');
   // The grid runs to ~150 rows, so getting back to the top by hand is a chore.
@@ -177,6 +182,7 @@ export default function HomeScreen() {
             <Text numberOfLines={1} style={{ color: ui.text, fontFamily: font.medium, fontSize: 12 }}>
               {t(p.label)}
             </Text>
+            {locked && p.pro && <ProLock size={12} />}
           </Pressable>
         ))}
       </ScrollView>

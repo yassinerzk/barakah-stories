@@ -9,6 +9,8 @@ import { useT } from '../../i18n';
 import { ui } from '../../theme';
 import { playLooping, safePause, remoteUrl, useMediaStore } from '../../media/catalog';
 import { Chip } from '../../components/ui';
+import { usePro, type ProReason } from '../../monetization/usePro';
+import { ProLock } from '../../monetization/ProLock';
 
 
 
@@ -30,9 +32,13 @@ function Notice({ status }: { status: string }) {
   );
 }
 
-/** Grid of looping backgrounds. Picking one downloads it (once) and switches the story to video. */
-export function VideoPanel() {
+/**
+ * Grid of looping backgrounds. Picking one downloads it (once) and switches the story to video.
+ * Video stories are Pro: free users see the clips with a lock, and a tap opens Pro.
+ */
+export function VideoPanel({ onLocked }: { onLocked: (reason: ProReason) => void }) {
   const { t, l } = useT();
+  const { locked } = usePro();
   const { manifest, status } = useCatalog();
   const design = useEditorStore((s) => s.design);
   const patch = useEditorStore((s) => s.patch);
@@ -41,6 +47,10 @@ export function VideoPanel() {
   if (!manifest) return <Notice status={status} />;
 
   const pick = (v: MediaVideo) => {
+    if (locked) {
+      onLocked('video');
+      return;
+    }
     patch({ video: v.id });
     void ensure(v);
   };
@@ -65,6 +75,7 @@ export function VideoPanel() {
             }}
           >
             <Image source={{ uri: remoteUrl(v.poster) }} accessible={false} style={{ flex: 1 }} contentFit="cover" />
+            {locked && <ProLock size={14} />}
             {downloading[v.file] && (
               <View style={{ position: 'absolute', inset: 0, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.4)' }}>
                 <ActivityIndicator color="#fff" />
