@@ -10,6 +10,66 @@ import { usePrayerAlertStore } from '../../notifications/prayerAlertStore';
 import { hasBundledSounds, sendTestAlert } from '../../notifications/prayerScheduler';
 import { useAdhanStore } from '../../notifications/AdhanPlayer';
 import { Button } from '../../components/ui';
+import { usePro } from '../../monetization/usePro';
+import { ProLock } from '../../monetization/ProLock';
+import { useCustomAdhanStore, type AdhanPickOutcome } from '../../notifications/customAdhan';
+
+/** Time for the sheet's slide-out before the Pro screen opens. */
+const SHEET_CLOSE_MS = 350;
+const PICK_MESSAGE: Record<Exclude<AdhanPickOutcome, 'cancelled'>, { key: 'adhanChosen' | 'adhanTooLarge' | 'adhanNotAudio' | 'adhanPickFailed'; ok: boolean }> = {
+  picked: { key: 'adhanChosen', ok: true },
+  tooLarge: { key: 'adhanTooLarge', ok: false },
+  notAudio: { key: 'adhanNotAudio', ok: false },
+  error: { key: 'adhanPickFailed', ok: false },
+};
+
+/** Which recording the adhan plays, and (Pro) a way to use your own. */
+function AdhanSoundCard({ onLocked }: { onLocked: () => void }) {
+  const { t, font, row, textAlign } = useT();
+  const toast = useToastStore((s) => s.show);
+  const { locked } = usePro();
+  const customName = useCustomAdhanStore((s) => s.name);
+  const pick = useCustomAdhanStore((s) => s.pick);
+  const clear = useCustomAdhanStore((s) => s.clear);
+  const stop = useAdhanStore((s) => s.stop);
+  const name = !locked && customName ? customName : t('adhanDefault');
+
+  const choose = async () => {
+    if (locked) return onLocked();
+    stop();
+    const outcome = await pick();
+    if (outcome === 'cancelled') return;
+    const { key, ok } = PICK_MESSAGE[outcome];
+    toast(t(key), ok ? 'success' : 'error');
+  };
+
+  return (
+    <View style={{ marginTop: 10, gap: 6, padding: 12, borderRadius: ui.radius, borderWidth: 1, borderColor: ui.line }}>
+      <View style={{ flexDirection: row, alignItems: 'center', gap: 8 }}>
+        <Text style={{ flex: 1, color: ui.textMuted, fontFamily: font.medium, fontSize: 13, textAlign }}>{t('adhanSound')}</Text>
+        {locked && <ProLock size={12} corner={false} />}
+      </View>
+      <Text numberOfLines={1} style={{ color: ui.text, fontFamily: font.semibold, fontSize: 15, textAlign }}>
+        {name}
+      </Text>
+      <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 12, lineHeight: 17, textAlign }}>{t('adhanCustomNote')}</Text>
+      <View style={{ flexDirection: row, gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
+        <Button label={t('chooseAdhan')} size="sm" variant="secondary" onPress={() => void choose()} />
+        {!locked && customName && (
+          <Button
+            label={t('useDefaultAdhan')}
+            size="sm"
+            variant="ghost"
+            onPress={() => {
+              stop();
+              clear();
+            }}
+          />
+        )}
+      </View>
+    </View>
+  );
+}
 
 const MODE_KEY = { adhan: 'modeAdhan', sound: 'modeSound', vibrate: 'modeVibrate', off: 'modeOff' } as const;
 const MODE_ICON = { adhan: 'musical-notes', sound: 'notifications', vibrate: 'phone-portrait', off: 'notifications-off' } as const;
@@ -33,6 +93,7 @@ export function PrayerAlertSheet({ prayer: requested, onClose }: Props) {
   const playing = useAdhanStore((s) => s.playing);
   const play = useAdhanStore((s) => s.play);
   const stop = useAdhanStore((s) => s.stop);
+  const { openPro } = usePro();
 
   if (!prayer) return null;
   const visible = requested !== null;
@@ -104,6 +165,15 @@ export function PrayerAlertSheet({ prayer: requested, onClose }: Props) {
           })}
         </View>
 
+        {mode === 'adhan' && (
+          <AdhanSoundCard
+            onLocked={() => {
+              // Close the sheet first: a screen pushed under an open modal stays hidden on iOS.
+              onClose();
+              setTimeout(() => openPro('adhan'), SHEET_CLOSE_MS);
+            }}
+          />
+        )}
         {!hasBundledSounds && mode === 'adhan' && (
           <Text style={{ color: ui.accent, fontFamily: font.regular, fontSize: 13, marginTop: 8, textAlign }}>
             {t('adhanExpoGoNote')}

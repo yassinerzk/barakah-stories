@@ -19,12 +19,14 @@ const REASON: Record<ProReason, TranslationKey> = {
   wallpaper: 'proReasonWallpaper',
   practice: 'proReasonPractice',
   watermark: 'removeAppNameHint',
+  adhan: 'proReasonAdhan',
 };
 const FEATURES: ReadonlyArray<{ icon: keyof typeof Ionicons.glyphMap; text: TranslationKey }> = [
   { icon: 'infinite', text: 'proFeatStories' },
   { icon: 'color-palette', text: 'proFeatStyle' },
   { icon: 'image', text: 'proFeatWallpapers' },
   { icon: 'radio-button-on', text: 'proFeatPractice' },
+  { icon: 'musical-notes', text: 'proFeatAdhan' },
   { icon: 'eye-off', text: 'proFeatNoName' },
 ];
 const PLAN_LABEL: Record<ProPlan, TranslationKey> = { monthly: 'planMonthly', yearly: 'planYearly', lifetime: 'planLifetime' };

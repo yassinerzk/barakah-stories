@@ -418,6 +418,17 @@ export const en = {
   proReasonPractice: "This tool is part of Pro.",
   unlockWithPro: "Unlock with Pro",
   proOnly: "Pro only",
+  adhanSound: "Adhan sound",
+  adhanDefault: "Default adhan",
+  chooseAdhan: "Choose my own adhan",
+  useDefaultAdhan: "Use the default",
+  adhanTooLarge: "That file is over 20 MB.",
+  adhanNotAudio: "Please choose an audio file (MP3, M4A…).",
+  adhanPickFailed: "Couldn't use that file. Please try another.",
+  adhanChosen: "Your adhan is set",
+  adhanCustomNote: "Plays when you open a prayer alert or tap Play adhan. The alert's own sound stays short.",
+  proReasonAdhan: "Your own adhan is part of Pro.",
+  proFeatAdhan: "Your own adhan recording",
 } as const;
 
 export type TranslationKey = keyof typeof en;

@@ -4,7 +4,7 @@ import { useEntitlementStore } from './store';
 import { proLocksActive } from './adapter';
 
 /** Why the Pro screen was opened; it leads with the matching line. */
-export type ProReason = 'stories' | 'video' | 'style' | 'wallpaper' | 'practice' | 'watermark';
+export type ProReason = 'stories' | 'video' | 'style' | 'wallpaper' | 'practice' | 'watermark' | 'adhan';
 
 /** `locked` is what callers check: true only for free users in a build that can sell Pro. */
 export function usePro() {

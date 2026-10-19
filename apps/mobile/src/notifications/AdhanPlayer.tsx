@@ -16,8 +16,7 @@ import { safePause, safePlay } from '../media/catalog';
  * whole recording here, in the foreground, with a clear way to stop it.
  */
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const FULL_ADHAN = require('../../assets/sounds/adhan_full.mp3');
+import { useAdhanSource } from './customAdhan';
 
 interface AdhanState {
   playing: boolean;
@@ -57,7 +56,8 @@ function AdhanBar() {
   const { t, font, row } = useT();
   const insets = useSafeAreaInsets();
   const stop = useAdhanStore((s) => s.stop);
-  const player = useAudioPlayer(FULL_ADHAN);
+  // The member's own recording when they have set one (Pro), otherwise the bundled adhan.
+  const player = useAudioPlayer(useAdhanSource());
   const status = useAudioPlayerStatus(player);
 
   useEffect(() => {
