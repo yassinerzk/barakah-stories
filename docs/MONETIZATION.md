@@ -33,7 +33,8 @@ locked there; development builds use a simulated store so the flow can be tested
    - Setup → Payments profile: create the merchant account (bank account, tax info).
    - Monetize → Products → Subscriptions: create `barakah_pro_monthly` (one auto-renewing base plan,
      1 month) and `barakah_pro_yearly` (base plan, 1 year). Set prices; Play converts per country.
-   - Monetize → Products → In-app products: create `barakah_pro_lifetime` (one-time).
+     Current US prices: monthly $2.49, yearly $19.99 (about a third off twelve months).
+   - Monetize → Products → In-app products: create `barakah_pro_lifetime` (one-time, $39.99).
    - Also as in-app products: the "Support the app" tips `barakah_tip_1`, `barakah_tip_2`,
      `barakah_tip_5` (about $1, $2 and $5). They unlock nothing. Call them support for the app, not a
      donation to a cause: charity donations go through Google's separate nonprofit process.

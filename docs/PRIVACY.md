@@ -1,6 +1,6 @@
 # Privacy Policy — Barakah Stories
 
-**Last updated:** 19 September 2026
+**Last updated:** 20 October 2026
 
 Barakah Stories is made by Klay Creative Lab LLC. This policy explains what the app does with your
 information. The short version: the app works fully without an account and keeps everything on
@@ -83,6 +83,19 @@ time it arrives. If you do, the reminder is scheduled **by your phone, on your p
 server involved, we are not told that you turned it on, and no notification is ever sent to you by
 us. Turning it off, or changing the time, is in Me → Daily reminder, and you can also switch the
 app's notifications off in your phone settings.
+
+## Purchases
+
+Barakah Pro and the optional "Support the app" tips are bought through Google Play (or the App
+Store on iPhone). We never see your card or payment details; the store handles the payment under its
+own privacy policy.
+
+To know whether your phone has Pro, the app uses [RevenueCat](https://www.revenuecat.com), which
+processes purchases on our behalf. It receives your purchase record from the store (what was bought,
+when, and whether it is still active) linked to a random identifier created by the app, not your
+name or email. RevenueCat's own [privacy policy](https://www.revenuecat.com/privacy) applies to
+that processing. We use this only to unlock Pro and restore it on a new phone; it is not used for
+advertising or sold to anyone.
 
 ## Sharing your stories
 

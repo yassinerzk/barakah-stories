@@ -22,7 +22,7 @@ export const DEV_ADAPTER: MonetizationAdapter = {
     return 'rewarded';
   },
   // Sample prices; the real ones come from Google Play / the App Store.
-  loadPrices: async () => ({ monthly: '$2.99', yearly: '$19.99', lifetime: '$39.99' }),
+  loadPrices: async () => ({ monthly: '$2.49', yearly: '$19.99', lifetime: '$39.99' }),
   sendTip: async () => {
     await wait(800);
     return 'purchased';
