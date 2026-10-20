@@ -1,0 +1,77 @@
+<en-US>
+New in 1.2.0
+
+• A new prayer screen with the sun moving across your day
+• Home-screen widgets: a prayer countdown, and a dhikr counter you tap to count
+• Islamic wallpapers for your lock screen
+• Daily practice: tasbih, daily deeds, duas, the 99 Names and an Islamic calendar
+• Quran: continue where you left off, and bookmark ayahs
+• Use your own adhan recording
+• A short guided setup on first launch
+</en-US>
+<ar>
+الجديد في 1.2.0
+
+• شاشة صلاة جديدة تتحرك فيها الشمس مع يومك
+• أدوات للشاشة الرئيسية: عدّ تنازلي للصلاة، وعدّاد ذكر تضغط عليه لتعدّ
+• خلفيات إسلامية لشاشة القفل
+• الأعمال اليومية: التسبيح، الأعمال، الأدعية، الأسماء الحسنى والتقويم الهجري
+• القرآن: أكمل من حيث توقفت، واحفظ الآيات
+• استخدم تسجيل الأذان الخاص بك
+• إعداد سريع عند أول تشغيل
+</ar>
+<fr-FR>
+Nouveautés de la 1.2.0
+
+• Un nouvel écran de prière où le soleil suit votre journée
+• Widgets d'accueil : compte à rebours de la prière et compteur de dhikr à toucher
+• Fonds d'écran islamiques pour l'écran verrouillé
+• Pratique quotidienne : tasbih, actes du jour, douas, les 99 Noms et calendrier hégirien
+• Coran : reprenez où vous vous êtes arrêté, et gardez vos versets
+• Utilisez votre propre enregistrement d'adhan
+• Une courte configuration au premier lancement
+</fr-FR>
+<id>
+Baru di 1.2.0
+
+• Layar salat baru dengan matahari yang bergerak sepanjang hari
+• Widget layar utama: hitung mundur salat dan penghitung zikir yang tinggal diketuk
+• Wallpaper islami untuk layar kunci
+• Amalan harian: tasbih, amalan, doa, 99 Nama, dan kalender Hijriah
+• Al-Qur'an: lanjutkan bacaan dan tandai ayat
+• Gunakan rekaman azan Anda sendiri
+• Pengaturan singkat saat pertama dibuka
+</id>
+<ms-MY>
+Baharu dalam 1.2.0
+
+• Skrin solat baharu dengan matahari bergerak sepanjang hari
+• Widget skrin utama: kiraan detik solat dan pembilang zikir yang hanya perlu disentuh
+• Kertas dinding Islamik untuk skrin kunci
+• Amalan harian: tasbih, amalan, doa, 99 Nama dan kalendar Hijrah
+• Al-Quran: sambung bacaan dan tanda ayat
+• Gunakan rakaman azan Anda sendiri
+• Persediaan ringkas semasa kali pertama dibuka
+</ms-MY>
+<th>
+มีอะไรใหม่ใน 1.2.0
+
+• หน้าจอละหมาดใหม่ที่ดวงอาทิตย์เคลื่อนไปตามวันของคุณ
+• วิดเจ็ตหน้าจอโฮม: นับถอยหลังเวลาละหมาด และตัวนับซิกรฺที่แตะเพื่อนับ
+• วอลเปเปอร์อิสลามสำหรับหน้าจอล็อก
+• การปฏิบัติประจำวัน: ตัสบีห์ การงานประจำวัน ดุอาอ์ 99 พระนาม และปฏิทินอิสลาม
+• อัลกุรอาน: อ่านต่อจากที่ค้างไว้ และบุ๊กมาร์กอายะฮ์
+• ใช้เสียงอะซานที่คุณบันทึกเอง
+• การตั้งค่าสั้น ๆ เมื่อเปิดครั้งแรก
+</th>
+<ur>
+1.2.0 میں نیا
+
+• نماز کی نئی اسکرین جس میں سورج آپ کے دن کے ساتھ چلتا ہے
+• ہوم اسکرین ویجیٹس: نماز کی الٹی گنتی، اور ٹیپ سے گننے والا ذکر کاؤنٹر
+• لاک اسکرین کے لیے اسلامی وال پیپرز
+• روزانہ معمول: تسبیح، روزانہ اعمال، دعائیں، اسماء الحسنیٰ اور اسلامی کیلنڈر
+• قرآن: جہاں چھوڑا تھا وہیں سے پڑھیں، اور آیات محفوظ کریں
+• اپنی اذان کی ریکارڈنگ استعمال کریں
+• پہلی بار کھولنے پر مختصر سیٹ اپ
+</ur>
