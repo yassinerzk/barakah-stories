@@ -1,0 +1,49 @@
+<en-US>
+• Barakah Pro is here: monthly, yearly or a one-time lifetime plan
+• Free forever: prayer times and alerts, Qibla, Quran, Sahih al-Bukhari and Sahih Muslim, and 5 image stories a day
+• Pro unlocks unlimited and video stories, all styles, widgets, wallpapers, practice tools and your own adhan
+• New "Support the app" tips
+• Fixes and improvements
+</en-US>
+<ar>
+• وصل «بركة برو»: اشتراك شهري أو سنوي أو مدى الحياة بدفعة واحدة
+• مجاني دائماً: مواقيت الصلاة والتنبيهات، القبلة، القرآن، صحيح البخاري وصحيح مسلم، و5 قصص مصورة يومياً
+• «برو» يفتح القصص غير المحدودة والفيديو وكل الأنماط والودجات والخلفيات وأدوات العبادة وأذانك الخاص
+• جديد: ادعم التطبيق بهدية صغيرة
+• إصلاحات وتحسينات
+</ar>
+<fr-FR>
+• Barakah Pro arrive : formule mensuelle, annuelle ou à vie en un seul paiement
+• Gratuit pour toujours : horaires et alertes de prière, Qibla, Coran, Sahih al-Bukhari et Sahih Muslim, et 5 stories images par jour
+• Pro débloque les stories illimitées et vidéo, tous les styles, widgets, fonds d'écran, outils de pratique et votre propre adhan
+• Nouveau : soutenir l'app
+• Corrections et améliorations
+</fr-FR>
+<id>
+• Barakah Pro hadir: paket bulanan, tahunan, atau seumur hidup sekali bayar
+• Gratis selamanya: jadwal dan pengingat salat, kiblat, Al-Qur'an, Sahih al-Bukhari dan Sahih Muslim, serta 5 cerita gambar per hari
+• Pro membuka cerita tanpa batas dan video, semua gaya, widget, wallpaper, alat ibadah, dan azan pilihan Anda
+• Baru: dukung aplikasi
+• Perbaikan dan peningkatan
+</id>
+<ms>
+• Barakah Pro kini tersedia: pelan bulanan, tahunan atau seumur hidup sekali bayar
+• Percuma selamanya: waktu dan peringatan solat, kiblat, Al-Quran, Sahih al-Bukhari dan Sahih Muslim, serta 5 cerita gambar sehari
+• Pro membuka cerita tanpa had dan video, semua gaya, widget, kertas dinding, alat ibadah dan azan pilihan anda
+• Baharu: sokong aplikasi
+• Pembaikan dan penambahbaikan
+</ms>
+<th>
+• Barakah Pro มาแล้ว: แบบรายเดือน รายปี หรือตลอดชีพจ่ายครั้งเดียว
+• ฟรีตลอดไป: เวลาละหมาดและการแจ้งเตือน กิบลัต อัลกุรอาน เศาะฮีหฺอัลบุคอรีและเศาะฮีหฺมุสลิม และสตอรี่ภาพ 5 รายการต่อวัน
+• Pro ปลดล็อกสตอรี่ไม่จำกัดและวิดีโอ ทุกสไตล์ วิดเจ็ต วอลเปเปอร์ เครื่องมือปฏิบัติ และเสียงอะซานของคุณเอง
+• ใหม่: สนับสนุนแอป
+• แก้ไขและปรับปรุง
+</th>
+<ur>
+• برکہ پرو آ گیا: ماہانہ، سالانہ یا ایک بار ادائیگی پر تاحیات
+• ہمیشہ مفت: نماز کے اوقات اور الرٹس، قبلہ، قرآن، صحیح بخاری اور صحیح مسلم، اور روزانہ 5 تصویری کہانیاں
+• پرو سے لامحدود اور ویڈیو کہانیاں، تمام انداز، ویجٹس، وال پیپرز، عبادت کے ٹولز اور اپنی اذان کھلتے ہیں
+• نیا: ایپ کی مدد کریں
+• درستگیاں اور بہتریاں
+</ur>
