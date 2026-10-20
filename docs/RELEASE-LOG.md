@@ -745,3 +745,19 @@ Verified: `versionCode='13'`, `versionName='1.1.0'`, targetSdk 36, upload certif
 
 The adhan is still the CC0 test recording; replacing it later means bumping the `prayer_adhan_v1`
 channel id.
+
+## 1.2.0, versionCode 15 — run 39400619267 (commit f0d6eec)
+
+New prayer screen (sun arc), onboarding, floating tab bar, daily practice (tasbih, deeds, duas,
+99 Names, calendar), Quran continue/bookmarks, hadith restyle, Android home-screen widgets,
+wallpapers (Android sets them directly), custom adhan, the Pro screen and "Support the app" tips.
+Release notes in seven languages: `docs/release-notes-1.2.0.txt`.
+
+Billing is not connected in this build (no RevenueCat key), so every Pro lock is off and the Pro
+and Support buttons show "Coming soon". Adding the `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` secret and
+rebuilding turns on purchases and the free-plan limits together.
+
+Verified: `versionCode='15'`, `versionName='1.2.0'`, upload certificate SHA-256 `56b26d99…9011c0`.
+versionCode 14 was a test build uploaded to Play earlier. Upload folder:
+`Downloads/barakah-release-code15`. New permissions: `SET_WALLPAPER` (normal, no declaration);
+`com.android.vending.BILLING` from RevenueCat (no declaration).
