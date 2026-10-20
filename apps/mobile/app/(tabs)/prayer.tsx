@@ -24,6 +24,8 @@ import { usePrayerTimes } from '../../src/features/prayer/usePrayerTimes';
 import { useHeading } from '../../src/features/prayer/useHeading';
 import { QiblaCompass } from '../../src/features/prayer/QiblaCompass';
 import { LocationSheet } from '../../src/features/prayer/LocationSheet';
+import { usePro } from '../../src/monetization/usePro';
+import { ProLock } from '../../src/monetization/ProLock';
 import { PrayerAlertSheet } from '../../src/features/prayer/PrayerAlertSheet';
 import { locateMe } from '../../src/features/prayer/locateMe';
 import { PrayerHero } from '../../src/features/prayer/PrayerHero';
@@ -76,6 +78,8 @@ export default function PrayerScreen() {
   const enableAlerts = usePrayerAlertStore((s) => s.enable);
   const disableAlerts = usePrayerAlertStore((s) => s.disable);
   const setPanel = usePrayerAlertStore((s) => s.setPanel);
+  // Calculation settings and the next-prayer panel are Pro; times, alerts and the Qibla stay free.
+  const { locked, openPro } = usePro();
 
   const useMyLocation = async () => {
     setLocating(true);
@@ -214,7 +218,13 @@ export default function PrayerScreen() {
                         <Text style={{ color: ui.text, fontFamily: font.semibold, fontSize: 15, textAlign }}>{t('panelLabel')}</Text>
                         <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 13, textAlign }}>{t('panelDesc')}</Text>
                       </View>
-                      <Switch value={prefs.panel} onValueChange={setPanel} accessibilityLabel={t('panelLabel')} trackColor={{ true: ui.accent, false: ui.line }} />
+                      {locked && <ProLock size={14} corner={false} />}
+                      <Switch
+                        value={prefs.panel && !locked}
+                        onValueChange={(on) => (locked ? openPro('feature') : setPanel(on))}
+                        accessibilityLabel={t('panelLabel')}
+                        trackColor={{ true: ui.accent, false: ui.line }}
+                      />
                     </View>
                   )}
                   <Button label={t('alertsTurnOff')} variant="ghost" onPress={disableAlerts} />
@@ -255,18 +265,19 @@ export default function PrayerScreen() {
 
             {/* calculation settings */}
             <View onLayout={(e) => setSettingsY(e.nativeEvent.layout.y)} style={{ gap: 8 }}>
+              {locked && <ProLock size={14} corner={false} />}
               <View style={{ flexDirection: row, gap: 8 }}>
                 <SettingTile
                   label={t('calcLabel')}
                   value={l(CALC_METHODS.find((m) => m.id === method)!.label)}
                   open={openSetting === 'method'}
-                  onPress={() => setOpenSetting((o) => (o === 'method' ? null : 'method'))}
+                  onPress={() => (locked ? openPro('feature') : setOpenSetting((o) => (o === 'method' ? null : 'method')))}
                 />
                 <SettingTile
                   label={t('asrMethod')}
                   value={madhab === 'hanafi' ? t('hanafi') : t('shafi')}
                   open={openSetting === 'madhab'}
-                  onPress={() => setOpenSetting((o) => (o === 'madhab' ? null : 'madhab'))}
+                  onPress={() => (locked ? openPro('feature') : setOpenSetting((o) => (o === 'madhab' ? null : 'madhab')))}
                 />
               </View>
               {openSetting === 'method' && (

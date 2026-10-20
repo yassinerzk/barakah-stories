@@ -1,4 +1,4 @@
-import { NOOP_ADAPTER, type MonetizationAdapter } from '@barakah/core';
+import { NOOP_ADAPTER, TIP_FALLBACK_PRICES, type MonetizationAdapter } from '@barakah/core';
 import { REVENUECAT_ADAPTER, revenueCatAvailable } from './revenuecat';
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -23,6 +23,11 @@ export const DEV_ADAPTER: MonetizationAdapter = {
   },
   // Sample prices; the real ones come from Google Play / the App Store.
   loadPrices: async () => ({ monthly: '$2.99', yearly: '$19.99', lifetime: '$39.99' }),
+  sendTip: async () => {
+    await wait(800);
+    return 'purchased';
+  },
+  loadTipPrices: async () => ({ ...TIP_FALLBACK_PRICES }),
 };
 
 /**

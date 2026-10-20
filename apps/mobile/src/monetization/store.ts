@@ -97,15 +97,18 @@ export const useEntitlementStore = create<EntitlementState>()(
           // No prices yet: the Pro screen shows the plans without them.
         }
       },
-      countStory: () => set({ quota: recordStory(get().quota, new Date()) }),
+      countStory: () => set({ quota: recordStory(get().quota, Date.now()) }),
     }),
     {
       name: 'barakah.entitlements',
-      version: 2,
+      version: 3,
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (s) => ({ entitlements: s.entitlements, firstOpenAt: s.firstOpenAt, quota: s.quota }),
-      // Version 1 only stored entitlements; the new fields start fresh.
-      migrate: (persisted) => ({ ...(persisted as object), quota: EMPTY_QUOTA, firstOpenAt: 0 }),
+      // v1 stored only entitlements; v2 counted stories per month. The daily count starts fresh.
+      migrate: (persisted, version) => {
+        const old = persisted as Partial<{ firstOpenAt: number }>;
+        return { ...(persisted as object), quota: EMPTY_QUOTA, firstOpenAt: version >= 2 ? (old.firstOpenAt ?? 0) : 0 };
+      },
       onRehydrateStorage: () => (state, error) => {
         // Written once, so the lifetime offer counts from the very first open.
         if (!error && state && state.firstOpenAt === 0) useEntitlementStore.setState({ firstOpenAt: Date.now() });

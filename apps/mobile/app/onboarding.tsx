@@ -15,6 +15,7 @@ import { AlertsStep, LocationStep, SettingsStep } from '../src/features/onboardi
 import { WidgetsStep } from '../src/features/onboarding/WidgetsStep';
 import { requestWidget, WidgetHowToSheet, type WidgetKind } from '../src/widgets/WidgetHowToSheet';
 import { widgetsSupported } from '../modules/widgets';
+import { usePro } from '../src/monetization/usePro';
 
 type Step = 'language' | 'welcome' | 'location' | 'settings' | 'alerts' | 'widgets' | 'ready';
 const MODE_KEY = { adhan: 'modeAdhan', sound: 'modeSound', vibrate: 'modeVibrate', off: 'modeOff' } as const;
@@ -53,6 +54,8 @@ export default function Onboarding() {
   const [busy, setBusy] = useState(false);
   const [suggested, setSuggested] = useState(false);
   const [widgetHowTo, setWidgetHowTo] = useState(false);
+  // Widgets are Pro: free users don't get the widget step.
+  const { locked } = usePro();
 
   // Calculation settings need a place to preview; without one that step is left out.
   // The widgets step needs the native widgets, which Expo Go and the web don't have.
@@ -62,7 +65,7 @@ export default function Onboarding() {
     'location',
     ...(location ? (['settings'] as const) : []),
     'alerts',
-    ...(widgetsSupported ? (['widgets'] as const) : []),
+    ...(widgetsSupported && !locked ? (['widgets'] as const) : []),
     'ready',
   ];
   const index = Math.max(0, steps.indexOf(step));

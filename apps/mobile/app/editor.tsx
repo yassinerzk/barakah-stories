@@ -13,7 +13,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAudioPlayer } from 'expo-audio';
-import { designToText, FREE_STORIES_PER_MONTH, shouldShowWatermark, storiesLeft, toLocaleDigits, type TranslationKey } from '@barakah/core';
+import { designToText, FREE_STORIES_PER_DAY, quotaResetsAt, shouldShowWatermark, storiesLeft, toLocaleDigits, type TranslationKey } from '@barakah/core';
 import { useEntitlementStore } from '../src/monetization/store';
 import { usePro, type ProReason } from '../src/monetization/usePro';
 import { WatermarkRow } from '../src/features/editor/WatermarkRow';
@@ -69,7 +69,10 @@ export default function EditorScreen() {
   const { locked, openPro } = usePro();
   const quota = useEntitlementStore((s) => s.quota);
   const countStory = useEntitlementStore((s) => s.countStory);
-  const left = storiesLeft(quota, new Date());
+  // A snapshot taken when the editor opens: stories shared since still count (they start later),
+  // and a window that closes while editing is picked up on the next open.
+  const [openedAt] = useState(() => Date.now());
+  const left = storiesLeft(quota, openedAt);
 
   const manifest = useMediaStore((s) => s.manifest);
   const local = useMediaStore((s) => s.local);
@@ -118,6 +121,11 @@ export default function EditorScreen() {
   const tools = TOOLS.filter((x) => !x.videoOnly || isVideo);
 
   const save = () => {
+    // The saved-stories library is Pro.
+    if (locked) {
+      openPro('feature');
+      return;
+    }
     const saved = upsert(design, savedId);
     setSavedId(saved.id);
     toast(t('saved'), 'success');
@@ -126,8 +134,14 @@ export default function EditorScreen() {
 
   const share = async () => {
     if (busy) return;
-    if (locked && (isVideo || left === 0)) {
-      openPro(isVideo ? 'video' : 'stories');
+    if (locked && isVideo) {
+      openPro('video');
+      return;
+    }
+    if (locked && left === 0) {
+      // Tells the Pro screen when the free stories come back.
+      const resetAt = quotaResetsAt(quota, Date.now());
+      openPro('stories', resetAt ? { resetAt: String(resetAt) } : undefined);
       return;
     }
     setBusy(true);
@@ -288,7 +302,7 @@ export default function EditorScreen() {
           <Text style={{ color: left > 0 ? ui.textMuted : ui.accent, fontFamily: font.medium, fontSize: 12 }}>
             {t('storiesLeftOf')
               .replace('{n}', toLocaleDigits(left, locale))
-              .replace('{total}', toLocaleDigits(FREE_STORIES_PER_MONTH, locale))}
+              .replace('{total}', toLocaleDigits(FREE_STORIES_PER_DAY, locale))}
           </Text>
         </Pressable>
       )}

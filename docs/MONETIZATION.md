@@ -2,11 +2,15 @@
 
 ## Pro plans and payment setup (October 2026 — supersedes the model table below)
 
-**Free:** prayer times and alerts, Quran, hadith, duas, widgets. Stories: 3 image stories a month
-(counted on the phone, reset on the 1st), no video, a starter set of themes / photos / decorations /
-Arabic fonts, the first 6 wallpapers.
-**Pro:** unlimited and video stories, every style and wallpaper, no app name on stories, Tasbih,
-Daily deeds, Calendar and 99 Names.
+**Free:** prayer times, prayer alerts and adhan, the Qibla compass, reading the Quran, reading Sahih
+al-Bukhari and Sahih Muslim, and 5 image stories per 24 hours (the window starts with the first
+story; counted on the phone). Language, accessibility settings and onboarding are always free.
+**Pro:** everything else — unlimited and video stories, every style, no app name, saved stories and
+sync, calculation settings, the next-prayer panel, the daily reminder, custom adhan, Tasbih, Daily
+deeds, Duas, Calendar, 99 Names, widgets, wallpapers, Quran bookmarks / continue reading / reading
+settings, hadith search / dua filter / continue reading. Every Pro item carries a PRO label for free
+users; tapping it opens the Pro screen, which can only be closed (back to where they were) or used
+to upgrade.
 
 | Plan     | Product id             | Type                        |
 | -------- | ---------------------- | --------------------------- |
@@ -30,6 +34,9 @@ locked there; development builds use a simulated store so the flow can be tested
    - Monetize → Products → Subscriptions: create `barakah_pro_monthly` (one auto-renewing base plan,
      1 month) and `barakah_pro_yearly` (base plan, 1 year). Set prices; Play converts per country.
    - Monetize → Products → In-app products: create `barakah_pro_lifetime` (one-time).
+   - Also as in-app products: the "Support the app" tips `barakah_tip_1`, `barakah_tip_2`,
+     `barakah_tip_5` (about $1, $2 and $5). They unlock nothing. Call them support for the app, not a
+     donation to a cause: charity donations go through Google's separate nonprofit process.
    - Products can only be activated once a build with the billing permission is uploaded to a
      testing track (the RevenueCat SDK adds it).
    - Setup → License testing: add your Gmail so test purchases are free.

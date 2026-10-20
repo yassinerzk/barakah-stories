@@ -4,7 +4,7 @@ import { useEntitlementStore } from './store';
 import { proLocksActive } from './adapter';
 
 /** Why the Pro screen was opened; it leads with the matching line. */
-export type ProReason = 'stories' | 'video' | 'style' | 'wallpaper' | 'practice' | 'watermark' | 'adhan';
+export type ProReason = 'stories' | 'video' | 'style' | 'wallpaper' | 'practice' | 'watermark' | 'adhan' | 'feature';
 
 /** `locked` is what callers check: true only for free users in a build that can sell Pro. */
 export function usePro() {
@@ -13,6 +13,8 @@ export function usePro() {
   return {
     pro,
     locked: proLocksActive && !pro,
-    openPro: (reason?: ProReason) => router.push({ pathname: '/pro', params: reason ? { reason } : {} }),
+    /** `params` carries extra context, e.g. `resetAt` (epoch ms) when the daily stories are used up. */
+    openPro: (reason?: ProReason, params?: Record<string, string>) =>
+      router.push({ pathname: '/pro', params: { ...(reason ? { reason } : {}), ...params } }),
   };
 }

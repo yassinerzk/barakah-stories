@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useT } from '../src/i18n';
+import { ProGate } from '../src/monetization/ProLock';
 import { ui } from '../src/theme';
 import { ScreenHeader } from '../src/components/ScreenHeader';
 import { Button } from '../src/components/ui';
@@ -18,7 +19,7 @@ const DHIKR_SIZE = 156;
  * Both home-screen widgets, live and with the person's own times and count,
  * each with a way to add it. Reached from Home and from Me.
  */
-export default function WidgetsScreen() {
+function WidgetsScreen() {
   const { t, font, textAlign } = useT();
   const insets = useSafeAreaInsets();
   const width = useLayoutWidth();
@@ -63,5 +64,14 @@ function Showcase({ title, body, onAdd, children }: { title: string; body: strin
         </View>
       </View>
     </View>
+  );
+}
+
+/** A Pro feature: free users see how to unlock it. */
+export default function WidgetsRoute() {
+  return (
+    <ProGate title="widgetsTitle" reason="feature" reasonKey="proReasonGeneric" bodyKey="widgetsIntro">
+      <WidgetsScreen />
+    </ProGate>
   );
 }

@@ -1,13 +1,14 @@
 import {
   EMPTY_QUOTA,
-  FREE_STORIES_PER_MONTH,
+  FREE_STORIES_PER_DAY,
   isFreeItem,
   LIFETIME_OFFER_MS,
   lifetimeOffer,
-  monthKey,
   PRO_PLANS,
   PRODUCT_IDS,
+  quotaResetsAt,
   recordStory,
+  STORY_WINDOW_MS,
   storiesLeft,
 } from './pro';
 
@@ -22,38 +23,44 @@ describe('plans', () => {
   });
 });
 
-describe('monthly story allowance', () => {
-  const oct = new Date(2026, 9, 19, 12);
+describe('daily story allowance', () => {
+  const HOUR = 60 * 60 * 1000;
+  const first = Date.UTC(2026, 9, 20, 14, 32);
+  const fill = (n: number) => {
+    let q = EMPTY_QUOTA;
+    for (let i = 0; i < n; i++) q = recordStory(q, first + i * HOUR);
+    return q;
+  };
 
-  it('keys months by local calendar month', () => {
-    expect(monthKey(new Date(2026, 0, 31, 23, 59))).toBe('2026-01');
-    expect(monthKey(new Date(2026, 9, 1, 0, 0))).toBe('2026-10');
-  });
-
-  it('starts with the full allowance', () => {
-    expect(storiesLeft(EMPTY_QUOTA, oct)).toBe(FREE_STORIES_PER_MONTH);
-    expect(FREE_STORIES_PER_MONTH).toBe(3);
+  it('starts with the full allowance and no reset time', () => {
+    expect(FREE_STORIES_PER_DAY).toBe(5);
+    expect(storiesLeft(EMPTY_QUOTA, first)).toBe(5);
+    expect(quotaResetsAt(EMPTY_QUOTA, first)).toBeNull();
   });
 
   it('counts down with each story and never below zero', () => {
-    let q = EMPTY_QUOTA;
-    for (let i = 0; i < 5; i++) q = recordStory(q, oct);
-    expect(storiesLeft(q, oct)).toBe(0);
-    expect(q.used).toBe(5);
+    const q = fill(6);
+    expect(storiesLeft(q, first + 6 * HOUR)).toBe(0);
+    expect(q.used).toBe(6);
+  });
+
+  it('resets 24 hours after the first story of the window, not at midnight', () => {
+    const q = fill(5);
+    expect(quotaResetsAt(q, first + 5 * HOUR)).toBe(first + STORY_WINDOW_MS);
+    expect(storiesLeft(q, first + STORY_WINDOW_MS - 1)).toBe(0);
+    expect(storiesLeft(q, first + STORY_WINDOW_MS)).toBe(5);
+    expect(recordStory(q, first + STORY_WINDOW_MS)).toEqual({ windowStart: first + STORY_WINDOW_MS, used: 1 });
   });
 
   it('does not change the quota it was given', () => {
-    const q = recordStory(EMPTY_QUOTA, oct);
-    recordStory(q, oct);
+    const q = recordStory(EMPTY_QUOTA, first);
+    recordStory(q, first);
     expect(q.used).toBe(1);
   });
 
-  it('starts again on the first of the next month', () => {
-    let q = EMPTY_QUOTA;
-    for (let i = 0; i < 3; i++) q = recordStory(q, oct);
-    const nov = new Date(2026, 10, 1, 0, 1);
-    expect(storiesLeft(q, nov)).toBe(3);
-    expect(recordStory(q, nov)).toEqual({ month: '2026-11', used: 1 });
+  it('does not reset when the clock is set back', () => {
+    const q = fill(5);
+    expect(storiesLeft(q, first - 3 * HOUR)).toBe(0);
   });
 });
 

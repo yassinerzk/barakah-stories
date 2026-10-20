@@ -10,6 +10,8 @@ import { useQuranStore, type AyahRef } from '../../src/store';
 import { loadChapter } from '../../src/quran/chapters';
 import { StarBadge } from '../../src/components/StarBadge';
 import { SvgFill } from '../../src/components/SvgFill';
+import { usePro } from '../../src/monetization/usePro';
+import { ProLock } from '../../src/monetization/ProLock';
 
 const GOLD_SOFT = 'rgba(217,182,92,';
 const fill = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k: string) => v[k] ?? '');
@@ -23,6 +25,7 @@ export default function QuranScreen() {
   const lastRead = useQuranStore((s) => s.lastRead);
   const bookmarks = useQuranStore((s) => s.bookmarks);
   const [tab, setTab] = useState<Tab>('surahs');
+  const { locked, openPro } = usePro();
   const pos = continuePosition({ lastRead, finished });
   const meta = getChapterMeta(pos.surah)!;
   const digits = (n: number) => toLocaleDigits(n, locale);
@@ -42,7 +45,8 @@ export default function QuranScreen() {
 
       {/* continue reading */}
       <Pressable
-        onPress={() => open(pos.surah, pos.ayah)}
+        // Picking up where you left off is Pro; starting to read is free.
+        onPress={() => (locked && lastRead ? openPro('feature') : open(pos.surah, pos.ayah))}
         accessibilityRole="button"
         accessibilityLabel={`${t('continueReading')}: ${meta.transliteration}, ${fill(t('ayahOf'), { n: digits(pos.ayah), total: digits(meta.total_verses) })}`}
         style={{ borderRadius: 22, overflow: 'hidden', borderWidth: 1, borderColor: `${GOLD_SOFT}0.45)`, backgroundColor: ui.bgElev, padding: 18 }}
@@ -60,6 +64,7 @@ export default function QuranScreen() {
           <Rect width="100%" height="100%" fill="url(#gQ)" opacity={0.08} />
           <Circle cx="85%" cy={50} r={70} fill="url(#qg)" />
         </SvgFill>
+        {locked && lastRead && <ProLock size={14} />}
         <Text style={{ color: ui.accent, fontFamily: font.medium, fontSize: 11, letterSpacing: 1.5, textAlign }}>
           {(lastRead ? t('continueReading') : t('startReading')).toLocaleUpperCase(locale)}
         </Text>
@@ -88,7 +93,7 @@ export default function QuranScreen() {
           return (
             <Pressable
               key={k}
-              onPress={() => setTab(k)}
+              onPress={() => (locked && k === 'bookmarks' ? openPro('feature') : setTab(k))}
               accessibilityRole="tab"
               accessibilityState={{ selected: on }}
               style={{ flex: 1, minHeight: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: on ? ui.accent : 'transparent' }}
@@ -97,6 +102,7 @@ export default function QuranScreen() {
                 {t(k)}
                 {k === 'bookmarks' && bookmarks.length > 0 ? ` · ${digits(bookmarks.length)}` : ''}
               </Text>
+              {locked && k === 'bookmarks' && <ProLock size={12} />}
             </Pressable>
           );
         })}

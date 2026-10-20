@@ -38,8 +38,7 @@ import { ProLock } from '../../src/monetization/ProLock';
 const PRACTICE = [
   { route: '/tasbih', label: 'tasbih', icon: 'radio-button-on-outline', pro: true },
   { route: '/deeds', label: 'deeds', icon: 'checkmark-done-outline', pro: true },
-  // Duas are religious content: free for everyone.
-  { route: '/duas', label: 'duas', icon: 'hand-left-outline', pro: false },
+  { route: '/duas', label: 'duas', icon: 'hand-left-outline', pro: true },
   { route: '/names', label: 'names99', icon: 'sparkles-outline', pro: true },
   { route: '/calendar', label: 'calendar', icon: 'calendar-outline', pro: true },
 ] as const;
@@ -226,6 +225,7 @@ export default function HomeScreen() {
             <Text numberOfLines={2} style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 12, lineHeight: 16, textAlign }}>
               {t(p.body)}
             </Text>
+            {locked && <ProLock size={14} />}
           </Pressable>
         ))}
       </View>

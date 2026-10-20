@@ -13,6 +13,8 @@ import { useChapterTranslation } from '../../src/quran/useChapterTranslation';
 import { Chip } from '../../src/components/ui';
 import { StarBadge } from '../../src/components/StarBadge';
 import { SurahCartouche } from '../../src/quran/SurahCartouche';
+import { usePro } from '../../src/monetization/usePro';
+import { ProLock } from '../../src/monetization/ProLock';
 
 const BISMILLAH = 'بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ';
 const fill = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k: string) => v[k] ?? '');
@@ -41,6 +43,8 @@ export default function SurahScreen() {
   const bookmarks = useQuranStore((s) => s.bookmarks);
   const toggleBookmark = useQuranStore((s) => s.toggleBookmark);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  // Reading is free; bookmarks and reading settings are Pro.
+  const { locked, openPro } = usePro();
   const createStory = (verse: QuranVerse) => {
     if (!meta) return;
     loadDesign(designFromVerses(meta, [verse], locale));
@@ -100,13 +104,14 @@ export default function SurahScreen() {
             </Text>
           </View>
           <Pressable
-            onPress={() => setSettingsOpen((o) => !o)}
+            onPress={() => (locked ? openPro('feature') : setSettingsOpen((o) => !o))}
             accessibilityRole="button"
             accessibilityLabel={t('readingSettings')}
             accessibilityState={{ expanded: settingsOpen }}
             style={{ width: 48, height: 48, alignItems: 'center', justifyContent: 'center' }}
           >
             <Text style={{ color: settingsOpen ? ui.accent : ui.text, fontFamily: font.semibold, fontSize: 17 }}>Aa</Text>
+            {locked && <ProLock size={10} />}
           </Pressable>
         </View>
         {settingsOpen && (
@@ -198,7 +203,7 @@ export default function SurahScreen() {
                 </View>
                 <View style={{ flex: 1 }} />
                 <Pressable
-                  onPress={() => toggleBookmark({ surah, ayah: item.id })}
+                  onPress={() => (locked ? openPro('feature') : toggleBookmark({ surah, ayah: item.id }))}
                   accessibilityRole="button"
                   accessibilityState={{ selected: kept }}
                   accessibilityLabel={fill(t(kept ? 'removeAyah' : 'saveAyah'), { n })}

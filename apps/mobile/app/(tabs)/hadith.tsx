@@ -16,6 +16,8 @@ import {
   type Post,
 } from '@barakah/core';
 import { useT } from '../../src/i18n';
+import { usePro } from '../../src/monetization/usePro';
+import { ProLock } from '../../src/monetization/ProLock';
 import { ui } from '../../src/theme';
 import { useEditorStore, useHadithStore, useRecentStore } from '../../src/store';
 import { useHadithLibrary } from '../../src/hadith/library';
@@ -28,6 +30,8 @@ export default function HadithScreen() {
   const { t, l, locale, font, row, textAlign } = useT();
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  // Reading Bukhari and Muslim is free; search, the dua filter and 'continue reading' are Pro.
+  const { locked, openPro } = usePro();
   const [query, setQuery] = useState('');
   const [debounced, setDebounced] = useState('');
   const [duaOnly, setDuaOnly] = useState(false);
@@ -111,7 +115,18 @@ export default function HadithScreen() {
           }}
           autoCorrect={false}
           returnKeyType="search"
+          editable={!locked}
         />
+        {locked && <ProLock size={14} corner={false} />}
+        {/* Search is Pro: for free users the whole field opens the Pro screen. */}
+        {locked && (
+          <Pressable
+            onPress={() => openPro('feature')}
+            accessibilityRole="button"
+            accessibilityLabel={`${t('searchHadith')}, ${t('proOnly')}`}
+            style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+          />
+        )}
         {query !== '' && (
           <Pressable
             onPress={() => setQuery('')}
@@ -124,7 +139,11 @@ export default function HadithScreen() {
         )}
       </View>
       <View style={{ flexDirection: row, gap: 8 }}>
-        <Chip label={`🤲 ${t('duaOnly')}`} active={duaOnly} onPress={() => setDuaOnly(!duaOnly)} />
+        <Chip
+          label={`${locked ? '🔒 ' : ''}🤲 ${t('duaOnly')}`}
+          active={duaOnly && !locked}
+          onPress={() => (locked ? openPro('feature') : setDuaOnly(!duaOnly))}
+        />
       </View>
 
       {debounced === '' && (
@@ -216,15 +235,18 @@ export default function HadithScreen() {
                   {ready && last && (
                     <Pressable
                       onPress={() =>
-                        router.push({
-                          pathname: '/hadith/[book]/[section]',
-                          params: { book: b, section: String(last.section), number: String(last.number) },
-                        })
+                        locked
+                          ? openPro('feature')
+                          : router.push({
+                              pathname: '/hadith/[book]/[section]',
+                              params: { book: b, section: String(last.section), number: String(last.number) },
+                            })
                       }
                       accessibilityRole="button"
                       style={{ minHeight: 40, justifyContent: 'center' }}
                     >
                       <Text numberOfLines={1} style={{ color: ui.accent, fontFamily: font.medium, fontSize: 12, textAlign: 'center' }}>
+                        {locked ? '🔒 ' : ''}
                         {t('continueReading')} ›
                       </Text>
                     </Pressable>

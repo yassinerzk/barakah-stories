@@ -1,14 +1,17 @@
 import { Platform } from 'react-native';
 import Constants, { ExecutionEnvironment } from 'expo-constants';
 import type Purchases from 'react-native-purchases';
-import type { CustomerInfo, PurchasesPackage } from 'react-native-purchases';
+import type { CustomerInfo, PRODUCT_CATEGORY, PurchasesPackage, PurchasesStoreProduct } from 'react-native-purchases';
 import {
   PRO_PLANS,
   PRODUCT_IDS,
+  TIP_PRODUCT_IDS,
+  TIP_SIZES,
   type EntitlementCheck,
   type MonetizationAdapter,
   type PlanPrices,
   type ProPlan,
+  type TipPrices,
 } from '@barakah/core';
 
 /*
@@ -68,6 +71,13 @@ async function packagesByPlan(): Promise<Partial<Record<ProPlan, PurchasesPackag
   };
 }
 
+/** Tips are one-off (consumable) products, outside any offering. */
+const NON_SUBSCRIPTION = 'NON_SUBSCRIPTION' as PRODUCT_CATEGORY;
+
+async function tipProducts(): Promise<PurchasesStoreProduct[]> {
+  return sdk().getProducts(TIP_SIZES.map((s) => TIP_PRODUCT_IDS[s]), NON_SUBSCRIPTION);
+}
+
 export const REVENUECAT_ADAPTER: MonetizationAdapter = {
   id: 'revenuecat',
   purchasePro: async (plan) => {
@@ -89,6 +99,24 @@ export const REVENUECAT_ADAPTER: MonetizationAdapter = {
     for (const plan of PRO_PLANS) {
       const pkg = packages[plan];
       if (pkg) prices[plan] = pkg.product.priceString;
+    }
+    return prices;
+  },
+  sendTip: async (size) => {
+    try {
+      const product = (await tipProducts()).find((p) => p.identifier === TIP_PRODUCT_IDS[size]);
+      if (!product) return 'unavailable';
+      await sdk().purchaseStoreProduct(product);
+      return 'purchased';
+    } catch (e) {
+      return (e as { userCancelled?: boolean }).userCancelled ? 'cancelled' : 'error';
+    }
+  },
+  loadTipPrices: async () => {
+    const prices: TipPrices = {};
+    for (const product of await tipProducts()) {
+      const size = TIP_SIZES.find((s) => TIP_PRODUCT_IDS[s] === product.identifier);
+      if (size) prices[size] = product.priceString;
     }
     return prices;
   },

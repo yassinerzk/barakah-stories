@@ -3,7 +3,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { isPro, lifetimeOffer, toLocaleDigits, type ProPlan, type TranslationKey } from '@barakah/core';
+import { formatClock, isPro, lifetimeOffer, toLocaleDigits, type ProPlan, type TranslationKey } from '@barakah/core';
 import { useT } from '../src/i18n';
 import { ui } from '../src/theme';
 import { useToastStore } from '../src/store';
@@ -20,6 +20,7 @@ const REASON: Record<ProReason, TranslationKey> = {
   practice: 'proReasonPractice',
   watermark: 'removeAppNameHint',
   adhan: 'proReasonAdhan',
+  feature: 'proReasonGeneric',
 };
 const FEATURES: ReadonlyArray<{ icon: keyof typeof Ionicons.glyphMap; text: TranslationKey }> = [
   { icon: 'infinite', text: 'proFeatStories' },
@@ -27,6 +28,9 @@ const FEATURES: ReadonlyArray<{ icon: keyof typeof Ionicons.glyphMap; text: Tran
   { icon: 'image', text: 'proFeatWallpapers' },
   { icon: 'radio-button-on', text: 'proFeatPractice' },
   { icon: 'musical-notes', text: 'proFeatAdhan' },
+  { icon: 'time', text: 'proFeatPrayer' },
+  { icon: 'book', text: 'proFeatQuran' },
+  { icon: 'cloud-upload', text: 'proFeatLibrary' },
   { icon: 'eye-off', text: 'proFeatNoName' },
 ];
 const PLAN_LABEL: Record<ProPlan, TranslationKey> = { monthly: 'planMonthly', yearly: 'planYearly', lifetime: 'planLifetime' };
@@ -50,10 +54,10 @@ function useNow(): number {
  * only open for the first three days after someone first opens the app.
  */
 export default function ProScreen() {
-  const { t, font, row, textAlign } = useT();
+  const { t, locale, font, row, textAlign } = useT();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { reason } = useLocalSearchParams<{ reason?: string }>();
+  const { reason, resetAt } = useLocalSearchParams<{ reason?: string; resetAt?: string }>();
   const toast = useToastStore((s) => s.show);
   const entitlements = useEntitlementStore((s) => s.entitlements);
   const firstOpenAt = useEntitlementStore((s) => s.firstOpenAt);
@@ -66,6 +70,8 @@ export default function ProScreen() {
   const offer = lifetimeOffer(firstOpenAt || now, now);
   const [plan, setPlan] = useState<ProPlan>('yearly');
   const why = reason && reason in REASON ? REASON[reason as ProReason] : null;
+  // When the daily free stories are used up: the time they come back.
+  const backAt = reason === 'stories' && resetAt && Number(resetAt) > 0 ? formatClock(new Date(Number(resetAt)), locale) : null;
 
   useEffect(() => {
     void loadPrices();
@@ -109,6 +115,11 @@ export default function ProScreen() {
             {t('proTitle')}
           </Text>
           {why && <Text style={{ color: ui.accent, fontFamily: font.medium, fontSize: 15, lineHeight: 21, textAlign: 'center' }}>{t(why)}</Text>}
+          {backAt && (
+            <Text style={{ color: ui.text, fontFamily: font.regular, fontSize: 14, lineHeight: 20, textAlign: 'center' }}>
+              {t('storiesResetAt').replace('{time}', backAt)}
+            </Text>
+          )}
           <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 14, lineHeight: 20, textAlign: 'center' }}>{t('proSubtitle')}</Text>
         </View>
 

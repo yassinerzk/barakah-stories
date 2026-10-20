@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { CATEGORIES, designFromPost, POSTS, postTranslation, toLocaleDigits, type CategoryId, type Post } from '@barakah/core';
 import { useT } from '../src/i18n';
+import { ProGate } from '../src/monetization/ProLock';
 import { ui } from '../src/theme';
 import { useEditorStore, useRecentStore } from '../src/store';
 import { ScreenHeader } from '../src/components/ScreenHeader';
@@ -15,7 +16,7 @@ const GOLD_SOFT = 'rgba(217,182,92,';
 const DUAS: readonly Post[] = POSTS.filter((p) => p.kind === 'dua' || p.kind === 'dhikr');
 
 /** Duas and adhkar to read, count and turn into a card. */
-export default function DuasScreen() {
+function DuasScreen() {
   const { t, l, locale, font, row, textAlign } = useT();
   const router = useRouter();
   const insets = useSafeAreaInsets();
@@ -111,5 +112,14 @@ export default function DuasScreen() {
         }}
       />
     </View>
+  );
+}
+
+/** A Pro feature: free users see how to unlock it. */
+export default function DuasRoute() {
+  return (
+    <ProGate title="duasTitle">
+      <DuasScreen />
+    </ProGate>
   );
 }

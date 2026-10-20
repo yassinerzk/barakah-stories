@@ -3,6 +3,7 @@ import * as Notifications from 'expo-notifications';
 import Constants, { ExecutionEnvironment } from 'expo-constants';
 import {
   formatClock,
+  isPro,
   pick,
   planAlerts,
   planPanel,
@@ -16,6 +17,8 @@ import {
 } from '@barakah/core';
 import { clearPanel, setPanel, type PanelEntryInput } from '../../modules/prayer-panel';
 import type { PrayerLocation } from '../store';
+import { useEntitlementStore } from '../monetization/store';
+import { proLocksActive } from '../monetization/adapter';
 
 /**
  * The OS side of prayer alerts. Every alert is a one-shot notification at an
@@ -162,7 +165,9 @@ export async function applyPrayerAlerts({ location, settings, prefs, locale, now
 }
 
 function applyPanel({ location, settings, prefs, locale, now = new Date() }: ApplyInput): void {
-  if (!location || !prefs.enabled || !prefs.panel) {
+  // The next-prayer panel is Pro (once Pro can be bought).
+  const panelLocked = proLocksActive && !isPro(useEntitlementStore.getState().entitlements);
+  if (!location || !prefs.enabled || !prefs.panel || panelLocked) {
     clearPanel();
     return;
   }

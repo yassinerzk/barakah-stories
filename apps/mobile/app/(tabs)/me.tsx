@@ -14,8 +14,11 @@ import { authEnabled } from '../../src/auth/supabase';
 import { useAuthStore } from '../../src/auth/store';
 import { syncAll } from '../../src/auth/sync';
 import { ProPanel } from '../../src/monetization/ProPanel';
+import { SupportPanel } from '../../src/monetization/SupportPanel';
 import { ReminderRow } from '../../src/notifications/ReminderRow';
 import { useA11yStore } from '../../src/a11y';
+import { usePro } from '../../src/monetization/usePro';
+import { ProLock } from '../../src/monetization/ProLock';
 
 type A11yKey = 'reduceMotion' | 'largeText' | 'boldArabic' | 'haptics' | 'qiblaVoice';
 const A11Y_ROWS: ReadonlyArray<{ key: A11yKey; title: TranslationKey; desc?: TranslationKey }> = [
@@ -198,6 +201,21 @@ function AccountPanel() {
   );
 }
 
+/** A Pro feature in the Me tab, for free users: what it is, its PRO label, and the way to unlock it. */
+function LockedRow({ text, onPress }: { text: string; onPress: () => void }) {
+  const { font, row, textAlign } = useT();
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      style={{ flexDirection: row, alignItems: 'center', gap: 10, minHeight: 48 }}
+    >
+      <Text style={{ flex: 1, color: ui.text, fontFamily: font.regular, fontSize: 14, textAlign }}>{text}</Text>
+      <ProLock size={14} corner={false} />
+    </Pressable>
+  );
+}
+
 export default function MeScreen() {
   const { t, font, row, textAlign } = useT();
   const insets = useSafeAreaInsets();
@@ -209,10 +227,12 @@ export default function MeScreen() {
   const upsert = useLibraryStore((s) => s.upsert);
   const load = useEditorStore((s) => s.load);
   const colWidth = Math.floor((width - 32 - 12) / 2);
+  // Account sync, the daily reminder and saved stories are Pro.
+  const { locked, openPro } = usePro();
 
   return (
     <FlatList
-      data={items}
+      data={locked ? [] : items}
       numColumns={2}
       extraData={colWidth}
       keyExtractor={(i) => i.id}
@@ -232,7 +252,7 @@ export default function MeScreen() {
               padding: 16,
             }}
           >
-            <AccountPanel />
+            {locked ? <LockedRow text={t('proFeatLibrary')} onPress={() => openPro('feature')} /> : <AccountPanel />}
           </View>
           <SectionTitle>{t('reminderLabel')}</SectionTitle>
           <View
@@ -244,7 +264,7 @@ export default function MeScreen() {
               padding: 16,
             }}
           >
-            <ReminderRow />
+            {locked ? <LockedRow text={t('reminderLabel')} onPress={() => openPro('feature')} /> : <ReminderRow />}
           </View>
           <SectionTitle>{t('proTitle')}</SectionTitle>
           <View
@@ -257,6 +277,18 @@ export default function MeScreen() {
             }}
           >
             <ProPanel />
+          </View>
+          <SectionTitle>{t('supportTitle')}</SectionTitle>
+          <View
+            style={{
+              backgroundColor: ui.bgElev,
+              borderRadius: ui.radius,
+              borderWidth: 1,
+              borderColor: ui.line,
+              padding: 16,
+            }}
+          >
+            <SupportPanel />
           </View>
           <SectionTitle>{t('accessibility')}</SectionTitle>
           <View
@@ -272,8 +304,8 @@ export default function MeScreen() {
           </View>
           <SectionTitle>{t('forYourPhone')}</SectionTitle>
           <View style={{ flexDirection: row, gap: 8 }}>
-            <Button label={t('widgetsTitle')} variant="ghost" onPress={() => router.push('/widgets')} style={{ flex: 1 }} />
-            <Button label={t('wallpapersTitle')} variant="ghost" onPress={() => router.push('/wallpapers')} style={{ flex: 1 }} />
+            <Button label={`${locked ? '🔒 ' : ''}${t('widgetsTitle')}`} variant="ghost" onPress={() => router.push('/widgets')} style={{ flex: 1 }} />
+            <Button label={`${locked ? '🔒 ' : ''}${t('wallpapersTitle')}`} variant="ghost" onPress={() => router.push('/wallpapers')} style={{ flex: 1 }} />
           </View>
           <Button label={t('replayIntro')} variant="ghost" onPress={() => router.push('/onboarding')} />
           <SectionTitle>{t('credits')}</SectionTitle>
@@ -292,11 +324,15 @@ export default function MeScreen() {
         </View>
       }
       ListEmptyComponent={
+        locked ? (
+          <LockedRow text={t('proFeatLibrary')} onPress={() => openPro('feature')} />
+        ) : (
         <Text
           style={{ color: ui.textMuted, fontFamily: font.regular, textAlign: 'center', paddingVertical: 30 }}
         >
           {t('myPostsEmpty')}
         </Text>
+        )
       }
       renderItem={({ item }) => (
         <View style={{ width: colWidth, gap: 8 }}>

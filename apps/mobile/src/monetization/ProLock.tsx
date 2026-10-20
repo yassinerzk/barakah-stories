@@ -6,20 +6,35 @@ import { useT } from '../i18n';
 import { ui } from '../theme';
 import { ScreenHeader } from '../components/ScreenHeader';
 import { GoldButton } from '../features/onboarding/OnbChrome';
-import { usePro } from './usePro';
+import { usePro, type ProReason } from './usePro';
 
-/** A small gold lock in a corner of something only Pro can use. */
+/**
+ * The "PRO" label on everything only Pro can use, so free users see what is
+ * included before they tap. Pro members never see it (callers check `locked`).
+ */
 export function ProLock({ size = 18, corner = true }: { size?: number; corner?: boolean }) {
   const { t } = useT();
+  const text = Math.max(8, Math.round(size * 0.55));
   return (
     <View
       accessibilityLabel={t('proOnly')}
       style={[
-        { width: size + 6, height: size + 6, borderRadius: (size + 6) / 2, alignItems: 'center', justifyContent: 'center', backgroundColor: ui.accent },
-        corner && { position: 'absolute', top: 4, right: 4 },
+        {
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 2,
+          height: size + 2,
+          paddingHorizontal: Math.round(size * 0.35),
+          borderRadius: (size + 2) / 2,
+          backgroundColor: ui.accent,
+        },
+        corner ? { position: 'absolute', top: 4, right: 4 } : { alignSelf: 'flex-start' },
       ]}
     >
-      <Ionicons name="lock-closed" size={size * 0.62} color={ui.accentInk} />
+      <Ionicons name="lock-closed" size={text} color={ui.accentInk} />
+      <Text allowFontScaling={false} style={{ color: ui.accentInk, fontSize: text, fontWeight: '800', letterSpacing: 0.5 }}>
+        PRO
+      </Text>
     </View>
   );
 }
@@ -28,13 +43,25 @@ export function ProLock({ size = 18, corner = true }: { size?: number; corner?: 
  * Wraps a practice screen: free users see what it is and how to unlock it,
  * instead of the tool itself. The wrapped screen never mounts for them.
  */
-export function ProGate({ title, children }: { title: TranslationKey; children: ReactNode }) {
+export function ProGate({
+  title,
+  children,
+  reason = 'practice',
+  reasonKey = 'proReasonPractice',
+  bodyKey = 'proFeatPractice',
+}: {
+  title: TranslationKey;
+  children: ReactNode;
+  reason?: ProReason;
+  reasonKey?: TranslationKey;
+  bodyKey?: TranslationKey;
+}) {
   const { locked, openPro } = usePro();
   if (!locked) return <>{children}</>;
-  return <LockedScreen title={title} onUnlock={() => openPro('practice')} />;
+  return <LockedScreen title={title} reasonKey={reasonKey} bodyKey={bodyKey} onUnlock={() => openPro(reason)} />;
 }
 
-function LockedScreen({ title, onUnlock }: { title: TranslationKey; onUnlock: () => void }) {
+function LockedScreen({ title, reasonKey, bodyKey, onUnlock }: { title: TranslationKey; reasonKey: TranslationKey; bodyKey: TranslationKey; onUnlock: () => void }) {
   const { t, font } = useT();
   return (
     <View style={{ flex: 1, backgroundColor: ui.bg }}>
@@ -44,9 +71,9 @@ function LockedScreen({ title, onUnlock }: { title: TranslationKey; onUnlock: ()
           <Ionicons name="lock-closed" size={30} color={ui.accent} />
         </View>
         <Text accessibilityRole="header" style={{ color: ui.text, fontFamily: font.semibold, fontSize: 20, textAlign: 'center' }}>
-          {t('proReasonPractice')}
+          {t(reasonKey)}
         </Text>
-        <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 15, lineHeight: 22, textAlign: 'center' }}>{t('proFeatPractice')}</Text>
+        <Text style={{ color: ui.textMuted, fontFamily: font.regular, fontSize: 15, lineHeight: 22, textAlign: 'center' }}>{t(bodyKey)}</Text>
         <View style={{ alignSelf: 'stretch', marginTop: 8 }}>
           <GoldButton label={t('unlockWithPro')} icon="star" onPress={onUnlock} />
         </View>

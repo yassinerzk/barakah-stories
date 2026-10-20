@@ -60,6 +60,22 @@ export function revokePro(e: Entitlements, now = Date.now()): Entitlements {
   return { tier: 'free', adRewardUntil: e.adRewardUntil, updatedAt: now };
 }
 
+/**
+ * "Support the app" tips: one-off consumable purchases that unlock nothing.
+ * They go to the app's development (store rules allow that as in-app products;
+ * a donation to a charity would not be).
+ */
+export type TipSize = 'small' | 'medium' | 'large';
+export const TIP_SIZES: readonly TipSize[] = ['small', 'medium', 'large'];
+export const TIP_PRODUCT_IDS: Readonly<Record<TipSize, string>> = {
+  small: 'barakah_tip_1',
+  medium: 'barakah_tip_2',
+  large: 'barakah_tip_5',
+};
+/** Shown until the store answers with prices in the person's currency. */
+export const TIP_FALLBACK_PRICES: Readonly<Record<TipSize, string>> = { small: '$1', medium: '$2', large: '$5' };
+export type TipPrices = Partial<Record<TipSize, string>>;
+
 /** What the store currently says about the person's Pro access. */
 export interface EntitlementCheck {
   active: boolean;
@@ -90,6 +106,9 @@ export interface MonetizationAdapter {
    * Adapters without a real store leave it out.
    */
   checkEntitlement?(): Promise<EntitlementCheck | null>;
+  /** A one-off tip; it unlocks nothing. Adapters without a real store leave these out. */
+  sendTip?(size: TipSize): Promise<PurchaseOutcome>;
+  loadTipPrices?(): Promise<TipPrices>;
 }
 
 /** Adapter used until a billing/ads SDK is integrated. */

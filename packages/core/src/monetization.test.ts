@@ -7,6 +7,9 @@ import {
   NOOP_ADAPTER,
   revokePro,
   shouldShowWatermark,
+  TIP_FALLBACK_PRICES,
+  TIP_PRODUCT_IDS,
+  TIP_SIZES,
 } from './monetization';
 
 describe('monetization', () => {
@@ -40,6 +43,13 @@ describe('monetization', () => {
     expect(ended.plan).toBeUndefined();
     expect(ended.adRewardUntil).toBe(pro.adRewardUntil);
     expect(pro.tier).toBe('pro');
+  });
+
+  it('offers three tip sizes, each its own store product, in order', () => {
+    expect([...TIP_SIZES]).toEqual(['small', 'medium', 'large']);
+    const ids = TIP_SIZES.map((s) => TIP_PRODUCT_IDS[s]);
+    expect(ids).toEqual(['barakah_tip_1', 'barakah_tip_2', 'barakah_tip_5']);
+    expect(TIP_SIZES.map((s) => TIP_FALLBACK_PRICES[s])).toEqual(['$1', '$2', '$5']);
   });
 
   it('the placeholder adapter reports nothing is available', async () => {
