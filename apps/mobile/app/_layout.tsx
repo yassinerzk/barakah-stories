@@ -13,6 +13,7 @@ import { startPrayerAlerts } from '../src/notifications/prayerAlertStore';
 import { AdhanPlayer, useAdhanFromNotifications } from '../src/notifications/AdhanPlayer';
 import { AnimatedSplash } from '../src/brand/AnimatedSplash';
 import { startWidgetSync } from '../src/widgets/sync';
+import { startEntitlementSync } from '../src/monetization/sync';
 
 SplashScreen.preventAutoHideAsync().catch(() => undefined);
 
@@ -35,6 +36,7 @@ export default function RootLayout() {
   useEffect(() => startPrayerAlerts(), []);
   // Home-screen widgets follow the prayer times and the tasbih (Android).
   useEffect(() => startWidgetSync(), []);
+  useEffect(() => startEntitlementSync(), []);
   useAdhanFromNotifications();
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync().catch(() => undefined);

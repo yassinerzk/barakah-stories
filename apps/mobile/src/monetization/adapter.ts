@@ -1,4 +1,5 @@
 import { NOOP_ADAPTER, type MonetizationAdapter } from '@barakah/core';
+import { REVENUECAT_ADAPTER, revenueCatAvailable } from './revenuecat';
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -24,8 +25,11 @@ export const DEV_ADAPTER: MonetizationAdapter = {
   loadPrices: async () => ({ monthly: '$2.99', yearly: '$19.99', lifetime: '$39.99' }),
 };
 
-/** The adapter this build uses. Swap here when the SDKs are wired in. */
-export const adapter: MonetizationAdapter = __DEV__ ? DEV_ADAPTER : NOOP_ADAPTER;
+/**
+ * The adapter this build uses: RevenueCat in a store build that has its key,
+ * the simulated store in development (Expo Go), otherwise none.
+ */
+export const adapter: MonetizationAdapter = revenueCatAvailable ? REVENUECAT_ADAPTER : __DEV__ ? DEV_ADAPTER : NOOP_ADAPTER;
 
 /**
  * Whether buying or earning anything is actually possible in this build.

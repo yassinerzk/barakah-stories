@@ -55,6 +55,17 @@ export function grantPro(e: Entitlements, now = Date.now(), plan?: ProPlan): Ent
   return { ...e, tier: 'pro', plan: plan ?? e.plan, updatedAt: now };
 }
 
+/** A subscription that ended (cancelled, refunded, lapsed): back to free. An ad reward stays. */
+export function revokePro(e: Entitlements, now = Date.now()): Entitlements {
+  return { tier: 'free', adRewardUntil: e.adRewardUntil, updatedAt: now };
+}
+
+/** What the store currently says about the person's Pro access. */
+export interface EntitlementCheck {
+  active: boolean;
+  plan?: ProPlan;
+}
+
 /** Localised store prices per plan ("€2.99"), filled in once the store has answered. */
 export type PlanPrices = Partial<Record<ProPlan, string>>;
 
@@ -73,6 +84,12 @@ export interface MonetizationAdapter {
   showRewardedAd(): Promise<AdOutcome>;
   /** Prices as the store will charge them, in the person's currency. */
   loadPrices(): Promise<PlanPrices>;
+  /**
+   * The store's current answer, checked at launch and on return to the app,
+   * so an ended subscription stops Pro. Null when the store can't be reached.
+   * Adapters without a real store leave it out.
+   */
+  checkEntitlement?(): Promise<EntitlementCheck | null>;
 }
 
 /** Adapter used until a billing/ads SDK is integrated. */

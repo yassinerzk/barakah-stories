@@ -24,6 +24,8 @@ jobs:
       # the app still builds and simply hides sign-up (see src/auth/supabase.ts).
       EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
       EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+      # RevenueCat's public Android SDK key. Empty = no billing in the build (everything stays open).
+      EXPO_PUBLIC_REVENUECAT_ANDROID_KEY: ${{ secrets.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY }}
     steps:
       - uses: actions/checkout@v4
 

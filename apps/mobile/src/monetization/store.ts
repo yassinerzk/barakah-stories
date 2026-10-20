@@ -6,7 +6,9 @@ import {
   FREE_ENTITLEMENTS,
   grantAdReward,
   grantPro,
+  isPro,
   recordStory,
+  revokePro,
   type AdOutcome,
   type Entitlements,
   type PlanPrices,
@@ -26,6 +28,8 @@ interface EntitlementState {
   busy: boolean;
   purchasePro: (plan: ProPlan) => Promise<PurchaseOutcome>;
   restore: () => Promise<void>;
+  /** Matches local Pro to the store's record: a renewal keeps it, an ended subscription removes it. */
+  sync: () => Promise<void>;
   watchAd: () => Promise<AdOutcome>;
   loadPrices: () => Promise<void>;
   countStory: () => void;
@@ -56,8 +60,22 @@ export const useEntitlementStore = create<EntitlementState>()(
         try {
           const tier = await adapter.restorePurchases();
           if (tier === 'pro') set({ entitlements: grantPro(get().entitlements) });
+          // The store's own record also says which plan it was.
+          await get().sync();
+        } catch {
+          // Nothing restored; the screen stays as it was.
         } finally {
           set({ busy: false });
+        }
+      },
+      sync: async () => {
+        const check = await adapter.checkEntitlement?.();
+        if (!check) return;
+        const current = get().entitlements;
+        if (check.active && (!isPro(current) || current.plan !== check.plan)) {
+          set({ entitlements: grantPro(current, Date.now(), check.plan) });
+        } else if (!check.active && isPro(current)) {
+          set({ entitlements: revokePro(current) });
         }
       },
       watchAd: async () => {
