@@ -46,13 +46,11 @@ locked there; development builds use a simulated store so the flow can be tested
    - Copy the two **public** SDK keys (safe in the app) into `.env` as
      `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` and `EXPO_PUBLIC_REVENUECAT_IOS_KEY`, and into the
      GitHub Actions secrets for CI builds.
-4. **App code** (one adapter, nothing else changes): `npx expo install react-native-purchases`,
-   add `RevenueCatAdapter` implementing `MonetizationAdapter` —
-   `purchasePro(plan)` → `Purchases.purchasePackage(package for that plan)`,
-   `restorePurchases()` → `Purchases.restorePurchases()`,
-   `loadPrices()` → `Purchases.getOfferings()` → each package's `product.priceString`,
-   Pro = `customerInfo.entitlements.active.pro` — then select it in `adapter.ts`.
-   `proLocksActive` turns on by itself.
+4. **App code — done** (`apps/mobile/src/monetization/revenuecat.ts`). It switches on by itself in
+   any store build that has the key: add GitHub secret `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY`
+   (and the line in `apps/mobile/.env` for local builds), rebuild, and the locks, real prices and
+   purchases go live. Pro is re-checked at launch and on every return to the app, so an ended
+   subscription locks again; lifetime stays.
 5. **Store declarations**: Play Data safety → add "Financial info → Purchase history" (collected by
    RevenueCat for purchases, not shared). Mention RevenueCat in `docs/PRIVACY.md` and
    `apps/web/public/privacy.html`. Add the subscription terms link to the store listing.
