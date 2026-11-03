@@ -25,10 +25,10 @@
       "previewMs": 60000,
       "tracks": {
         "en": {
-          "file": "yunus-and-the-whale.en-487410af.m4a",
-          "bytes": 4005347,
-          "sha256": "487410afae7a3f8d0129ecd274d4280318401c44b25b447eb73b838994947b52",
-          "durationMs": 569600,
+          "file": "yunus-and-the-whale.en-fdbdbb2a.m4a",
+          "bytes": 3236249,
+          "sha256": "fdbdbb2a5218cf61e30a26189e8f25d00d3a02ba381738d5ab2043e3b4808966",
+          "durationMs": 429000,
           "narrator": "Barakah Stories"
         }
       }
@@ -55,10 +55,10 @@
       "previewMs": 60000,
       "tracks": {
         "en": {
-          "file": "sulayman-the-ant-and-the-hoopoe.en-c5a3e580.m4a",
-          "bytes": 5024919,
-          "sha256": "c5a3e58081399c2e8f5a45dec5a11a8926a9510cd8170c389c61222fd730200f",
-          "durationMs": 701000,
+          "file": "sulayman-the-ant-and-the-hoopoe.en-279d0144.m4a",
+          "bytes": 4050597,
+          "sha256": "279d014404b55a3c9a68badae26ee2af5fbd58320cc69605abec5d0390c87d84",
+          "durationMs": 533300,
           "narrator": "Barakah Stories"
         }
       }
@@ -87,10 +87,10 @@
       "previewMs": 60000,
       "tracks": {
         "en": {
-          "file": "hajar-ismail-and-zamzam.en-a2e5469d.m4a",
-          "bytes": 4595272,
-          "sha256": "a2e5469d9901b2d2b4e745a26d36f5da702ac33ccc31ccf81716fc46f23f30c8",
-          "durationMs": 634500,
+          "file": "hajar-ismail-and-zamzam.en-1a1a110d.m4a",
+          "bytes": 3678641,
+          "sha256": "1a1a110d0f0560d01b66de2593b07e954ea4a4aecef78200c247b0f162672715",
+          "durationMs": 482000,
           "narrator": "Barakah Stories"
         }
       }
