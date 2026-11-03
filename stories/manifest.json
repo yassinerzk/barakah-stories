@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "stories": [
+    {
+      "id": "yunus-and-the-whale",
+      "title": {
+        "en": "Yunus and the Whale",
+        "ar": "يونس والحوت",
+        "fr": "Yunus et la baleine"
+      },
+      "summary": {
+        "en": "A prophet leaves his people in anger, is swallowed by the sea, and finds that no darkness is beyond the reach of du’a.",
+        "ar": "نبيٌّ يترك قومه غاضباً، فيبتلعه البحر، ويعلم أن لا ظلمة تعلو على الدعاء.",
+        "fr": "Un prophète quitte son peuple en colère, est englouti par la mer, et découvre qu’aucune obscurité n’est hors de portée de l’invocation."
+      },
+      "cover": "sea-night",
+      "series": "prophets",
+      "sources": [
+        "Quran 37:139-148",
+        "Quran 21:87-88",
+        "Quran 10:98",
+        "Bukhari 3416",
+        "Tirmidhi 3505"
+      ],
+      "previewMs": 60000,
+      "tracks": {
+        "en": {
+          "file": "yunus-and-the-whale.en-487410af.m4a",
+          "bytes": 4005347,
+          "sha256": "487410afae7a3f8d0129ecd274d4280318401c44b25b447eb73b838994947b52",
+          "durationMs": 569600,
+          "narrator": "Barakah Stories"
+        }
+      }
+    },
+    {
+      "id": "sulayman-the-ant-and-the-hoopoe",
+      "title": {
+        "en": "Sulayman, the Ant and the Hoopoe",
+        "ar": "سليمان والنملة والهدهد",
+        "fr": "Sulayman, la fourmi et la huppe"
+      },
+      "summary": {
+        "en": "An ant warns her colony, a hoopoe brings news of a queen, and a king says thank you before anything else.",
+        "ar": "نملةٌ تحذّر قومها، وهدهدٌ يأتي بخبر ملكة، وملكٌ يبدأ كل شيء بالشكر.",
+        "fr": "Une fourmi avertit sa colonie, une huppe apporte des nouvelles d’une reine, et un roi dit merci avant toute chose."
+      },
+      "cover": "garden-dawn",
+      "series": "prophets",
+      "sources": [
+        "Quran 27:15-44",
+        "Quran 34:12",
+        "Quran 38:30"
+      ],
+      "previewMs": 60000,
+      "tracks": {
+        "en": {
+          "file": "sulayman-the-ant-and-the-hoopoe.en-c5a3e580.m4a",
+          "bytes": 5024919,
+          "sha256": "c5a3e58081399c2e8f5a45dec5a11a8926a9510cd8170c389c61222fd730200f",
+          "durationMs": 701000,
+          "narrator": "Barakah Stories"
+        }
+      }
+    },
+    {
+      "id": "hajar-ismail-and-zamzam",
+      "title": {
+        "en": "Hajar, Ismail and Zamzam",
+        "ar": "هاجر وإسماعيل وزمزم",
+        "fr": "Hajar, Ismaïl et Zamzam"
+      },
+      "summary": {
+        "en": "A mother and a baby in a valley with no water, seven runs between two hills, and a spring that is still there.",
+        "ar": "أمٌّ ورضيعها في وادٍ لا ماء فيه، وسبعة أشواط بين جبلين، وعينٌ ما زالت تجري.",
+        "fr": "Une mère et un bébé dans une vallée sans eau, sept courses entre deux collines, et une source qui coule encore."
+      },
+      "cover": "valley-noon",
+      "series": "prophets",
+      "sources": [
+        "Bukhari 3364",
+        "Bukhari 3365",
+        "Quran 14:37",
+        "Quran 2:127",
+        "Quran 2:158"
+      ],
+      "previewMs": 60000,
+      "tracks": {
+        "en": {
+          "file": "hajar-ismail-and-zamzam.en-a2e5469d.m4a",
+          "bytes": 4595272,
+          "sha256": "a2e5469d9901b2d2b4e745a26d36f5da702ac33ccc31ccf81716fc46f23f30c8",
+          "durationMs": 634500,
+          "narrator": "Barakah Stories"
+        }
+      }
+    }
+  ]
+}
