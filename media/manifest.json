@@ -642,28 +642,6 @@
       }
     },
     {
-      "id": "dhikr-allah-hu",
-      "group": "islamic",
-      "name": {
-        "en": "Dhikr",
-        "ar": "ذكر",
-        "fr": "Dhikr",
-        "id": "Zikir",
-        "ms": "Zikir",
-        "th": "ซิกร์",
-        "ur": "ذکر"
-      },
-      "file": "sound/dhikr-allah-hu-053bbd64.m4a",
-      "durationMs": 8900,
-      "bytes": 109416,
-      "source": {
-        "site": "Freesound",
-        "url": "https://freesound.org/s/788910/",
-        "author": "ibrahim_baig",
-        "license": "CC0 1.0"
-      }
-    },
-    {
       "id": "mosque-room",
       "group": "islamic",
       "name": {

@@ -94,6 +94,228 @@
           "narrator": "Barakah Stories"
         }
       }
+    },
+    {
+      "id": "musa-the-baby-in-the-river",
+      "title": {
+        "en": "The Baby in the River",
+        "ar": "الرضيع في النهر",
+        "fr": "Le bébé sur le fleuve"
+      },
+      "summary": {
+        "en": "A mother lets her baby go on the river, and Allah keeps His promise.",
+        "ar": "أم تلقي رضيعها في النهر، والله يفي بوعده.",
+        "fr": "Une mère confie son bébé au fleuve, et Allah tient Sa promesse."
+      },
+      "cover": "garden-dawn",
+      "series": "sleep",
+      "sources": [
+        "Quran 28:7-13",
+        "Quran 20:38-41",
+        "Bukhari 6314"
+      ],
+      "previewMs": 60000,
+      "tracks": {
+        "en": {
+          "file": "musa-the-baby-in-the-river.en-fb0e6672.m4a",
+          "bytes": 3550020,
+          "sha256": "fb0e6672505536b2851842de32184ad47af14e3f5d1ef77795a85d166b932d72",
+          "durationMs": 480400,
+          "narrator": "Barakah Stories"
+        },
+        "ar": {
+          "file": "musa-the-baby-in-the-river.ar-74f3f659.m4a",
+          "bytes": 5063342,
+          "sha256": "74f3f6593b09170dd3f4babf3dab5a60e9fe4166b765f2b6a1a1ad0ccd734eac",
+          "durationMs": 689900,
+          "narrator": "Barakah Stories"
+        }
+      }
+    },
+    {
+      "id": "musa-and-the-sea",
+      "title": {
+        "en": "Musa and the Sea",
+        "ar": "موسى والبحر",
+        "fr": "Moussa et la mer"
+      },
+      "summary": {
+        "en": "Trapped between an army and the sea, Musa says: with me is my Lord.",
+        "ar": "بين الجيش والبحر، يقول موسى: إن معي ربي.",
+        "fr": "Entre l'armée et la mer, Moussa dit : mon Seigneur est avec moi."
+      },
+      "cover": "sea-night",
+      "series": "prophets",
+      "sources": [
+        "Quran 26:52-68",
+        "Quran 20:77-79",
+        "Quran 10:90-92"
+      ],
+      "previewMs": 60000,
+      "tracks": {
+        "en": {
+          "file": "musa-and-the-sea.en-bc0fefdf.m4a",
+          "bytes": 3692712,
+          "sha256": "bc0fefdfa09102174d2fc881817ff5ecfe98a3a3516486cc86ab9634ed777821",
+          "durationMs": 492200,
+          "narrator": "Barakah Stories"
+        },
+        "ar": {
+          "file": "musa-and-the-sea.ar-76555c37.m4a",
+          "bytes": 4978163,
+          "sha256": "76555c374a89432a27797289f06a9eb1a642ff80cbe8a06eb03dce2234180426",
+          "durationMs": 667200,
+          "narrator": "Barakah Stories"
+        }
+      }
+    },
+    {
+      "id": "musa-and-al-khidr",
+      "title": {
+        "en": "Musa and al-Khidr",
+        "ar": "موسى والخضر",
+        "fr": "Moussa et al-Khidr"
+      },
+      "summary": {
+        "en": "A boat, a boy and a wall teach Musa that there is wisdom he cannot see.",
+        "ar": "سفينة وغلام وجدار تعلّم موسى أن هناك حكمة لا يراها.",
+        "fr": "Un bateau, un garçon et un mur montrent à Moussa une sagesse cachée."
+      },
+      "cover": "valley-noon",
+      "series": "prophets",
+      "sources": [
+        "Quran 18:60-82",
+        "Bukhari 3401",
+        "Bukhari 4725"
+      ],
+      "previewMs": 60000,
+      "tracks": {
+        "en": {
+          "file": "musa-and-al-khidr.en-5b12fd9f.m4a",
+          "bytes": 3765593,
+          "sha256": "5b12fd9fe72f1a92adba0db452f5520c7ea8db319603ce404bc503889fa5aef3",
+          "durationMs": 496800,
+          "narrator": "Barakah Stories"
+        },
+        "ar": {
+          "file": "musa-and-al-khidr.ar-2e351d65.m4a",
+          "bytes": 5578562,
+          "sha256": "2e351d6583de129f1146f860203f789082da846016783b72d269eef3feaa01e9",
+          "durationMs": 734200,
+          "narrator": "Barakah Stories"
+        }
+      }
+    },
+    {
+      "id": "hud-and-the-people-of-ad",
+      "title": {
+        "en": "Hud and the People of 'Ad",
+        "ar": "هود وقوم عاد",
+        "fr": "Houd et le peuple de 'Ad"
+      },
+      "summary": {
+        "en": "A strong people, a brother's warning, and a cloud that was not rain.",
+        "ar": "قوم أقوياء، وأخ ينذرهم، وسحابة لم تكن مطرًا.",
+        "fr": "Un peuple fort, l'avertissement d'un frère, et un nuage qui n'était pas la pluie."
+      },
+      "cover": "valley-noon",
+      "series": "prophets",
+      "sources": [
+        "Quran 7:65-72",
+        "Quran 11:50-60",
+        "Quran 46:21-26",
+        "Quran 69:6-8"
+      ],
+      "previewMs": 60000,
+      "tracks": {
+        "en": {
+          "file": "hud-and-the-people-of-ad.en-63e5469c.m4a",
+          "bytes": 3832997,
+          "sha256": "63e5469c5ab19bb18ee6da8eb8035ec2e93abe0810a9a9daabf69b2090031215",
+          "durationMs": 510400,
+          "narrator": "Barakah Stories"
+        },
+        "ar": {
+          "file": "hud-and-the-people-of-ad.ar-ec8d3680.m4a",
+          "bytes": 5645693,
+          "sha256": "ec8d3680883c857450132ae1e111017749c9cdb05c543721ec91ba9af8278abe",
+          "durationMs": 745200,
+          "narrator": "Barakah Stories"
+        }
+      }
+    },
+    {
+      "id": "dhul-qarnayn",
+      "title": {
+        "en": "Dhul-Qarnayn",
+        "ar": "ذو القرنين",
+        "fr": "Dhoul-Qarnayn"
+      },
+      "summary": {
+        "en": "A man given great power travels the earth, refuses payment, and says: this is a mercy from my Lord.",
+        "ar": "رجل آتاه الله قوة عظيمة يجوب الأرض ويأبى الأجر ويقول: هذا رحمة من ربي.",
+        "fr": "Un homme doté d'un grand pouvoir parcourt la terre, refuse tout paiement et dit : ceci est une miséricorde de mon Seigneur."
+      },
+      "cover": "valley-noon",
+      "series": "prophets",
+      "sources": [
+        "Quran 18:83-98"
+      ],
+      "previewMs": 60000,
+      "tracks": {
+        "en": {
+          "file": "dhul-qarnayn.en-5f591eaf.m4a",
+          "bytes": 3612352,
+          "sha256": "5f591eaf8d07805b084f88bf02eda0c5ad8f8cd2e4d62b34258f4c21187f5908",
+          "durationMs": 487600,
+          "narrator": "Barakah Stories"
+        },
+        "ar": {
+          "file": "dhul-qarnayn.ar-366f18f2.m4a",
+          "bytes": 5697356,
+          "sha256": "366f18f275eb9241642cbc0a373270039b489a343caf940e4dee4b213274400a",
+          "durationMs": 749100,
+          "narrator": "Barakah Stories"
+        }
+      }
+    },
+    {
+      "id": "nuh-and-the-ark",
+      "title": {
+        "en": "Nuh and the Ark",
+        "ar": "نوح والسفينة",
+        "fr": "Nuh et l'Arche"
+      },
+      "summary": {
+        "en": "A prophet calls his people for 950 years, builds a ship, and is comforted by Allah after the flood.",
+        "ar": "نبيٌّ يدعو قومه ألف سنة إلا خمسين عاماً، ويبني السفينة، ويواسيه الله بعد الطوفان.",
+        "fr": "Un prophète appelle son peuple pendant 950 ans, construit l'Arche, et Allah le réconforte après le déluge."
+      },
+      "cover": "sea-night",
+      "series": "prophets",
+      "sources": [
+        "Quran 11:25-49",
+        "Quran 71:1-28",
+        "Quran 7:59-64",
+        "Quran 29:14"
+      ],
+      "previewMs": 60000,
+      "tracks": {
+        "en": {
+          "file": "nuh-and-the-ark.en-bb4a6365.m4a",
+          "bytes": 3699454,
+          "sha256": "bb4a63653a3da1ee0081aa86ebd857fac982c37ca09c98ad6f01529f27e1c7a1",
+          "durationMs": 494900,
+          "narrator": "Barakah Stories"
+        },
+        "ar": {
+          "file": "nuh-and-the-ark.ar-0152e8f8.m4a",
+          "bytes": 5298673,
+          "sha256": "0152e8f86636dc0f7b0961da019550b56cf0c77bebb5fa464bc71146abd4287f",
+          "durationMs": 715600,
+          "narrator": "Barakah Stories"
+        }
+      }
     }
   ]
 }
