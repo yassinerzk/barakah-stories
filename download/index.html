@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Download Barakah Stories</title>
+    <meta
+      name="description"
+      content="Prayer times with the adhan, the full Quran, hadith, a tasbih and calm audio stories of the Prophets. Free on Android and iPhone."
+    />
+    <meta property="og:title" content="Barakah Stories: prayer, Quran and stories" />
+    <meta
+      property="og:description"
+      content="Prayer times with the adhan, the full Quran, hadith, a tasbih and audio stories for the whole family."
+    />
+    <meta property="og:image" content="https://yassinerzk.github.io/barakah-stories/download/03-prayer.webp" />
+    <meta name="theme-color" content="#0b2a24" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      /*
+       * Sends a phone straight to its store; everyone else stays on this page.
+       *   ?stay=1               always show the page
+       *   ?platform=ios|android pretend to be that phone (for testing; never redirects)
+       * IOS_LIVE stays false until the App Store has approved the app; until
+       * then iPhone visitors see the page with a "coming soon" note.
+       */
+      (function () {
+        var IOS_LIVE = false;
+        var PLAY = 'https://play.google.com/store/apps/details?id=com.barakah.stories';
+        var APPLE = 'https://apps.apple.com/app/id6830028404';
+        var q = new URLSearchParams(location.search);
+        var ua = navigator.userAgent || '';
+        var forced = q.get('platform');
+        var isAndroid = forced ? forced === 'android' : /Android/i.test(ua);
+        // iPadOS reports itself as a Mac; a touch screen gives it away.
+        var isIOS = forced
+          ? forced === 'ios'
+          : /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+        var platform = isAndroid ? 'android' : isIOS ? 'ios' : 'desktop';
+        var target = platform === 'android' ? PLAY : platform === 'ios' && IOS_LIVE ? APPLE : null;
+        window.BARAKAH = { platform: platform, iosLive: IOS_LIVE, play: PLAY, apple: APPLE, target: target };
+        document.documentElement.dataset.platform = platform;
+        if (target && q.get('stay') !== '1' && !forced) {
+          document.documentElement.dataset.redirecting = 'true';
+          setTimeout(function () {
+            location.replace(target);
+          }, 250);
+        }
+      })();
+    </script>
+    <style>
+      :root {
+        --bg: #0b2a24;
+        --bg-deep: #071c18;
+        --surface: rgba(243, 239, 228, 0.06);
+        --line: rgba(216, 184, 106, 0.22);
+        --fg: #f3efe4;
+        --muted: #b9c4bf;
+        --gold: #d8b86a;
+        --gold-bright: #ecd28f;
+        --ink: #1c211f;
+        --radius: 22px;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        --dur: 700ms;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(1200px 600px at 50% -10%, rgba(216, 184, 106, 0.16), transparent 60%),
+          linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+        color: var(--fg);
+        font: 16px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      /* Redirect notice, shown only on a phone that is being sent to its store. */
+      .redirect {
+        display: none;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        padding: 12px 16px;
+        background: var(--gold);
+        color: var(--ink);
+        text-align: center;
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .redirect a {
+        text-decoration: underline;
+      }
+      [data-redirecting='true'] .redirect {
+        display: block;
+      }
+
+      header.hero {
+        padding: 56px 0 24px;
+        display: grid;
+        gap: 40px;
+        align-items: center;
+      }
+      @media (min-width: 860px) {
+        header.hero {
+          grid-template-columns: 1.1fr 0.9fr;
+          padding: 88px 0 48px;
+        }
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 28px;
+      }
+      .brand img {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      }
+      .brand span {
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+      .brand small {
+        display: block;
+        color: var(--muted);
+        font-weight: 400;
+        font-size: 13px;
+      }
+      h1 {
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 600;
+        font-size: clamp(2.4rem, 1.4rem + 4.2vw, 4.2rem);
+        line-height: 1.04;
+        letter-spacing: -0.015em;
+        margin: 0 0 18px;
+      }
+      h1 em {
+        font-style: normal;
+        color: var(--gold);
+      }
+      .lede {
+        color: var(--muted);
+        font-size: 1.1rem;
+        max-width: 34rem;
+        margin: 0 0 32px;
+      }
+
+      .stores {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .store {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 60px;
+        padding: 10px 20px 10px 16px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        text-decoration: none;
+        transition:
+          transform 200ms var(--ease),
+          background-color 200ms var(--ease),
+          border-color 200ms var(--ease);
+      }
+      .store:hover {
+        transform: translateY(-2px);
+        border-color: var(--gold);
+      }
+      .store:focus-visible {
+        outline: 2px solid var(--gold-bright);
+        outline-offset: 3px;
+      }
+      .store svg {
+        width: 26px;
+        height: 26px;
+        flex: none;
+      }
+      .store b {
+        display: block;
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      .store small {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.2;
+      }
+      .store.primary {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: var(--ink);
+      }
+      .store.primary small {
+        color: rgba(28, 33, 31, 0.7);
+      }
+      .store.primary:hover {
+        background: var(--gold-bright);
+      }
+      .store[aria-disabled='true'] {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .note {
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .hero-shot {
+        justify-self: center;
+        width: min(78vw, 340px);
+        aspect-ratio: 9 / 16;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow:
+          0 40px 80px rgba(0, 0, 0, 0.45),
+          0 0 0 1px var(--line);
+      }
+      .hero-shot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+      h2 {
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 600;
+        font-size: clamp(1.7rem, 1.2rem + 2vw, 2.5rem);
+        line-height: 1.15;
+        margin: 0 0 10px;
+      }
+      .section-lede {
+        color: var(--muted);
+        margin: 0 0 32px;
+        max-width: 36rem;
+      }
+
+      /* Screens: a swipeable row on phones, a grid on wide screens. */
+      .screens {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: min(66vw, 260px);
+        gap: 16px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding: 4px 16px 20px;
+        margin: 0 -16px;
+        scrollbar-width: none;
+      }
+      .screens::-webkit-scrollbar {
+        display: none;
+      }
+      @media (min-width: 960px) {
+        .screens {
+          grid-auto-flow: row;
+          grid-template-columns: repeat(3, 1fr);
+          overflow: visible;
+          margin: 0;
+          padding: 0;
+          gap: 24px;
+        }
+      }
+      .screens figure {
+        margin: 0;
+        scroll-snap-align: center;
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: var(--surface);
+        box-shadow: 0 0 0 1px var(--line);
+      }
+      .screens img {
+        width: 100%;
+        aspect-ratio: 9 / 16;
+        object-fit: cover;
+        display: block;
+      }
+
+      .features {
+        display: grid;
+        gap: 16px;
+      }
+      @media (min-width: 720px) {
+        .features {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 960px) {
+        .features {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .feature {
+        padding: 22px;
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: 0 0 0 1px var(--line);
+      }
+      .feature h3 {
+        margin: 10px 0 6px;
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+      .feature p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .feature .glyph {
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      .closing {
+        text-align: center;
+      }
+      .closing .section-lede {
+        margin-inline: auto;
+      }
+      .closing .stores {
+        justify-content: center;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0 40px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      footer .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+        justify-content: space-between;
+      }
+      footer nav {
+        display: flex;
+        gap: 18px;
+      }
+
+      /* Gentle reveal; nothing moves for people who prefer reduced motion. */
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity var(--dur) var(--ease),
+          transform var(--dur) var(--ease);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .store {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="redirect" role="status">
+      Opening the store… <a id="redirect-link" href="#">Tap here if nothing happens</a>
+    </div>
+
+    <main>
+      <div class="wrap">
+        <header class="hero">
+          <div>
+            <div class="brand">
+              <img src="icon.webp" alt="" width="56" height="56" />
+              <span>Barakah Stories<small>Prayer · Quran · Stories</small></span>
+            </div>
+            <h1>Your day, with <em>barakah</em> in it</h1>
+            <p class="lede">
+              Prayer times with the adhan, the full Quran and authentic hadith, a tasbih that feels like real beads,
+              and calm audio stories of the Prophets for the whole family. Free to download.
+            </p>
+            <div class="stores" data-stores></div>
+            <p class="note" id="store-note" hidden></p>
+          </div>
+          <div class="hero-shot">
+            <img
+              src="03-prayer.webp"
+              alt="The prayer screen: a countdown to the next prayer and today's times"
+              width="540"
+              height="960"
+              fetchpriority="high"
+            />
+          </div>
+        </header>
+      </div>
+
+      <section>
+        <div class="wrap">
+          <h2 class="reveal">A look inside</h2>
+          <p class="section-lede reveal">Six of the screens you'll use every day.</p>
+          <div class="screens" role="list">
+            <figure role="listitem" class="reveal">
+              <img src="01-home.webp" alt="Home: today's verse, hadith and dua" width="540" height="960" loading="lazy" />
+            </figure>
+            <figure role="listitem" class="reveal">
+              <img src="05-stories.webp" alt="Audio stories of the Prophets" width="540" height="960" loading="lazy" />
+            </figure>
+            <figure role="listitem" class="reveal">
+              <img src="04-quran.webp" alt="The Quran reader in Uthmani script" width="540" height="960" loading="lazy" />
+            </figure>
+            <figure role="listitem" class="reveal">
+              <img src="06-tasbih.webp" alt="A tasbih with real-looking beads" width="540" height="960" loading="lazy" />
+            </figure>
+            <figure role="listitem" class="reveal">
+              <img src="02-editor.webp" alt="Turning a verse into a card to share" width="540" height="960" loading="lazy" />
+            </figure>
+            <figure role="listitem" class="reveal">
+              <img src="03-prayer.webp" alt="Prayer times with a live countdown" width="540" height="960" loading="lazy" />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <h2 class="reveal">Everything in one calm place</h2>
+          <p class="section-lede reveal">No more switching between apps for prayer, Quran, dhikr and stories.</p>
+          <div class="features">
+            <article class="feature reveal">
+              <span class="glyph" aria-hidden="true">🕌</span>
+              <h3>Prayer times and adhan</h3>
+              <p>Accurate times for your location, a live countdown, adhan alerts, a Qibla compass and widgets.</p>
+            </article>
+            <article class="feature reveal">
+              <span class="glyph" aria-hidden="true">🎧</span>
+              <h3>Audio stories</h3>
+              <p>Narrated stories of the Prophets in English and Arabic, 8 to 15 minutes, to download and play offline.</p>
+            </article>
+            <article class="feature reveal">
+              <span class="glyph" aria-hidden="true">📖</span>
+              <h3>Quran and hadith</h3>
+              <p>All 114 surahs offline with translations, plus Sahih al-Bukhari and Sahih Muslim with search.</p>
+            </article>
+            <article class="feature reveal">
+              <span class="glyph" aria-hidden="true">📿</span>
+              <h3>Tasbih and adhkar</h3>
+              <p>A tasbih that looks like real beads, morning and evening adhkar, duas and the 99 Names.</p>
+            </article>
+            <article class="feature reveal">
+              <span class="glyph" aria-hidden="true">✨</span>
+              <h3>Share the barakah</h3>
+              <p>Over 300 ready-made cards, or turn any verse or hadith into a card for your WhatsApp status.</p>
+            </article>
+            <article class="feature reveal">
+              <span class="glyph" aria-hidden="true">🔒</span>
+              <h3>Private by design</h3>
+              <p>No sign-up needed. What you make stays on your phone. Seven languages, including Arabic and Urdu.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing">
+        <div class="wrap">
+          <h2 class="reveal">Get Barakah Stories</h2>
+          <p class="section-lede reveal">Free, with an optional Pro for the full stories and no ads.</p>
+          <div class="stores reveal" data-stores></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>Barakah Stories · Klay Creative Lab LLC</span>
+        <nav>
+          <a href="../privacy.html">Privacy</a>
+          <a href="../terms.html">Terms</a>
+        </nav>
+      </div>
+    </footer>
+
+    <template id="store-buttons">
+      <a class="store" data-store="android" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M3.6 2.3a1.3 1.3 0 0 0-.6 1.1v17.2c0 .5.2.9.6 1.1l9.6-9.7zm10.8 8.5 2.7-2.7L5.4 1.6c-.3-.2-.6-.2-.9-.2zm0 2.4-9.9 10c.3 0 .6 0 .9-.2l11.7-6.5zm4.1-4.4-3 3 3 3 3-1.7c.9-.5.9-1.8 0-2.3z"
+          />
+        </svg>
+        <span><small>Get it on</small><b>Google Play</b></span>
+      </a>
+      <a class="store" data-store="ios" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.8 1.3 10.3.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8s2.3-1.3 3.1-2.5c1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.2zM13.9 4.9c.7-.9 1.2-2 1-3.2-1 .1-2.2.7-3 1.5-.6.7-1.2 1.9-1 3.1 1.1.1 2.3-.6 3-1.4z"
+          />
+        </svg>
+        <span><small data-ios-caption>Download on the</small><b>App Store</b></span>
+      </a>
+    </template>
+
+    <script>
+      (function () {
+        var B = window.BARAKAH;
+        var tpl = document.getElementById('store-buttons');
+
+        // One set of buttons per slot, the visitor's own store first and highlighted.
+        document.querySelectorAll('[data-stores]').forEach(function (slot) {
+          var frag = tpl.content.cloneNode(true);
+          var play = frag.querySelector('[data-store="android"]');
+          var apple = frag.querySelector('[data-store="ios"]');
+          play.href = B.play;
+          if (B.iosLive) {
+            apple.href = B.apple;
+          } else {
+            apple.removeAttribute('href');
+            apple.setAttribute('aria-disabled', 'true');
+            apple.querySelector('[data-ios-caption]').textContent = 'Coming soon on the';
+          }
+          var mine = B.platform === 'ios' ? apple : play;
+          var other = mine === play ? apple : play;
+          if (B.platform !== 'desktop' && !mine.hasAttribute('aria-disabled')) mine.classList.add('primary');
+          slot.appendChild(mine);
+          slot.appendChild(other);
+        });
+
+        if (B.platform === 'ios' && !B.iosLive) {
+          var note = document.getElementById('store-note');
+          note.textContent =
+            'The iPhone version is in review with Apple and will be here very soon. On Android? It is ready now.';
+          note.hidden = false;
+        }
+        if (B.target) document.getElementById('redirect-link').href = B.target;
+
+        // Reveal sections as they come into view.
+        var items = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) {
+          items.forEach(function (el) {
+            el.classList.add('in');
+          });
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px' },
+        );
+        items.forEach(function (el) {
+          io.observe(el);
+        });
+      })();
+    </script>
+  </body>
+</html>
