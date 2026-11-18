@@ -55,15 +55,54 @@ async function buildSound(url, durationSec) {
   return out;
 }
 
-async function compose({ id, backgroundUrl, soundUrl, overlay, durationSec }) {
+/**
+ * A verse video's recitation: each verse's file up to its cut, back to back, and
+ * a fade at the very end when the reciter is cut off mid-verse.
+ */
+async function buildRecitation({ clips, fadeOutSec }, durationSec) {
+  const rate = 44100, channels = 2, length = Math.round(durationSec * rate);
+  const ctx = new OfflineAudioContext(channels, length, rate);
+  const out = ctx.createBuffer(channels, length, rate);
+  let at = 0;
+  for (const clip of clips) {
+    const decoded = await ctx.decodeAudioData(await (await fetch(clip.url)).arrayBuffer());
+    const take = Math.min(Math.round(clip.endSec * rate), decoded.length, length - at);
+    for (let ch = 0; ch < channels; ch++) {
+      const src = decoded.getChannelData(Math.min(ch, decoded.numberOfChannels - 1));
+      out.getChannelData(ch).set(src.subarray(0, take), at);
+    }
+    at += take;
+    if (at >= length) break;
+  }
+  const fade = Math.min(Math.round((fadeOutSec || 0.04) * rate), length);
+  for (let ch = 0; ch < channels; ch++) {
+    const dst = out.getChannelData(ch);
+    for (let i = length - fade; i < length; i++) dst[i] *= Math.cos(((i - (length - fade)) / fade) * Math.PI / 2);
+  }
+  return out;
+}
+
+/** Each verse's text fades in over this, as in the app's preview. */
+const VERSE_FADE_SEC = 0.4;
+
+async function compose({ id, backgroundUrl, soundUrl, overlay, durationSec, parts, recitation }) {
   const canvas = document.getElementById('c');
   const g = canvas.getContext('2d');
-  const text = await loadImage(overlay);
+  // One text layer for a story; one per verse, each in its time range, for a verse video.
+  const layers = parts && parts.length
+    ? await Promise.all(parts.map(async (p) => ({ img: await loadImage(p.overlay), from: p.fromSec })))
+    : [{ img: await loadImage(overlay), from: 0 }];
+  const layerAt = (sec) => {
+    let i = 0;
+    for (let k = 0; k < layers.length; k++) if (layers[k].from <= sec) i = k;
+    return i;
+  };
+  const hasSound = !!soundUrl || !!(recitation && recitation.clips && recitation.clips.length);
 
   const videoCodec = await getFirstEncodableVideoCodec(['avc'], { width: W, height: H });
   if (!videoCodec) throw new Error('This device cannot encode H.264 video');
   // AAC encoding arrived in Safari with iOS 26; older devices get a silent video.
-  const audioCodec = soundUrl && typeof AudioEncoder !== 'undefined'
+  const audioCodec = hasSound && typeof AudioEncoder !== 'undefined'
     ? await getFirstEncodableAudioCodec(['aac'], { numberOfChannels: 2, sampleRate: 44100 })
     : null;
 
@@ -86,13 +125,17 @@ async function compose({ id, backgroundUrl, soundUrl, overlay, durationSec }) {
     for await (const { canvas: bg } of sink.canvases()) {
       if (frame >= total) break;
       g.drawImage(bg, 0, 0, W, H);
-      g.drawImage(text, 0, 0, W, H);
+      const sec = frame / FPS;
+      const li = layerAt(sec);
+      g.globalAlpha = li === 0 ? 1 : Math.min(1, (sec - layers[li].from) / VERSE_FADE_SEC);
+      g.drawImage(layers[li].img, 0, 0, W, H);
+      g.globalAlpha = 1;
       await video.add(frame / FPS, 1 / FPS);
       frame++;
       if (frame % 15 === 0) send({ type: 'progress', id, p: frame / total });
     }
   }
-  if (audio) await audio.add(await buildSound(soundUrl, durationSec));
+  if (audio) await audio.add(recitation && recitation.clips && recitation.clips.length ? await buildRecitation(recitation, durationSec) : await buildSound(soundUrl, durationSec));
   await output.finalize();
 
   // Back to the app in pieces: one huge message is slow on both bridges.
@@ -105,7 +148,7 @@ async function compose({ id, backgroundUrl, soundUrl, overlay, durationSec }) {
     for (let k = 0; k < part.length; k += 0x8000) s += String.fromCharCode.apply(null, part.subarray(k, k + 0x8000));
     send({ type: 'chunk', id, i, data: btoa(s) });
   }
-  send({ type: 'done', id, total: i, silent: !!soundUrl && !audio });
+  send({ type: 'done', id, total: i, silent: hasSound && !audio });
 }
 
 async function onMessage(event) {
