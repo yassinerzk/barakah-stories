@@ -264,6 +264,270 @@
         "author": null,
         "license": "Pexels License"
       }
+    },
+    {
+      "id": "mosque-teal-sky",
+      "name": {
+        "en": "Mosque, teal sky",
+        "fr": "Mosquée, ciel turquoise",
+        "ar": "مسجد وسماء فيروزية",
+        "id": "Masjid, langit biru kehijauan",
+        "ms": "Masjid, langit biru kehijauan",
+        "th": "มัสยิดกับฟ้าสีเขียวอมฟ้า",
+        "ur": "مسجد اور فیروزی آسمان"
+      },
+      "file": "video/mosque-teal-sky-c3c9a6fb.mp4",
+      "poster": "video/mosque-teal-sky-166c87f9.jpg",
+      "durationMs": 8000,
+      "bytes": 2179920,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/35287128/",
+        "author": "Helin Gezer",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "dome-minaret",
+      "name": {
+        "en": "Dome and minaret",
+        "fr": "Dôme et minaret",
+        "ar": "قبة ومئذنة",
+        "id": "Kubah dan menara",
+        "ms": "Kubah dan menara",
+        "th": "โดมและหออะซาน",
+        "ur": "گنبد اور مینار"
+      },
+      "file": "video/dome-minaret-16df4ef1.mp4",
+      "poster": "video/dome-minaret-841cd63f.jpg",
+      "durationMs": 8000,
+      "bytes": 3739112,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/34903825/",
+        "author": "Havvanur Akın",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "blue-mosque",
+      "name": {
+        "en": "Blue Mosque",
+        "fr": "Mosquée bleue",
+        "ar": "المسجد الأزرق",
+        "id": "Masjid Biru",
+        "ms": "Masjid Biru",
+        "th": "มัสยิดสีน้ำเงิน",
+        "ur": "نیلی مسجد"
+      },
+      "file": "video/blue-mosque-4bbdb865.mp4",
+      "poster": "video/blue-mosque-2c08ba76.jpg",
+      "durationMs": 8000,
+      "bytes": 2729218,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/27879220/",
+        "author": "Sururi Ballıdağ",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "kaaba",
+      "name": {
+        "en": "The Kaaba",
+        "fr": "La Kaaba",
+        "ar": "الكعبة المشرفة",
+        "id": "Ka’bah",
+        "ms": "Kaabah",
+        "th": "กะอ์บะฮ์",
+        "ur": "خانہ کعبہ"
+      },
+      "file": "video/kaaba-c51ce4fd.mp4",
+      "poster": "video/kaaba-0d503071.jpg",
+      "durationMs": 7633,
+      "bytes": 2684766,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/35189233/",
+        "author": "Earth Photart",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "kaaba-night",
+      "name": {
+        "en": "Kaaba at night",
+        "fr": "La Kaaba la nuit",
+        "ar": "الكعبة ليلاً",
+        "id": "Ka’bah di malam hari",
+        "ms": "Kaabah pada waktu malam",
+        "th": "กะอ์บะฮ์ยามค่ำคืน",
+        "ur": "رات کو کعبہ"
+      },
+      "file": "video/kaaba-night-cbe4f046.mp4",
+      "poster": "video/kaaba-night-a7026fa1.jpg",
+      "durationMs": 8000,
+      "bytes": 4274743,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/41070642/",
+        "author": "Selim A",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "prophets-mosque",
+      "name": {
+        "en": "Prophet's Mosque courtyard",
+        "fr": "Cour de la mosquée du Prophète",
+        "ar": "ساحة المسجد النبوي",
+        "id": "Halaman Masjid Nabawi",
+        "ms": "Halaman Masjid Nabawi",
+        "th": "ลานมัสยิดนบี",
+        "ur": "مسجدِ نبوی کا صحن"
+      },
+      "file": "video/prophets-mosque-c4561189.mp4",
+      "poster": "video/prophets-mosque-ee2acd5e.jpg",
+      "durationMs": 8000,
+      "bytes": 4341533,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/35250210/",
+        "author": "Fahad Puthawala",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "crescent-city",
+      "name": {
+        "en": "Crescent over the city",
+        "fr": "Croissant sur la ville",
+        "ar": "هلال فوق المدينة",
+        "id": "Bulan sabit di atas kota",
+        "ms": "Anak bulan di atas bandar",
+        "th": "จันทร์เสี้ยวเหนือเมือง",
+        "ur": "شہر پر ہلال"
+      },
+      "file": "video/crescent-city-286e3bcc.mp4",
+      "poster": "video/crescent-city-26793bad.jpg",
+      "durationMs": 8000,
+      "bytes": 2531841,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/40974028/",
+        "author": "정규송 Nui MALAMA",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "crescent-palms",
+      "name": {
+        "en": "Crescent through palms",
+        "fr": "Croissant entre les palmes",
+        "ar": "هلال بين النخيل",
+        "id": "Bulan sabit di balik palem",
+        "ms": "Anak bulan di sebalik palma",
+        "th": "จันทร์เสี้ยวผ่านใบปาล์ม",
+        "ur": "کھجوروں میں ہلال"
+      },
+      "file": "video/crescent-palms-efb00eb3.mp4",
+      "poster": "video/crescent-palms-af9e41d2.jpg",
+      "durationMs": 8000,
+      "bytes": 1375552,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/37787814/",
+        "author": "Shuttercraftsman",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "crescent-moon",
+      "name": {
+        "en": "Crescent moon",
+        "fr": "Croissant de lune",
+        "ar": "الهلال",
+        "id": "Bulan sabit",
+        "ms": "Anak bulan",
+        "th": "จันทร์เสี้ยว",
+        "ur": "ہلال"
+      },
+      "file": "video/crescent-moon-2b38491d.mp4",
+      "poster": "video/crescent-moon-8d4d3e09.jpg",
+      "durationMs": 8000,
+      "bytes": 1232652,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/37223412/",
+        "author": "Bejan Adrian",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "golden-sunset",
+      "name": {
+        "en": "Golden sunset",
+        "fr": "Coucher de soleil doré",
+        "ar": "غروب ذهبي",
+        "id": "Senja keemasan",
+        "ms": "Senja keemasan",
+        "th": "อาทิตย์ตกสีทอง",
+        "ur": "سنہرا غروب"
+      },
+      "file": "video/golden-sunset-d80bca14.mp4",
+      "poster": "video/golden-sunset-e1fa22e4.jpg",
+      "durationMs": 8000,
+      "bytes": 2148679,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/36744510/",
+        "author": "Prasanjeet Shyam",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "sunset-clouds",
+      "name": {
+        "en": "Sunset clouds",
+        "fr": "Nuages au couchant",
+        "ar": "غيوم الغروب",
+        "id": "Awan senja",
+        "ms": "Awan senja",
+        "th": "เมฆยามอาทิตย์ตก",
+        "ur": "غروب کے بادل"
+      },
+      "file": "video/sunset-clouds-b39dd6c8.mp4",
+      "poster": "video/sunset-clouds-2a3d4ba6.jpg",
+      "durationMs": 8000,
+      "bytes": 2957632,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/30733728/",
+        "author": "Matheus Bertelli",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "dusk-sky",
+      "name": {
+        "en": "Sunset in a dark sky",
+        "fr": "Couchant dans un ciel sombre",
+        "ar": "غروب في سماء داكنة",
+        "id": "Senja di langit gelap",
+        "ms": "Senja di langit gelap",
+        "th": "อาทิตย์ตกในฟ้ามืด",
+        "ur": "تاریک آسمان میں غروب"
+      },
+      "file": "video/dusk-sky-9cfcfaf7.mp4",
+      "poster": "video/dusk-sky-cf32a075.jpg",
+      "durationMs": 8000,
+      "bytes": 1157707,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/video/36738426/",
+        "author": "Masum Bin Zafar",
+        "license": "Pexels License"
+      }
     }
   ],
   "sounds": [
@@ -661,6 +925,512 @@
         "url": "https://freesound.org/s/451616/",
         "author": "kyles",
         "license": "CC0 1.0"
+      }
+    }
+  ],
+  "photos": [
+    {
+      "id": "green-dome-minaret",
+      "name": {
+        "en": "Green Dome",
+        "fr": "Dôme vert",
+        "ar": "القبة الخضراء",
+        "id": "Kubah Hijau",
+        "ms": "Kubah Hijau",
+        "th": "โดมเขียว",
+        "ur": "گنبدِ خضرا"
+      },
+      "file": "photo/green-dome-minaret-463c4126.webp",
+      "thumb": "photo/green-dome-minaret-thumb-c0827b4d.webp",
+      "bytes": 81268,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/40123782/",
+        "author": "Md Amir Umar",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "prophets-mosque-dusk",
+      "name": {
+        "en": "Prophet's Mosque at dusk",
+        "fr": "Mosquée du Prophète au crépuscule",
+        "ar": "المسجد النبوي عند الغروب",
+        "id": "Masjid Nabawi saat senja",
+        "ms": "Masjid Nabawi waktu senja",
+        "th": "มัสยิดนบีตอนพลบค่ำ",
+        "ur": "شام کے وقت مسجدِ نبوی"
+      },
+      "file": "photo/prophets-mosque-dusk-0719a9e1.webp",
+      "thumb": "photo/prophets-mosque-dusk-thumb-eb7be798.webp",
+      "bytes": 47282,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/38978332/",
+        "author": "Melike Elif Erdem",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "green-silver-domes",
+      "name": {
+        "en": "Green and silver domes",
+        "fr": "Dômes vert et argent",
+        "ar": "القبة الخضراء والفضية",
+        "id": "Kubah hijau dan perak",
+        "ms": "Kubah hijau dan perak",
+        "th": "โดมเขียวและเงิน",
+        "ur": "سبز اور نقرئی گنبد"
+      },
+      "file": "photo/green-silver-domes-2c3f67c9.webp",
+      "thumb": "photo/green-silver-domes-thumb-caa7b8af.webp",
+      "bytes": 181188,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/35017403/",
+        "author": "Md Amir Umar",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "madinah-minarets",
+      "name": {
+        "en": "Minarets of Madinah",
+        "fr": "Minarets de Médine",
+        "ar": "مآذن المدينة",
+        "id": "Menara Madinah",
+        "ms": "Menara Madinah",
+        "th": "หออะซานแห่งมะดีนะฮ์",
+        "ur": "مدینہ کے مینار"
+      },
+      "file": "photo/madinah-minarets-c028235c.webp",
+      "thumb": "photo/madinah-minarets-thumb-08ad93bc.webp",
+      "bytes": 83152,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/33169780/",
+        "author": "Tarik Sami",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "green-dome-sky",
+      "name": {
+        "en": "Green Dome, blue sky",
+        "fr": "Dôme vert, ciel bleu",
+        "ar": "القبة الخضراء والسماء الزرقاء",
+        "id": "Kubah Hijau, langit biru",
+        "ms": "Kubah Hijau, langit biru",
+        "th": "โดมเขียว ฟ้าคราม",
+        "ur": "گنبدِ خضرا، نیلا آسمان"
+      },
+      "file": "photo/green-dome-sky-6eac142a.webp",
+      "thumb": "photo/green-dome-sky-thumb-2bc972ff.webp",
+      "bytes": 103108,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/17928133/",
+        "author": "Saad Alkot",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "madinah-dusk",
+      "name": {
+        "en": "Madinah at dusk",
+        "fr": "Médine au crépuscule",
+        "ar": "المدينة المنورة عند الغروب",
+        "id": "Madinah saat senja",
+        "ms": "Madinah waktu senja",
+        "th": "มะดีนะฮ์ยามพลบค่ำ",
+        "ur": "شام کے وقت مدینہ"
+      },
+      "file": "photo/madinah-dusk-2be5703d.webp",
+      "thumb": "photo/madinah-dusk-thumb-ef9f8e56.webp",
+      "bytes": 183690,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/4321694/",
+        "author": "Hussain Awan",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "kaaba-night",
+      "name": {
+        "en": "Kaaba at night",
+        "fr": "La Kaaba la nuit",
+        "ar": "الكعبة ليلاً",
+        "id": "Ka’bah di malam hari",
+        "ms": "Kaabah pada waktu malam",
+        "th": "กะอ์บะฮ์ยามค่ำคืน",
+        "ur": "رات کو کعبہ"
+      },
+      "file": "photo/kaaba-night-feaf558c.webp",
+      "thumb": "photo/kaaba-night-thumb-2fe5c40c.webp",
+      "bytes": 160550,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/38789865/",
+        "author": "Shafeek",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "kaaba-tawaf",
+      "name": {
+        "en": "Around the Kaaba",
+        "fr": "Autour de la Kaaba",
+        "ar": "حول الكعبة",
+        "id": "Mengelilingi Ka’bah",
+        "ms": "Mengelilingi Kaabah",
+        "th": "รอบกะอ์บะฮ์",
+        "ur": "کعبہ کے گرد"
+      },
+      "file": "photo/kaaba-tawaf-fb5fe9f6.webp",
+      "thumb": "photo/kaaba-tawaf-thumb-33f5e709.webp",
+      "bytes": 289760,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/34999018/",
+        "author": "Fahad Puthawala",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "blue-mosque-night",
+      "name": {
+        "en": "Blue Mosque at night",
+        "fr": "Mosquée bleue la nuit",
+        "ar": "المسجد الأزرق ليلاً",
+        "id": "Masjid Biru di malam hari",
+        "ms": "Masjid Biru pada waktu malam",
+        "th": "มัสยิดสีน้ำเงินยามค่ำ",
+        "ur": "رات کو نیلی مسجد"
+      },
+      "file": "photo/blue-mosque-night-54f18374.webp",
+      "thumb": "photo/blue-mosque-night-thumb-687e429a.webp",
+      "bytes": 92706,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/22458431/",
+        "author": "İbrahim Ak",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "mosque-reflection",
+      "name": {
+        "en": "Mosque reflection",
+        "fr": "Reflet de mosquée",
+        "ar": "انعكاس المسجد",
+        "id": "Bayangan masjid",
+        "ms": "Pantulan masjid",
+        "th": "เงาสะท้อนมัสยิด",
+        "ur": "مسجد کا عکس"
+      },
+      "file": "photo/mosque-reflection-36e518f4.webp",
+      "thumb": "photo/mosque-reflection-thumb-313e8090.webp",
+      "bytes": 86300,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/38144878/",
+        "author": "Aditya Addanki",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "suleymaniye-sunset",
+      "name": {
+        "en": "Süleymaniye at sunset",
+        "fr": "Süleymaniye au coucher du soleil",
+        "ar": "السليمانية عند الغروب",
+        "id": "Süleymaniye saat matahari terbenam",
+        "ms": "Süleymaniye waktu matahari terbenam",
+        "th": "สุไลมานิเยยามอาทิตย์ตก",
+        "ur": "غروب کے وقت سلیمانیہ"
+      },
+      "file": "photo/suleymaniye-sunset-9bc7df7c.webp",
+      "thumb": "photo/suleymaniye-sunset-thumb-1194a5d7.webp",
+      "bytes": 199154,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/38498299/",
+        "author": "Büşra",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "minarets-twilight",
+      "name": {
+        "en": "Minarets at twilight",
+        "fr": "Minarets au crépuscule",
+        "ar": "مآذن في الشفق",
+        "id": "Menara saat senja",
+        "ms": "Menara waktu senja",
+        "th": "หออะซานยามสนธยา",
+        "ur": "شفق میں مینار"
+      },
+      "file": "photo/minarets-twilight-1c31116c.webp",
+      "thumb": "photo/minarets-twilight-thumb-532021af.webp",
+      "bytes": 104402,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/15702466/",
+        "author": "Omer CETIN",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "mosque-evening",
+      "name": {
+        "en": "Mosque in the evening",
+        "fr": "Mosquée le soir",
+        "ar": "مسجد في المساء",
+        "id": "Masjid di sore hari",
+        "ms": "Masjid pada waktu petang",
+        "th": "มัสยิดยามเย็น",
+        "ur": "شام کو مسجد"
+      },
+      "file": "photo/mosque-evening-f551e68c.webp",
+      "thumb": "photo/mosque-evening-thumb-411b14bc.webp",
+      "bytes": 24624,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/19312555/",
+        "author": "sevde",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "lit-dome",
+      "name": {
+        "en": "Lit dome at night",
+        "fr": "Dôme illuminé la nuit",
+        "ar": "قبة مضيئة ليلاً",
+        "id": "Kubah bercahaya di malam hari",
+        "ms": "Kubah bercahaya pada waktu malam",
+        "th": "โดมเรืองแสงยามค่ำ",
+        "ur": "رات کو روشن گنبد"
+      },
+      "file": "photo/lit-dome-d9d595fa.webp",
+      "thumb": "photo/lit-dome-thumb-179c3cdd.webp",
+      "bytes": 66544,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/18436365/",
+        "author": "Muhtelifane",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "courtyard-arches",
+      "name": {
+        "en": "Courtyard arches",
+        "fr": "Arcades de la cour",
+        "ar": "أقواس الصحن",
+        "id": "Lengkung halaman",
+        "ms": "Gerbang halaman",
+        "th": "ซุ้มโค้งลานมัสยิด",
+        "ur": "صحن کے محراب"
+      },
+      "file": "photo/courtyard-arches-59d5243c.webp",
+      "thumb": "photo/courtyard-arches-thumb-2b31bcaa.webp",
+      "bytes": 120660,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/30764913/",
+        "author": "Gökhan Çınar",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "minarets-sunset",
+      "name": {
+        "en": "Minarets at sunset",
+        "fr": "Minarets au coucher du soleil",
+        "ar": "مآذن عند الغروب",
+        "id": "Menara saat matahari terbenam",
+        "ms": "Menara waktu matahari terbenam",
+        "th": "หออะซานยามอาทิตย์ตก",
+        "ur": "غروب کے وقت مینار"
+      },
+      "file": "photo/minarets-sunset-d173e8c6.webp",
+      "thumb": "photo/minarets-sunset-thumb-c578b2ac.webp",
+      "bytes": 44016,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/40123768/",
+        "author": "Md Amir Umar",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "pastel-crescent",
+      "name": {
+        "en": "Crescent in a pastel sky",
+        "fr": "Croissant dans un ciel pastel",
+        "ar": "هلال في سماء هادئة",
+        "id": "Bulan sabit di langit pastel",
+        "ms": "Anak bulan di langit pastel",
+        "th": "จันทร์เสี้ยวในฟ้าสีพาสเทล",
+        "ur": "ہلکے آسمان میں ہلال"
+      },
+      "file": "photo/pastel-crescent-e612a6cc.webp",
+      "thumb": "photo/pastel-crescent-thumb-641e5866.webp",
+      "bytes": 9122,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/31255485/",
+        "author": "Zoafsha",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "twilight-crescent",
+      "name": {
+        "en": "Crescent at twilight",
+        "fr": "Croissant au crépuscule",
+        "ar": "هلال في الشفق",
+        "id": "Bulan sabit saat senja",
+        "ms": "Anak bulan waktu senja",
+        "th": "จันทร์เสี้ยวยามสนธยา",
+        "ur": "شفق میں ہلال"
+      },
+      "file": "photo/twilight-crescent-5f9d9779.webp",
+      "thumb": "photo/twilight-crescent-thumb-05caeda2.webp",
+      "bytes": 20688,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/32403234/",
+        "author": "Leticia Signorin",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "day-crescent",
+      "name": {
+        "en": "Crescent in the day sky",
+        "fr": "Croissant dans le ciel du jour",
+        "ar": "هلال في سماء النهار",
+        "id": "Bulan sabit di langit siang",
+        "ms": "Anak bulan di langit siang",
+        "th": "จันทร์เสี้ยวในฟ้ากลางวัน",
+        "ur": "دن کے آسمان میں ہلال"
+      },
+      "file": "photo/day-crescent-3d144b32.webp",
+      "thumb": "photo/day-crescent-thumb-f54ff0f1.webp",
+      "bytes": 28328,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/27196949/",
+        "author": "Feyza Daştan",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "golden-sea",
+      "name": {
+        "en": "Golden sunset over the sea",
+        "fr": "Coucher doré sur la mer",
+        "ar": "غروب ذهبي على البحر",
+        "id": "Senja keemasan di laut",
+        "ms": "Senja keemasan di laut",
+        "th": "อาทิตย์ตกสีทองเหนือทะเล",
+        "ur": "سمندر پر سنہری غروب"
+      },
+      "file": "photo/golden-sea-88691692.webp",
+      "thumb": "photo/golden-sea-thumb-87866f18.webp",
+      "bytes": 63242,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/29799956/",
+        "author": "Talha Resitoglu",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "golden-clouds",
+      "name": {
+        "en": "Golden sun and clouds",
+        "fr": "Soleil doré et nuages",
+        "ar": "شمس ذهبية وغيوم",
+        "id": "Matahari keemasan dan awan",
+        "ms": "Matahari keemasan dan awan",
+        "th": "ดวงอาทิตย์สีทองและเมฆ",
+        "ur": "سنہرا سورج اور بادل"
+      },
+      "file": "photo/golden-clouds-cb12ce71.webp",
+      "thumb": "photo/golden-clouds-thumb-9feadf7e.webp",
+      "bytes": 112950,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/39138794/",
+        "author": "Blessing Niniola",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "desert-stars",
+      "name": {
+        "en": "Desert under the stars",
+        "fr": "Désert sous les étoiles",
+        "ar": "صحراء تحت النجوم",
+        "id": "Gurun di bawah bintang",
+        "ms": "Gurun di bawah bintang",
+        "th": "ทะเลทรายใต้แสงดาว",
+        "ur": "ستاروں تلے صحرا"
+      },
+      "file": "photo/desert-stars-6abae510.webp",
+      "thumb": "photo/desert-stars-thumb-d83a2e82.webp",
+      "bytes": 326832,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/8570089/",
+        "author": "Магомед Шапиев",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "above-clouds",
+      "name": {
+        "en": "Above the clouds",
+        "fr": "Au-dessus des nuages",
+        "ar": "فوق الغيوم",
+        "id": "Di atas awan",
+        "ms": "Di atas awan",
+        "th": "เหนือเมฆ",
+        "ur": "بادلوں کے اوپر"
+      },
+      "file": "photo/above-clouds-fdf6fbfd.webp",
+      "thumb": "photo/above-clouds-thumb-c48dc5a0.webp",
+      "bytes": 148750,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/15708333/",
+        "author": "Dương Nhân",
+        "license": "Pexels License"
+      }
+    },
+    {
+      "id": "ramadan-crescent",
+      "name": {
+        "en": "Ramadan crescent and lantern",
+        "fr": "Croissant et lanterne du Ramadan",
+        "ar": "هلال وفانوس رمضان",
+        "id": "Bulan sabit dan lentera Ramadan",
+        "ms": "Anak bulan dan tanglung Ramadan",
+        "th": "จันทร์เสี้ยวและโคมรอมฎอน",
+        "ur": "رمضان کا ہلال اور فانوس"
+      },
+      "file": "photo/ramadan-crescent-c3771652.webp",
+      "thumb": "photo/ramadan-crescent-thumb-302e41a1.webp",
+      "bytes": 227078,
+      "source": {
+        "site": "Pexels",
+        "url": "https://www.pexels.com/photo/32166678/",
+        "author": "Hanafi Mellek",
+        "license": "Pexels License"
       }
     }
   ]

@@ -88,10 +88,12 @@ const VERSE_FADE_SEC = 0.4;
 async function compose({ id, backgroundUrl, soundUrl, overlay, durationSec, parts, recitation }) {
   const canvas = document.getElementById('c');
   const g = canvas.getContext('2d');
-  // One text layer for a story; one per verse, each in its time range, for a verse video.
+  // The card, drawn whole on every frame. A verse video adds one words-only layer
+  // per verse, each in its time range: only the words fade, the card stays.
+  const base = await loadImage(overlay);
   const layers = parts && parts.length
-    ? await Promise.all(parts.map(async (p) => ({ img: await loadImage(p.overlay), from: p.fromSec })))
-    : [{ img: await loadImage(overlay), from: 0 }];
+    ? await Promise.all(parts.map(async (p) => ({ img: await loadImage(p.overlay), from: p.fromSec, to: p.toSec })))
+    : [];
   const layerAt = (sec) => {
     let i = 0;
     for (let k = 0; k < layers.length; k++) if (layers[k].from <= sec) i = k;
@@ -125,11 +127,17 @@ async function compose({ id, backgroundUrl, soundUrl, overlay, durationSec, part
     for await (const { canvas: bg } of sink.canvases()) {
       if (frame >= total) break;
       g.drawImage(bg, 0, 0, W, H);
-      const sec = frame / FPS;
-      const li = layerAt(sec);
-      g.globalAlpha = li === 0 ? 1 : Math.min(1, (sec - layers[li].from) / VERSE_FADE_SEC);
-      g.drawImage(layers[li].img, 0, 0, W, H);
-      g.globalAlpha = 1;
+      g.drawImage(base, 0, 0, W, H);
+      if (layers.length) {
+        const sec = frame / FPS;
+        const li = layerAt(sec);
+        // In as a verse starts (not the first), out before the next (not the last).
+        const fadeIn = li === 0 ? 1 : Math.min(1, (sec - layers[li].from) / VERSE_FADE_SEC);
+        const fadeOut = li === layers.length - 1 ? 1 : Math.min(1, Math.max(0, (layers[li].to - sec) / VERSE_FADE_SEC));
+        g.globalAlpha = Math.max(0, Math.min(fadeIn, fadeOut));
+        g.drawImage(layers[li].img, 0, 0, W, H);
+        g.globalAlpha = 1;
+      }
       await video.add(frame / FPS, 1 / FPS);
       frame++;
       if (frame % 15 === 0) send({ type: 'progress', id, p: frame / total });
