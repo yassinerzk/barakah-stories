@@ -93,7 +93,7 @@
   <body>
     <main>
       <h1>Privacy Policy — Barakah Stories</h1>
-      <p class="updated">Last updated: 23 November 2026</p>
+      <p class="updated">Last updated: 26 November 2026</p>
 
       <p class="lede">
         Barakah Stories is made by Klay Creative Lab LLC. This policy explains what the app does with your
@@ -106,8 +106,8 @@
       <p>
         We do not use analytics to study how you use the app, and we do not sell personal information. The
         free version of the app shows advertising; Barakah Pro shows none. What advertising involves is under
-        "Advertising" below, and how we measure our own ads on Facebook and Instagram is under "Measuring our
-        own ads".
+        "Advertising" below, and how we measure our own ads on Facebook, Instagram and Google is under
+        "Measuring our own ads".
       </p>
       <p>
         You can use the whole app <strong>without an account</strong>. If you never sign up, everything you
@@ -119,18 +119,26 @@
       <h2>If you create an account</h2>
       <p>
         Signing up is optional. It exists for one purpose: keeping your saved posts and Quran reading progress
-        available on more than one device.
+        available on more than one device. You can sign up with your Apple account, your Google account or an
+        email address.
       </p>
       <p>If you do sign up, we store:</p>
       <ul>
-        <li><strong>Your email address</strong>, used to identify your account and let you sign in.</li>
+        <li>
+          <strong>Your email address</strong>, used to identify your account and let you sign in. With Apple
+          you can choose "Hide My Email"; we then only see a relay address that Apple forwards to you.
+        </li>
+        <li><strong>Your name</strong>, if you sign in with Apple or Google and they share it with us.</li>
         <li>
           <strong>Your saved story designs</strong> and <strong>your Quran reading progress</strong>, so they
           can be synced.
         </li>
       </ul>
       <p>
-        Your password is never visible to us. Accounts run on
+        Your password is never visible to us, and with Apple or Google sign-in we never get a password at
+        all. Your email address and name are used only for your account, never for advertising or tracking,
+        and deleting the account removes them. If you signed in with Apple, you can also remove Barakah
+        Stories under "Sign in with Apple" in your Apple ID settings. Accounts run on
         <a href="https://supabase.com">Supabase</a>, which processes this data on our behalf as our hosting
         provider; it is not sold or shared with anyone else. Your data is protected so that only your own
         account can read or write it.
@@ -224,7 +232,9 @@
         To know whether your phone has Pro, the app uses
         <a href="https://www.revenuecat.com">RevenueCat</a>, which processes purchases on our behalf. It
         receives your purchase record from the store (what was bought, when, and whether it is still active)
-        linked to a random identifier created by the app, not your name or email. RevenueCat's own
+        linked to a random identifier created by the app, not your name or email. While you are signed in,
+        purchases are linked to your account's random identifier instead (again not your name or email), so
+        Pro also works on your other phones. RevenueCat's own
         <a href="https://www.revenuecat.com/privacy">privacy policy</a> applies to that processing. We use
         this to unlock Pro and restore it on a new phone, and RevenueCat also tells Meta when a trial or
         purchase happens, as described under "Measuring our own ads". It is not sold to anyone.
@@ -255,9 +265,10 @@
 
       <h2>Measuring our own ads</h2>
       <p>
-        We advertise Barakah Stories on Facebook and Instagram, and we want to know which of those ads lead
-        people to install the app and to try or buy Barakah Pro. For that, the app includes Meta's software
-        (the Meta SDK), and RevenueCat, which handles purchases for us, reports purchases to Meta.
+        We advertise Barakah Stories on Facebook, Instagram and Google, and we want to know which of those
+        ads lead people to install the app and to try or buy Barakah Pro. For that, the app includes Meta's
+        software (the Meta SDK) and Google's Firebase Analytics, and RevenueCat, which handles purchases for
+        us, reports purchases to Meta.
       </p>
       <ul>
         <li>
@@ -272,21 +283,30 @@
           random identifier.
         </li>
         <li>
-          <strong>Meta never receives</strong> your name, email or account, your advertising identifier, your
-          location, or anything you read, listen to or create in the app. On iPhone and iPad the app never
-          asks for permission to track you, and it tells Meta that tracking is not allowed.
+          <strong>From the app, Google receives</strong> (through Firebase Analytics) that the app was
+          installed and opened and when an in-app purchase is made, with a random identifier that Firebase
+          creates for this installation, basic information about your device and, as with any internet
+          connection, your IP address. The app switches off Firebase's collection of your advertising
+          identifier, its automatic screen tracking, and ad personalisation.
+        </li>
+        <li>
+          <strong>Through this measurement, neither Meta nor Google receives</strong> your name, email or
+          account, your advertising identifier, your location, or anything you read, listen to or create in
+          the app. On iPhone and iPad the app never asks for permission to track you, and it tells Meta that
+          tracking is not allowed.
         </li>
       </ul>
       <p>
         Where the law requires consent (the European Economic Area, the United Kingdom and Switzerland),
         none of this happens unless you allowed "Store and/or access information on a device" and "Measure
         advertising performance" in the consent message the app shows before ads. You can change your
-        choice at any time under Me → Privacy choices. If you withdraw it, the app stops Meta's software
-        from reporting and removes the identifier from RevenueCat, so later renewals are no longer reported.
+        choice at any time under Me → Privacy choices. If you withdraw it, the app stops Meta's and Google's
+        software from reporting and removes the identifiers from RevenueCat, so later renewals are no longer
+        reported.
       </p>
       <p>
-        Meta's <a href="https://www.facebook.com/privacy/policy/">privacy policy</a> applies to what Meta
-        receives.
+        Meta's <a href="https://www.facebook.com/privacy/policy/">privacy policy</a> and Google's
+        <a href="https://policies.google.com/privacy">privacy policy</a> apply to what each of them receives.
       </p>
 
       <h2>Sharing your stories</h2>

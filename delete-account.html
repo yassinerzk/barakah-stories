@@ -57,6 +57,17 @@
       p {
         margin: 0 0 1rem;
       }
+      h2 {
+        font-size: 1.05rem;
+        line-height: 1.3;
+        margin: 0 0 0.5rem;
+      }
+      .other {
+        border: 1px solid var(--rule);
+        border-radius: 8px;
+        padding: 0.9rem 1rem;
+        margin-bottom: 1rem;
+      }
       .warn {
         border: 1px solid var(--rule);
         border-inline-start: 3px solid var(--danger);
@@ -133,9 +144,27 @@
       <h1>Delete your account</h1>
 
       <p>
-        If you made a Barakah Stories account, you can delete it here. Sign in with the same email and
-        password you use in the app.
+        If you made a Barakah Stories account with an email and password, you can delete it here. Sign in with
+        the same email and password you use in the app.
       </p>
+
+      <div class="other">
+        <h2>Signed up with Apple or Google?</h2>
+        <p>
+          Those accounts have no password with us, so they can't sign in on this page. Delete them in the app
+          instead: open <strong>Me → Account → Delete account</strong>. For an Apple account, the app also
+          removes Barakah Stories from your Apple ID.
+        </p>
+        <p style="margin: 0">
+          No longer have the app? Email
+          <a href="mailto:info@klaycreate.com?subject=Delete%20my%20Barakah%20Stories%20account"
+            >info@klaycreate.com</a
+          >
+          from the address on the account and we will delete it for you. If you chose Apple's
+          <em>Hide My Email</em>, write from the address Apple forwards to, and include the relay address,
+          which you can find on your iPhone under Settings → your name → Sign in with Apple → Barakah Stories.
+        </p>
+      </div>
 
       <div class="warn">
         <p style="margin: 0">
@@ -209,7 +238,10 @@
 
           const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
           if (signInError) {
-            say('Could not sign in. Check the email and password and try again.', 'err');
+            say(
+              'Could not sign in. Check the email and password and try again. Signed up with Apple or Google? See above.',
+              'err',
+            );
             submit.disabled = false;
             return;
           }
